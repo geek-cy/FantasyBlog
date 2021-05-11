@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.VisitorMapper">
+    <select id="selectById" parameterType="java.util.Set" resultType="visitor">
+        <if test="visitorId != null">
+            select id,nickname,avatar,link from t_visitor where id = #{visitorId}
+        </if>
+    </select>
+
+    <select id="selectByVisitorId" parameterType="java.util.Map" resultType="visitor">
+        <if test="visitorId != null">
+            select id, nickname, avatar, link
+            from t_visitor
+            where id = #{visitorId}
+        </if>
+        <if test="userId != null">
+            select nickname, avatar
+            from sys_user
+            where id = #{userId}
+        </if>
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

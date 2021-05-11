@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.CategoryMapper">
+    <select id="listPreviewByCategory" resultType="cn.myBlog.entity.Category">
+        select tc.id, tc.name, tc.color, count(ta.id) articleCount
+        from t_category tc
+                 left join t_article ta
+                           on ta.category_id = tc.id
+        where tc.display = 1 and ta.status = 2
+        group by tc.id
+    </select>
+    <select id="listTableByCategory" resultType="cn.myBlog.entity.Category"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select tc.id,
+               tc.name,
+               tc.color,
+               tc.display,
+               tc.introduction,
+               tc.create_time,
+               tc.update_time,
+               count(ta.id) articleCount
+        from t_category tc
+                 left join t_article ta
+                           on ta.category_id = tc.id
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        GROUP BY tc.id
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.TagMapper">
+    <resultMap id="baseResultMap" type="cn.myBlog.entity.Tag">
+        <id property="id" column="id"/>
+        <id property="name" column="name"/>
+        <id property="color" column="color"/>
+        <id property="createTime" column="create_time"/>
+        <id property="updateTime" column="update_time"/>
+        <id property="articleCount" column="articleCount"/>
+    </resultMap>
+    <select id="selectByArticleId" resultType="cn.myBlog.entity.Tag">
+        select tt.id, tt.name, tt.color
+        from t_tag tt
+                 left join t_article_tag tat
+                           on tt.id = tat.tag_id
+        where tat.article_id = #{articleId}
+    </select>
+    <select id="listArtcileCountByTag" resultType="cn.myBlog.entity.Tag">
+        select tt.id, tt.name, tt.color, count(ta.id) articleCount
+        from t_tag tt
+                 left join t_article_tag tat
+                           on tt.id = tat.tag_id
+                 left join t_article ta
+                           on ta.id = tat.article_id
+        where ta.status = 2
+        group by tt.id
+    </select>
+    <select id="listTableByTag" resultType="cn.myBlog.entity.Tag"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select tt.id, tt.name, tt.color, tt.create_time, tt.update_time, count(tat.tag_id) articleCount
+        from t_tag tt
+        left join t_article_tag tat on tt.id = tat.tag_id
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        group by tt.id
+    </select>
+</mapper>

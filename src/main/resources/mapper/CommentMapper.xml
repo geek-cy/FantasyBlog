@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.CommentMapper">
+    <resultMap id="tableResultMap" type="comment">
+        <id property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="address" column="address"/>
+        <association property="visitor" column="visitor_id"
+                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+    </resultMap>
+    <resultMap id="previewResultMap" type="comment">
+        <id property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <association property="visitor" column="visitor_id"
+                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+    </resultMap>
+
+    <resultMap id="newestResultMap" type="comment">
+        <id property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="status" column="status"/>
+        <association property="visitor" column="visitor_id"
+                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+    </resultMap>
+
+    <sql id="tableColumn">
+        id,pid,user_id,article_id,visitor_id,content,create_time,browser,os,address,request_ip,status
+    </sql>
+    <sql id="previewColumn">
+        id,pid,user_id,visitor_id,content,parent_nickname,create_time,browser,os,address
+    </sql>
+    <select id="listTableByPage" resultMap="tableResultMap">
+        select
+        <include refid="tableColumn"/>
+        from t_comment
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        order by create_time DESC
+    </select>
+
+    <select id="listRootPageByArticleId" resultMap="previewResultMap">
+        select
+        <include refid="previewColumn"/>
+        from t_comment where article_id = #{articleId} and pid = 0 and status &lt;&gt; 0
+        order by create_time desc
+    </select>
+
+    <select id="listByArticleId" resultMap="previewResultMap">
+        select
+        <include refid="previewColumn"/>
+        from t_comment where article_id = #{articleId} and status &lt;&gt; 0
+        order by create_time desc
+    </select>
+
+    <select id="listNewest" resultMap="newestResultMap">
+        select id,article_id,visitor_id,content,create_time,status
+        from t_comment
+        order by create_time desc
+        limit #{limit}
+    </select>
+</mapper>

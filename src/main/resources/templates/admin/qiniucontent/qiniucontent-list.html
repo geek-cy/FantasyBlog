@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>七牛云存储</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/admin/layuimini/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/admin/layuimini/css/public.css" media="all">
+    <link rel="stylesheet" href="/static/admin/layuimini/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="table-search-fieldset" permission="sys:localstorage:query">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">文件名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" autocomplete="off" class="layui-input"
+                                       placeholder="不输入则忽略文件名筛选">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">日期范围</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="date-range" placeholder="不输入则忽略日期范围筛选"
+                                       name="dateRange">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                    lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary"><i
+                                    class="layui-icon layui-icon-fonts-clear"></i> 清 空
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm data-add-btn layui-btn-normal" lay-event="add"
+                        permission="sys:qiniu:add"><i class="layui-icon layui-icon-upload"></i>&nbsp;上传
+                </button>
+                <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="sync"
+                        permission="sys:qiniu:sync"><i class="layui-icon layui-icon-refresh"></i>&nbsp;同步
+                </button>
+                <button class="layui-btn layui-btn-sm" lay-event="config"
+                        permission="sys:qiniu:config"><i class="layui-icon layui-icon-set-fill"></i>&nbsp;配置
+                </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"
+                        permission="sys:qiniu:delete"><i class="layui-icon layui-icon-delete"></i>&nbsp;删除
+                </button>
+            </div>
+        </script>
+
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+    </div>
+</div>
+<script src="/static/admin/layuimini/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script src="/static/admin/layuimini/lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="/static/admin/my/js/my.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    layui.use(['form', 'table', 'laydate'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            table = layui.table,
+            laydate = layui.laydate;
+        //日期范围
+        laydate.render({
+            elem: '#date-range',
+            range: '~',
+            theme: 'molv'
+        });
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        })
+
+        table.render({
+            elem: '#currentTableId',
+            url: '/admin/qiNiuContent',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [
+                [
+                    {type: "checkbox", width: 50, fixed: "left"},
+                    {field: 'id', width: 80, title: 'ID', sort: true},
+                    {
+                        field: 'name', width: 250, title: '文件名', templet: function (data) {
+                            let name = data.name;
+                            let url = data.url;
+                            return '<a href=' + url + ' style="color: #1890FF;" target="_blank">' + name + '</a>'
+                        }
+                    },
+                    {
+                        width: 150, title: '预览图', align: 'center', templet: function (data) {
+                            let fileType = data.fileType;
+                            let url = data.url;
+                            if (fileType === '图片') {
+                                return '<a onclick="show_img(this)" ><img class="layui-nav-img" src="' + url + '"></img></a>';
+                            } else {
+                                return '<div class="layui-nav-img"><i class="fa fa-file"></i></div>';
+                            }
+                        }
+                    },
+                    {field: 'suffix', width: 120, title: '文件类型', sort: true},
+                    {field: 'fileType', width: 120, title: '类别', sort: true},
+                    {field: 'size', width: 120, title: '大小', sort: true},
+                    {
+                        field: 'url', width: 350, title: 'url', templet: function (data) {
+                            let url = data.url;
+                            return '<a class="clip-btn layui-btn-primary" data-clipboard-text="' + url + '"><i class="layui-icon layui-icon-link" alt="复制至剪切板"></i></a>&nbsp&nbsp;<span>' + url + '</span>';
+                        }
+                    },
+                    {field: 'bucket', width: 200, title: '空间名称', sort: true},
+                    {field: 'type', width: 120, title: '空间类型', sort: true},
+                    {field: 'updateTime', title: '创建时间', minWidth: 200, sort: true},
+                ]
+            ],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true,
+            done: function () {
+                checkPermission();
+                var clipboard = new ClipboardJS('.clip-btn');
+                clipboard.on('success', function (e) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: '链接已复制至剪切板！'
+                    })
+                    e.clearSelection();
+                });
+            }
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            let name = data.field.name;
+            let dateRange = data.field.dateRange;
+            let dates = dateRange.split(' ~ ')
+            let startDate = dates[0];
+            let endDate = dates[1];
+
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: {
+                    name: name,
+                    startDate: startDate,
+                    endDate: endDate,
+                }
+            }, 'data');
+
+            return false;
+        });
+
+        /**
+         * toolbar监听事件
+         */
+        table.on('toolbar(currentTableFilter)', function (obj) {
+            if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                var idList = [];
+                $.each(data, function () {
+                    idList.push($(this)[0].id);
+                });
+                if (idList.length <= 0) {
+                    return false;
+                }
+                Swal.fire({
+                    title: '确定删除选中的' + idList.length + '个文件吗？',
+                    text: '你将无法恢复它！',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '确定删除！',
+                    cancelButtonText: '取消删除！',
+                    showLoaderOnConfirm: true,
+                    preConfirm: () => {
+                        return new Promise((resolve, reject) => {
+                            axios({
+                                method: 'delete',
+                                url: '/admin/qiNiuContent',
+                                data: idList,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                                .then(response => {
+                                    table.reload('currentTableId');
+                                    resolve(response.data);
+                                }, error => {
+                                    reject(error);
+                                })
+                        }).then(res => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '删除成功！',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }).catch(error => {
+                            Swal.showValidationMessage(`删除失败: ${error.response.data.message}`);
+                        })
+                    }
+                });
+            } else if (obj.event === 'add') {
+                var index = layer.open({
+                    title: '上传文件',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['60%', '90%'],
+                    content: '/admin/page/qiniucontent/qiniucontent-add',
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+            } else if (obj.event === 'sync') {
+                $.ajax({
+                    url: '/admin/qiNiuContent/synchronize',
+                    type: 'POST',
+                    success: function (result) {
+                        table.reload('currentTableId');
+                        Swal.fire(
+                            'success!',
+                            '同步成功',
+                            'success'
+                        );
+                    }
+                })
+            } else if (obj.event === 'config') {
+                var index = layer.open({
+                    title: '配置七牛云',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['50%', '80%'],
+                    content: '/admin/page/qiniucontent/qiniucontent-config',
+                });
+            }
+        });
+
+    });
+
+    //显示大图片
+    function show_img(t) {
+        var t = $(t).find("img");
+        //页面层
+        layer.open({
+            title: '图片',
+            type: 1,
+            shade: 0.2,
+            maxmin: true,
+            shadeClose: true,
+            area: ['80%', '80%'],
+            content: '<div style="text-align:center"><img src="' + $(t).attr('src') + '" /></div>'
+        });
+        $(window).on("resize", function () {
+            layer.full(index);
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+/'泛化：Father <|-- Son
+实现List <|.. AbstractList
+依赖Human ..> Cigarette
+关联Human --> Water
+聚合Company o-- Human
+组合Human *-- Brain
+public	+
+package private	～
+protected	#
+private	-'/
+
+UserDetailsServiceImpl *-- LoginUser
+WebSecurityConfig o-- UserDetailsServiceImpl
+
++class UserDetailsServiceImpl {
+    -MenuMapper menuMapper;
+    LoginUser loginUser = new LoginUser()
+    loginUser.setPermissions(permission)
+}
+
++class LoginUser extends User implements UserDetails{
+    -List<Menu> permissions
+    getAuthorities():Collection<? extends GrantedAuthority>
+}
+
++class UserDetails {
+    Collection<? extends GrantedAuthority> getAuthorities();
+    String getPassword();
+    String getUsername();
+    boolean isAccountNonExpired();
+    boolean isAccountNonLocked();
+    boolean isCredentialsNonExpired();
+    boolean isEnabled();
+}
+
+@enduml

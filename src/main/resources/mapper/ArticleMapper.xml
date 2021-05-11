@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.ArticleMapper">
+    <resultMap id="tableResultMap" type="cn.myBlog.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="cover" column="cover"/>
+        <result property="type" column="type"/>
+        <result property="comments" column="comments"/>
+        <result property="views" column="views"/>
+        <result property="likes" column="likes"/>
+        <result property="published" column="published"/>
+        <!--前台没有-->
+        <!--        <result property="commentable" column="commentable"/>-->
+        <!--        <result property="appreciable" column="appreciable"/>-->
+        <result property="top" column="top"/>
+        <result property="recommend" column="recommend"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+        <association property="category" javaType="cn.myBlog.entity.Category">
+            <id property="id" column="cid"/>
+            <result property="name" column="cname"/>
+            <result property="color" column="color"/>
+        </association>
+        <association property="author" javaType="cn.myBlog.entity.User">
+            <result property="id" column="aid"/>
+            <result property="username" column="username"/>
+        </association>
+        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+    </resultMap>
+
+    <resultMap id="recommendResultMap" type="cn.myBlog.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="cover" column="cover"/>
+        <association property="category" javaType="cn.myBlog.entity.Category">
+            <id property="id" column="cid"/>
+            <id property="name" column="cname"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="previewResultMap" type="cn.myBlog.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="summary" column="summary"/>
+        <result property="cover" column="cover"/>
+        <result property="createTime" column="create_time"/>
+        <association property="category" javaType="cn.myBlog.entity.Category">
+            <id property="id" column="cid"/>
+            <result property="name" column="cname"/>
+        </association>
+        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+    </resultMap>
+
+    <resultMap id="detailResultMap" type="cn.myBlog.entity.Article">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="cover" column="cover"/>
+        <result property="comments" column="comments"/>
+        <result property="createTime" column="create_time"/>
+        <result property="type" column="type"/>
+        <result property="appreciable" column="appreciable"/>
+        <result property="likes" column="likes"/>
+        <result property="commentable" column="commentable"/>
+        <result property="views" column="views"/>
+        <result property="authorId" column="author_id"/>
+        <association property="category" javaType="cn.myBlog.entity.Category">
+            <id property="categoryId" column="category_id"/>
+            <result property="name" column="cname"/>
+        </association>
+        <association property="author" javaType="cn.myBlog.entity.User">
+            <id property="username" column="username"/>
+        </association>
+        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+    </resultMap>
+
+    <sql id="previewColumn">
+        ta
+        .
+        id
+        , ta.title, ta.summary, ta.create_time, ta.cover, tc.id as cid, tc.name as cname
+    </sql>
+
+    <sql id="backgroundColumn">
+        ta
+        .
+        id
+        , ta.title, ta.type, ta.cover, ta.comments, ta.views, ta.likes, ta.published, ta.top, ta.recommend, ta.status, ta.sort, ta.create_time, ta.update_time,
+        tc.id as cid, tc.name as cname, tc.color,
+        su.username
+    </sql>
+
+    <sql id="recommendPreviewColumn">
+        ta
+        .
+        id
+        , ta.title, ta.summary, ta.cover, tc.id as cid, tc.name as cname
+    </sql>
+
+    <sql id="detailColumn">
+        ta
+        .
+        id
+        , ta.title, ta.content, ta.cover, ta.create_time, ta.type, ta.views, ta.likes, ta.comments,ta.commentable,
+        ta.appreciable, tc.id as cid, tc.name as cname, su.id as uid, su.username
+    </sql>
+    <select id="listTableByPage" resultMap="tableResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select
+        <include refid="backgroundColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        left join sys_user su
+        on ta.author_id = su.id
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+
+    <select id="listPreviewRecommend" resultMap="recommendResultMap">
+        select
+        <include refid="recommendPreviewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where ta.recommend = 1
+        and ta.published = 1
+        and ta.status &lt;&gt;0
+        order by ta.sort desc
+        limit #{limit}
+    </select>
+
+    <select id="listPreviewByPage" resultMap="previewResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where ta.published = 1
+        and ta.status &lt;&gt;0
+        order by ta.sort desc, ta.create_time desc
+    </select>
+
+    <select id="listPreviewByDate" resultMap="previewResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where ta.published = 1
+        and ta.status &lt;&gt;0
+        order by ta.create_time desc
+    </select>
+    <select id="selectDetailById" resultMap="detailResultMap">
+        select
+        <include refid="detailColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        left join sys_user su
+        on ta.author_id = su.id
+        where ta.id = #{id}
+    </select>
+
+    <select id="selectPrevPreviewById" resultMap="previewResultMap">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where ta.id = (select max(id) from t_article where id &lt; #{id})
+        and ta.published = 1 and ta.status &lt;&gt;0
+    </select>
+
+    <select id="selectNextPreviewById" resultMap="previewResultMap">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where ta.id = (select min(id) from t_article where id &gt; #{id})
+        and ta.published = 1 and ta.status &lt;&gt;0
+    </select>
+
+    <select id="listPreviewPageByCategoryId" resultMap="previewResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        where tc.id = #{categoryId}
+        and ta.published = 1 and ta.status &lt;&gt;0
+        order by ta.sort desc
+    </select>
+
+    <select id="listPreviewPageByTagId" resultMap="previewResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select
+        <include refid="previewColumn"/>
+        from t_article ta
+        left join t_category tc
+        on ta.category_id = tc.id
+        left join t_article_tag tat
+        on ta.id = tat.article_id
+        where tat.tag_id = #{tagId}
+        and ta.published = 1 and ta.status &lt;&gt;0
+        order by ta.sort desc
+    </select>
+
+    <select id="countByDate" resultType="cn.myBlog.vo.ArticleDateVO">
+        select year(create_time) 'year'
+        <choose>
+            <when test="dft == 2">
+                , month(create_time) 'month'
+            </when>
+            <when test="dft == 1">
+                , month(create_time) 'month',day(create_time) 'day'
+            </when>
+        </choose>
+        ,count(id) 'articleCount'
+        from t_article
+        where create_time >= Date_sub(curdate(),INTERVAL 1 YEAR) and published = 1 and status = 2
+        <choose>
+            <when test="dft == 3">
+                group by year(create_time)
+            </when>
+            <when test="dft ==2">
+                group by year(create_time),month(create_time)
+            </when>
+            <when test="dft == 1">
+                group by year(create_time) ,month(create_time), day(create_time)
+            </when>
+        </choose>
+    </select>
+</mapper>

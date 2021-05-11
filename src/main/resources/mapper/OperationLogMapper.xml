@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.OperationLogMapper">
+    <!--统计最近七天内的数据并按天分组 -->
+    <select id="countByLast7Days" resultType="cn.myBlog.vo.ViewDateVO">
+        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') date,count(*) viewCount
+        FROM sys_operation_log
+        WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date (create_time) group BY date;
+    </select>
+</mapper>

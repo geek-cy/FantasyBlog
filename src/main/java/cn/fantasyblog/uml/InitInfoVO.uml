@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.blog.cy.myBlog.vo.InitInfoVO</OriginalElement>
+  <nodes>
+    <node x="0.0" y="276.0">com.blog.cy.myBlog.vo.InitInfoVO</node>
+    <node x="6.0" y="0.0">com.blog.cy.myBlog.vo.InitInfoVO.LogoInfo</node>
+    <node x="6.0" y="575.0">com.blog.cy.myBlog.vo.InitInfoVO.HomeInfo</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.blog.cy.myBlog.vo.InitInfoVO.HomeInfo" target="com.blog.cy.myBlog.vo.InitInfoVO">
+      <point x="-73.5" y="-101.5" />
+      <point x="30.5" y="550.0" />
+      <point x="26.0" y="550.0" />
+      <point x="-78.0" y="124.5" />
+    </edge>
+    <edge source="com.blog.cy.myBlog.vo.InitInfoVO.LogoInfo" target="com.blog.cy.myBlog.vo.InitInfoVO">
+      <point x="73.5" y="113.0" />
+      <point x="177.5" y="251.0" />
+      <point x="182.0" y="251.0" />
+      <point x="78.0" y="-124.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8483709273182958" x="104.0" y="389.0" />
+  <SelectedNodes>
+    <node>com.blog.cy.myBlog.vo.InitInfoVO</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

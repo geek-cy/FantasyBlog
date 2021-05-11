@@ -1,0 +1,1347 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta th:include="front/fragments :: head(~{::title})">
+    <title>文章详情</title>
+    <!--代码高亮-->
+    <link rel="stylesheet" href="/static/front/css/prism-tomorrow.css" type="text/css">
+    <link rel="stylesheet" href="/static/front/css/prism-line-numbers.css" type="text/css">
+    <link rel="stylesheet" href="/static/front/css/tocbot.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        #articleContent h1::before,
+        #articleContent h2::before,
+        #articleContent h3::before,
+        #articleContent h4::before,
+        #articleContent h5::before,
+        #articleContent h6::before {
+            display: block;
+            content: " ";
+            height: 100px;
+            margin-top: -100px;
+            visibility: hidden;
+        }
+
+        #articleContent :focus {
+            outline: none;
+        }
+
+        .toc-fixed {
+            position: fixed;
+            top: 64px;
+        }
+
+        .toc-widget {
+            width: 345px;
+            padding-left: 20px;
+        }
+
+        .toc-widget .toc-title {
+            margin: 35px 0 15px 0;
+            padding-left: 17px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1.5rem;
+        }
+
+        .toc-widget ol {
+            padding: 0;
+            list-style: none;
+        }
+
+        #toc-content {
+            height: calc(100vh - 250px);
+            overflow: auto;
+        }
+
+        #toc-content ol {
+            padding-left: 10px;
+        }
+
+        #toc-content ol li {
+            padding-left: 10px;
+        }
+
+        #toc-content .toc-link:hover {
+            color: #42b983;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        #toc-content .toc-link::before {
+            background-color: transparent;
+            max-height: 25px;
+        }
+
+        #toc-content .is-active-link {
+            color: #42b983;
+        }
+
+        #toc-content .is-active-link::before {
+            background-color: #42b983;
+        }
+
+        #floating-toc-btn {
+            position: fixed;
+            right: 15px;
+            bottom: 76px;
+            padding-top: 15px;
+            margin-bottom: 0;
+            z-index: 998;
+        }
+
+        #floating-toc-btn .btn-floating {
+            width: 48px;
+            height: 48px;
+        }
+
+        #floating-toc-btn .btn-floating i {
+            line-height: 48px;
+            font-size: 1.4rem;
+        }
+    </style>
+    <style>
+        #reward {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        #reward .reward-link {
+            font-size: 1.4rem;
+            line-height: 38px;
+        }
+
+        #reward .btn-floating:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #rewardModal {
+            width: 320px;
+            height: 350px;
+        }
+
+        #rewardModal .reward-title {
+            margin: 15px auto;
+            padding-bottom: 5px;
+        }
+
+        #rewardModal .modal-content {
+            padding: 10px;
+        }
+
+        #rewardModal .close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 1.3rem;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+        #rewardModal .close:hover {
+            color: #ef5350;
+            transform: scale(1.3);
+            -moz-transform: scale(1.3);
+            -webkit-transform: scale(1.3);
+            -o-transform: scale(1.3);
+        }
+
+        #rewardModal .reward-tabs {
+            margin: 0 auto;
+            width: 210px;
+        }
+
+        .reward-tabs .tabs {
+            height: 38px;
+            margin: 10px auto;
+            padding-left: 0;
+        }
+
+        .reward-content ul {
+            padding-left: 0 !important;
+        }
+
+        .reward-tabs .tabs .tab {
+            height: 38px;
+            line-height: 38px;
+        }
+
+        .reward-tabs .tab a {
+            color: #fff;
+            background-color: #ccc;
+        }
+
+        .reward-tabs .tab a:hover {
+            background-color: #ccc;
+            color: #fff;
+        }
+
+        .reward-tabs .wechat-tab .active {
+            color: #fff !important;
+            background-color: #22AB38 !important;
+        }
+
+        .reward-tabs .alipay-tab .active {
+            color: #fff !important;
+            background-color: #019FE8 !important;
+        }
+
+        .reward-tabs .reward-img {
+            width: 210px;
+            height: 210px;
+        }
+    </style>
+    <style>
+        .valine-card {
+            margin: 1.5rem auto;
+        }
+
+        .valine-card .card-content {
+            padding: 20px 20px 5px 20px;
+        }
+
+        #vcomments textarea {
+            box-sizing: border-box;
+            background: url("/static/front/image/comment_bg.png") 100% 100% no-repeat;
+        }
+
+        #vcomments p {
+            margin: 2px 2px 10px;
+            font-size: 1.05rem;
+            line-height: 1.78rem;
+        }
+
+        #vcomments blockquote p {
+            text-indent: 0.2rem;
+        }
+
+        #vcomments a {
+            padding: 0 2px;
+            color: #4cbf30;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        #vcomments img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #vcomments ol li {
+            list-style-type: decimal;
+        }
+
+        #vcomments ol,
+        ul {
+            display: block;
+            padding-left: 2em;
+            word-spacing: 0.05rem;
+        }
+
+        #vcomments ul li,
+        ol li {
+            display: list-item;
+            line-height: 1.8rem;
+            font-size: 1rem;
+        }
+
+        #vcomments ul li {
+            list-style-type: disc;
+        }
+
+        #vcomments ul ul li {
+            list-style-type: circle;
+        }
+
+        #vcomments table, th, td {
+            padding: 12px 13px;
+            border: 1px solid #dfe2e5;
+        }
+
+        #vcomments table, th, td {
+            border: 0;
+        }
+
+        table tr:nth-child(2n), thead {
+            background-color: #fafafa;
+        }
+
+        #vcomments table th {
+            background-color: #f2f2f2;
+            min-width: 80px;
+        }
+
+        #vcomments table td {
+            min-width: 80px;
+        }
+
+        #vcomments h1 {
+            font-size: 1.85rem;
+            font-weight: bold;
+            line-height: 2.2rem;
+        }
+
+        #vcomments h2 {
+            font-size: 1.65rem;
+            font-weight: bold;
+            line-height: 1.9rem;
+        }
+
+        #vcomments h3 {
+            font-size: 1.45rem;
+            font-weight: bold;
+            line-height: 1.7rem;
+        }
+
+        #vcomments h4 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            line-height: 1.5rem;
+        }
+
+        #vcomments h5 {
+            font-size: 1.1rem;
+            font-weight: bold;
+            line-height: 1.4rem;
+        }
+
+        #vcomments h6 {
+            font-size: 1rem;
+            line-height: 1.3rem;
+        }
+
+        #vcomments p {
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+
+        #vcomments hr {
+            margin: 12px 0;
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+
+        #vcomments blockquote {
+            margin: 15px 0;
+            border-left: 5px solid #42b983;
+            padding: 1rem 0.8rem 0.3rem 0.8rem;
+            color: #666;
+            background-color: rgba(66, 185, 131, .1);
+        }
+
+        #vcomments pre {
+            font-family: monospace, monospace;
+            padding: 1.2em;
+            margin: .5em 0;
+            background: #272822;
+            overflow: auto;
+            border-radius: 0.3em;
+            tab-size: 4;
+        }
+
+        #vcomments code {
+            font-family: monospace, monospace;
+            padding: 1px 3px;
+            font-size: 0.92rem;
+            color: #e96900;
+            background-color: #f8f8f8;
+            border-radius: 2px;
+        }
+
+        #vcomments pre code {
+            font-family: monospace, monospace;
+            padding: 0;
+            color: #e8eaf6;
+            background-color: #272822;
+        }
+
+        #vcomments pre[class*="language-"] {
+            padding: 1.2em;
+            margin: .5em 0;
+        }
+
+        #vcomments code[class*="language-"],
+        pre[class*="language-"] {
+            color: #e8eaf6;
+        }
+
+        #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+            position: inherit;
+            margin-left: -1.3rem;
+            margin-right: 0.4rem;
+            margin-top: -1px;
+            vertical-align: middle;
+            left: unset;
+            visibility: visible;
+        }
+
+        #vcomments b,
+        strong {
+            font-weight: bold;
+        }
+
+        #vcomments dfn {
+            font-style: italic;
+        }
+
+        #vcomments small {
+            font-size: 85%;
+        }
+
+        #vcomments cite {
+            font-style: normal;
+        }
+
+        #vcomments mark {
+            background-color: #fcf8e3;
+            padding: .2em;
+        }
+
+        #vcomments table, th, td {
+            padding: 12px 13px;
+            border: 1px solid #dfe2e5;
+        }
+
+        table tr:nth-child(2n), thead {
+            background-color: #fafafa;
+        }
+
+        #vcomments table th {
+            background-color: #f2f2f2;
+            min-width: 80px;
+        }
+
+        #vcomments table td {
+            min-width: 80px;
+        }
+
+        #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+            position: inherit;
+            margin-left: -1.3rem;
+            margin-right: 0.4rem;
+            margin-top: -1px;
+            vertical-align: middle;
+            left: unset;
+            visibility: visible;
+        }
+    </style>
+</head>
+
+<body>
+<!--navbar-->
+<header th:replace="front/fragments :: header"></header>
+<!--end navbar-->
+<div id="app">
+    <!--bgcover-->
+    <div class="bg-cover pd-header post-cover" th:style="'background:url(' + ${article.cover} + ');'">
+        <div class="container" style="right: 0px;left: 0px;">
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <!--标题-->
+                    <div class="brand">
+                        <h1 class="description center-align post-title" th:text="${article.title}">文章标题</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--end bgcover-->
+
+    <!--content-->
+    <main class="post-container content">
+        <div class="row">
+            <!-- 文章内容详情 -->
+            <div id="main-content" class="col s12 m12 l9">
+                <div id="artDetail">
+                    <div class="card">
+                        <div class="card-content article-info">
+                            <div class="row tag-cate">
+                                <!--文章标签-->
+                                <div class="col s8">
+                                    <div class="article-tag">
+                                        <a href="#" th:each="tag : ${article.tagList}">
+                                            <span class="chip bg-color" th:text="${tag.name}">标签名称</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--文章分类-->
+                                <div class="col s4 right-align">
+                                    <div class="post-cate">
+                                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                        <a href="#" class="post-category" th:text="${article.category.name}">分类名称</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-info">
+                                <!--发布日期-->
+                                <div class="post-date info-break-policy">
+                                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;<span
+                                        th:text="${#dates.format(article.createTime,'yyyy-MM-dd')}">发布日期</span>
+                                </div>
+                                <!--浏览次数-->
+                                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                                    <i class="fa fa-eye fa-fw"></i>浏览次数:&nbsp;&nbsp;
+                                    <span th:text="${views}">0</span>
+                                </div>
+                                <!--点赞量-->
+                                <div class="info-break-policy">
+                                    <i class="fa fa-heart fa-fw"></i>点赞量:&nbsp;&nbsp;<span
+                                        th:text="${likes}">0</span>
+                                </div>
+                                <!--评论量-->
+                                <div class="info-break-policy">
+                                    <i class="fa fa-comment fa-fw"></i>评论量:&nbsp;&nbsp;<span
+                                        th:text="${article.comments}">0</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr class="clearfix">
+                        <div class="card-content article-card-content">
+                            <!--文章内容-->
+                            <div id="articleContent" data-aos="fade-up" th:utext="${article.content}">文章内容</div>
+                            <hr>
+                            <!--复制-->
+                            <div class="reprint" id="reprint-statement">
+                                <!--文章作者-->
+                                <div class="reprint__author">
+                                <span class="reprint-meta" style="font-weight: bold;">
+                                    <i class="fas fa-user">文章作者:</i>
+                                </span>
+                                    <span class="reprint-info">
+                                    <a href="#" rel="external nofollow noreferrer" th:text="${article.author.username}">作者</a>
+                                </span>
+                                </div>
+                                <!--文章链接-->
+                                <div class="reprint__type">
+                                <span class="reprint-meta" style="font-weight: bold;">
+                                    <i class="fas fa-link">文章链接:</i>
+                                </span>
+                                    <span class="reprint-info">
+                                        <a href="#" rel="external nofollow noreferrer"
+                                           th:text="${#httpServletRequest.requestURL}">文章链接</a>
+                                    </span>
+                                </div>
+                                <!--文章复制提醒-->
+                                <div class="reprint__notice">
+                                    <span class="reprint-meta" style="font-weight: bold;">
+                                        <i class="fas fa-copyright">
+                                            版权声明:
+                                        </i>
+                                    </span>
+                                    <span class="reprint-info">
+                                        本博客所有文章除特別声明外，均采用
+                                        <a href="javascript:;" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                                        许可协议。转载请注明来源
+                                        <a href="javascript:;" target="_blank"
+                                           th:text="${article.author.username}">作者</a>!
+                                    </span>
+                                </div>
+                            </div>
+                            <!--分享-->
+                            <div class="tag_share" style="display: block;">
+                                <!--文章标签-->
+                                <div class="post-meta__tag-list" style="display: inline-block;">
+                                    <div class="article-tag">
+                                        <a href="#">
+                                            <span class="chip bg-color"
+                                                  th:text="${article.type==1?'原创':(article.type==2?'转载':'翻译')}">文章类型</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--文章分享-->
+                                <div class="post_share"
+                                     style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                                    <link rel="stylesheet" type="text/css" href="/static/front/css/share.min.css">
+                                    <div id="article-share">
+                                        <div class="social-share"
+                                             data-sites="qq,qzone,wechat,weibo"
+                                             data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--打赏-->
+                            <div id="reward">
+                                <a href="#rewardModal"
+                                   class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red"
+                                   th:if="${article.appreciable}">赏</a>
+                                <a class="reward-link btn-floating btn-medium waves-effect waves-light teal"
+                                   id="likeBtn" @click="likeIt">赞</a>
+                                <!-- Modal Structure -->
+                                <div id="rewardModal" class="modal">
+                                    <div class="modal-content">
+                                        <a class="close modal-close"><i class="fas fa-times"></i></a>
+                                        <h4 class="reward-title">你的赏识是我前进的动力</h4>
+                                        <div class="reward-content">
+                                            <div class="reward-tabs">
+                                                <ul class="tabs row">
+                                                    <li class="tab col s12 wechat-tab waves-effect waves-light"><a
+                                                            href="#">微 信</a></li>
+                                                </ul>
+                                                <div id="wechat">
+                                                    <img src="/static/front/image/wepay.jpg"
+                                                         class="reward-img lazy"
+                                                         alt="微信打赏二维码">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="loginModal" class="modal">
+                        <div class="modal-content">
+                            <div class="row">
+                                <h4 class="col s12">登录</h4>
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="certificate" type="text" class="validate" required
+                                                   v-model="login.certificate" placeholder="请输入用户名或邮箱">
+                                            <label for="certificate">用户名</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">credit_card</i>
+                                            <input id="password" type="password" class="validate" required
+                                                   v-model="login.password" placeholder="请输入密码">
+                                            <label for="password">密码</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <a class="col s12 waves-effect waves-light btn" @click="postLogin">登录</a>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <a href="#registerModal"
+                                               class="col s12 waves-effect waves-light btn materialize-red modal-trigger">注册</a>
+                                        </div>
+                                        <a class="col s12 center" href="#">忘记密码？</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="registerModal" class="modal">
+                        <div class="modal-content">
+                            <div class="row">
+                                <h4 class="col s12">注册</h4>
+                                <form class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">account_circle</i>
+                                            <input id="reg-username" type="text" class="validate" required
+                                                   placeholder="请输入用户名"
+                                                   pattern="^[A-Za-z0-9]{4,16}$"
+                                                   v-model="register.username">
+                                            <label for="reg-username">用户名</label>
+                                            <span class="error red-text"
+                                                  id="reg-username-tip"
+                                                  v-show="!checkUsername()">用户名只能为数字或字母，长度为4-16个字符</span>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">credit_card</i>
+                                            <input id="reg-password" type="password" class="validate" required
+                                                   placeholder="请输入密码"
+                                                   pattern="^[A-Za-z0-9]{6,16}$"
+                                                   v-model="register.password">
+                                            <label for="reg-password">密码</label>
+                                            <span class="error red-text"
+                                                  id="reg-password-tip"
+                                                  v-show="!checkPassword()">密码只能为数字或字母，长度为6-16个字符</span>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">verified_user</i>
+                                            <input id="reg-repeat" type="password" required
+                                                   pattern="^[A-Za-z0-9]{6,16}$"
+                                                   v-model="register.repeat">
+                                            <label for="reg-repeat">重复密码</label>
+                                            <span class="error red-text"
+                                                  id="reg-repeat-tip" v-show="!checkRepeat()">两次密码输入不一致</span>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">email</i>
+                                            <input id="reg-email" type="email" class="validate" required
+                                                   v-model="register.email">
+                                            <label for="reg-email">邮件</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">perm_identity</i>
+                                            <input type="text" class="validate" required v-model="register.nickname"
+                                                   :class="{invalid: !checkNickname()}">
+                                            <label>昵称</label>
+                                            <span class="error red-text"
+                                                  v-show="!checkNickname()">昵称只能为字母或汉字，长度为2-8个字符</span>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <i class="material-icons prefix">http</i>
+                                            <input type="url" class="validate" v-model="register.link">
+                                            <label>网址(可选)</label>
+                                        </div>
+                                        <div class="input-field col s12">
+                                            <a type="submit"
+                                               class="col s12 waves-effect waves-light btn materialize-red white-text"
+                                               @click.prevent="postRegister()">注册</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--评论区-->
+                    <div class="card valine-card aos-init aos-animate" data-aos="fade-up" id="comment-area">
+                        <div class="comment_headling"
+                             style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+                            <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+                            <span>评论</span>
+                        </div>
+                        <div id="comment-form">
+                            <input type="hidden" name="pid" v-model="pid"/>
+                            <div id="vcomments" class="card-content v" style="display: grid">
+                                <div class="vwrap">
+                                    <div class="vedit">
+                                        <textarea id="veditor" class="veditor vinput"
+                                                  :placeholder="placeholder" name="content"
+                                                  required v-model="content" @focus="toLogin"></textarea>
+                                    </div>
+                                    <div class="vcontrol" style="float: right">
+                                        <div class="col col-80 text-right">
+                                            <button type="button" class="vsubmit vbtn" @click="saveComment">回复</button>
+                                        </div>
+                                    </div>
+                                    <div style="display:none;" class="vmark"></div>
+                                </div>
+                                <div class="vinfo" style="display:block;">
+                                    <div class="vcount col"><span class="vnum">{{total}}</span>&nbsp;评论</div>
+                                </div>
+                                <div class="center-align">
+                                    <div class="preloader-wrapper big active" v-show="loading">
+                                        <div class="spinner-layer spinner-blue">
+                                            <div class="circle-clipper left">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="gap-patch">
+                                                <div class="circle"></div>
+                                            </div>
+                                            <div class="circle-clipper right">
+                                                <div class="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vlist">
+                                    <div class="vcard" v-for="(comment, index) in comments" :key="comment.id"
+                                         :id="'comment'+comment.id">
+                                        <img class="vimg" :src="comment.visitor.avatar">
+                                        <div class="vh">
+                                            <div class="vhead">
+                                                <a class="vnick" rel="nofollow"
+                                                   :href="comment.visitor.link"
+                                                   target="_blank">{{comment.visitor.nickname}}</a>
+                                                <span class="vsys">{{comment.browser}}</span>
+                                                <span class="vsys">{{comment.os}}</span>
+                                                <span class="vsys">{{comment.address}}</span>
+                                            </div>
+                                            <div class="vmeta">
+                                                <span class="vtime">{{comment.createTime | dateFormat}}</span>
+                                                <span class="vat"
+                                                      @click="reply(comment.id, comment.visitor.nickname)">回复</span>
+                                            </div>
+                                            <div class="vcontent">
+                                                <p>{{comment.content}}</p>
+                                            </div>
+                                            <div class="vquote"
+                                                 v-if="comment.children !== undefined && comment.children.length > 0">
+                                                <div class="vcard" v-for="(child, index) in comment.children"
+                                                     :key="child.id">
+                                                    <img class="vimg"
+                                                         :src="child.visitor.avatar">
+                                                    <div class="vh">
+                                                        <div class="vhead">
+                                                            <a class="vnick" rel="nofollow"
+                                                               :href="child.visitor.link"
+                                                               target="_blank">{{child.visitor.nickname}}</a>
+                                                            <span class="vsys">{{child.browser}}</span>
+                                                            <span class="vsys">{{child.os}}</span>
+                                                            <span class="vsys">{{child.address}}</span>
+                                                        </div>
+                                                        <div class="vmeta">
+                                                            <span class="vtime">{{child.createTime | dateFormat}}</span>
+                                                            <span class="vat"
+                                                                  @click="reply(child.visitor.id, child.visitor.nickname)">回复</span>
+                                                        </div>
+                                                        <div class="vcontent">
+                                                            <p>
+                                                                <a class="at"
+                                                                   :href="'#comment'+child.pid">@{{child.parentNickname}}</a>&nbsp;&nbsp;{{child.content}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vempty" style="display:none;"></div>
+                                <div class="vpage txt-center" v-if="current < pages">
+                                    <button type="button" class="vsubmit vbtn" @click="loadMore">加载更多</button>
+                                </div>
+                                <div class="info">
+                                    <div class="power txt-right">Powered By <a href="https://valine.js.org"
+                                                                               target="_blank">Valine</a><br>v1.3.10
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--上、下一篇文章-->
+                    <article id="prenext-posts" class="prev-next articles">
+                        <div class="row article-row">
+                            <!--上一篇-->
+                            <div class="article col s12 m6" data-aos="fade-up" th:if="${prevPreview != null}">
+                                <div class="article-badge left-badge text-color">
+                                    <i class="fas fa-chevron-left"></i>&nbsp;上一篇
+                                </div>
+                                <div class="card">
+                                    <a th:href="@{/article/{id}(id=${prevPreview.id})}">
+                                        <div class="card-image">
+                                            <img th:src="@{${prevPreview.cover}}" class="responsive-img">
+                                            <span class="card-title" th:text="${prevPreview.title}">文章标题</span>
+                                        </div>
+                                    </a>
+                                    <div class="card-content article-content">
+                                        <div class="summary block-with-text" th:text="${prevPreview.summary}">文章摘要</div>
+                                        <div class="publish-info">
+                                        <span class="publish-date">
+                                            <i class="far fa-clock fa-fw icon-date"></i><span
+                                                th:text="${#dates.format(prevPreview.createTime,'yyyy-MM-dd')}">2020-03-11</span>
+                                        </span>
+                                            <span class="publish-author">
+                                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                            <a href="#" class="post-category" th:text="${prevPreview.category.name}">分类名称</a>
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-action article-tags">
+                                        <a href="#" th:each="tag : ${prevPreview.tagList}">
+                                            <span class="chip bg-color" th:text="${tag.name}">标签名称</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--下一篇-->
+                            <div class="article col s12 m6" data-aos="fade-up" th:if="${nextPreview != null}">
+                                <div class="article-badge right-badge text-color">
+                                    下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                                </div>
+                                <div class="card">
+                                    <a th:href="@{/article/{id}(id=${nextPreview.id})}">
+                                        <div class="card-image">
+                                            <img th:src="@{${nextPreview.cover}}" class="responsive-img"
+                                                 alt="Java之ThreadLocal的使用及源码解析">
+                                            <span class="card-title" th:text="${nextPreview.title}">文章标题</span>
+                                        </div>
+                                    </a>
+                                    <div class="card-content article-content">
+                                        <div class="summary block-with-text" th:text="${nextPreview.summary}">文章摘要</div>
+                                        <div class="publish-info">
+                                        <span class="publish-date">
+                                            <i class="far fa-clock fa-fw icon-date"></i><span
+                                                th:text="${#dates.format(nextPreview.createTime,'yyyy-MM-dd')}">2020-03-11</span>
+                                        </span>
+                                            <span class="publish-author">
+                                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                            <a href="#" class="post-category" th:text="${nextPreview.category.name}">标签名称</a>
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-action article-tags">
+                                        <a href="#" th:each="tag : ${nextPreview.tagList}">
+                                            <span class="chip bg-color" th:text="${tag.name}">标签名称</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <!--文章幕布-->
+            <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+                <div class="toc-widget">
+                    <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+                    <div id="toc-content"></div>
+                </div>
+            </div>
+        </div>
+        <!-- TOC 悬浮按钮. -->
+        <div id="floating-toc-btn" class="hide-on-med-and-down">
+            <a class="btn-floating btn-large bg-color">
+                <i class="fas fa-list-ul"></i>
+            </a>
+        </div>
+    </main>
+    <!--end content-->
+</div>
+
+<!--footer-->
+<footer th:replace="front/fragments :: footer"></footer>
+<!--end footer-->
+
+<!--commons-->
+<div th:replace="front/fragments :: commons"></div>
+<!--end commons-->
+
+<!--scripts-->
+<div th:replace="front/fragments :: scripts"></div>
+<!--end scripts-->
+
+<!--vue-->
+<script type="text/javascript">
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            articleId: [[${article.id}]],
+            pid: 0,
+            content: '',
+            parentNickname: '',
+            comments: [],
+            placeholder: '你对这篇文章有什么看法呢(必填)...',
+            current: 1,
+            pages: 0,
+            total: 0,
+            register: {
+                username: '',
+                password: '',
+                repeat: '',
+                email: '',
+                nickname: '',
+                link: '',
+            },
+            login: {
+                certificate: '',
+                password: ''
+            },
+            loading: false,
+        },
+        methods: {
+            postLogin: function () {
+                if (this.login.username === "" || this.login.password === "") {
+                    swal({
+                        text: "提交失败,请重新检查表单信息!",
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
+                    });
+                } else {
+                    axios({
+                        url: '/visitor/login',
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        data: {
+                            certificate: this.login.certificate,
+                            password: this.login.password,
+                        }
+                    }).then((result) => {
+                        swal({
+                            text: "登录成功",
+                            icon: "success",
+                            timer: 1000,
+                        }).then((value) => {
+                            localStorage.setItem("visitor", JSON.stringify(result.data));
+                            $('#loginModal').modal('close');
+                        });
+                    }).catch(error => {
+                        swal({
+                            text: `${error.response.data.message}`,
+                            icon: "error",
+                            button: {
+                                text: "确定",
+                            },
+                        });
+                    });
+                }
+            },
+            postRegister: function () {
+                let isPass = this.checkUsername() && this.checkPassword() && this.checkRepeat() && this.checkNickname();
+                if (!isPass) {
+                    swal({
+                        text: "提交失败,请重新检查表单信息!",
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
+                    });
+                } else {
+                    axios({
+                        url: '/visitor',
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        data: {
+                            username: this.register.username,
+                            password: this.register.password,
+                            email: this.register.email,
+                            nickname: this.register.nickname,
+                            link: this.register.link,
+                        }
+                    }).then((result) => {
+                        swal({
+                            text: "注册成功,请登录!",
+                            icon: "success",
+                            button: {
+                                text: "确定",
+                            },
+                        }).then((value) => {
+                            $('#registerModal').modal('close');
+                        });
+                    }).catch(error => {
+                        swal({
+                            text: `${error.response.data.message}`,
+                            icon: "error",
+                            button: {
+                                text: "确定",
+                            },
+                        });
+                    });
+                }
+            },
+            checkUsername: function () {
+                if (this.register.username === "") {
+                    return true;
+                }
+                let pattern = /^[A-Za-z0-9]{4,16}$/;
+                return pattern.test(this.register.username);
+            },
+            checkPassword: function () {
+                if (this.register.password === "") {
+                    return true;
+                }
+                let pattern = /^[A-Za-z0-9]{6,16}$/;
+                return pattern.test(this.register.password);
+            },
+            checkRepeat: function () {
+                return this.register.password === this.register.repeat;
+            },
+            checkNickname: function () {
+                if (this.register.nickname === "") {
+                    return true;
+                }
+                let pattern = /^[A-Za-z\u4E00-\u9FA5]{2,8}$/;
+                return pattern.test(this.register.nickname);
+            },
+            toLogin: function () {
+                let visitor = localStorage.getItem('visitor');
+                if (visitor !== null) {
+                    return false;
+                }
+                $('#loginModal').modal('open');
+            },
+            likeIt: function () {
+                axios({
+                    url: '/article/' + this.articleId + '/likes',
+                    method: 'PUT',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                }).then((result) => {
+                    $('#likeBtn').addClass('disabled');
+                })
+                return false;
+            },
+            clearForm: function () {
+                this.content = '';
+            },
+            loadMore: function () {
+                this.current += 1;
+                this.getComments();
+            },
+            reply: function (commentId, nickname) {
+                this.placeholder = '@' + nickname;
+                this.pid = commentId;
+                this.parentNickname = nickname;
+                this.clearForm();
+                $.scrollTo('#comment-area', 500);
+                $('#veditor').focus();
+            },
+            validate: function () {
+                /* if (this.nickname.trim() === '') {
+                     alert('昵称不能为空');
+                     return false;
+                 }
+                 if (this.email.trim() === '') {
+                     alert('邮箱地址不能为空');
+                     return false;
+                 }*/
+                if (this.content.trim() === '') {
+                    swal({
+                        text: "评论内容不能为空",
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
+                    });
+                    return false;
+                }
+                /*if (this.link !== '') {
+                    let pattern = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+                    if (!pattern.test(this.link)) {
+                        alert('请填写完整地址（包含协议）');
+                        return false;
+                    }
+                }*/
+                return true;
+            },
+            saveComment: function () {
+                if (!this.validate()) {
+                    return false;
+                }
+                let visitor = JSON.parse(localStorage.getItem("visitor"));
+                if (visitor === null) {
+                    swal({
+                        text: "当前访客未登录",
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
+                    }).then((value) => {
+                        $('#loginModal').modal('open');
+                    });
+                    return false;
+                }
+                let newComment = {
+                    'articleId': this.articleId,
+                    'pid': this.pid,
+                    'content': this.content,
+                    'visitorId': visitor.id,
+                    'parentNickname': this.parentNickname
+                };
+                this.loading = true;
+                axios.post('/comments', newComment,
+                    {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then((result) => {
+                        setTimeout(() => {
+                            this.loading = false;
+                            this.current = 1;
+                            this.content = '';
+                            this.getComments();
+                        }, 1000);
+                    }).catch((error) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '提交失败！',
+                        text: `${error.response.data.message}`,
+                    });
+                })
+                return false;
+            },
+            getComments: function () {
+                axios({
+                    url: '/comments/listByArticleId/' + this.articleId + '?current=' + this.current,
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                }).then((result) => {
+                    this.current = result.data.current;
+                    this.pages = result.data.pages;
+                    this.total = result.data.total;
+                    if (this.current <= 1) {
+                        this.comments = result.data.records;
+                    } else {
+                        this.comments = this.comments.concat(result.data.records);
+                    }
+                })
+            }
+        },
+        created() {
+            this.getComments();
+        },
+        filters: {
+            dateFormat: function (value) {
+                return moment(value).fromNow();
+            }
+        },
+    });
+</script>
+<!--弹出层-->
+<script src="https://cdn.bootcdn.net/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<!--社交分享-->
+<script src="/static/front/js/social-share.min.js"></script>
+<!--评论区-->
+<script src="/static/front/js/Valine.min.js"></script>
+<!--目录-->
+<script src="/static/front/js/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+
+    });
+</script>
+<!--文章复制-->
+<script async="" defer="">
+    document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><a class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+    });
+
+    function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+    }
+</script>
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: GeeBlog<br />'
+            + '文章作者: AlanLiang<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {
+            bodyElement.removeChild(newdiv);
+        }, 200);
+    });
+</script>
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/static/front/js/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/static/front/js/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/static/front/js/codeCopy.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/static/front/js/codeShrink.js"></script>
+<!-- 代码块折行 -->
+<style type="text/css">
+    code[class*="language-"], pre[class*="language-"] {
+        white-space: pre !important;
+    }
+</style>
+<!--代码高亮-->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.17.1/prism.min.js"></script>
+<script src="https://cdn.bootcss.com/prism/1.17.1/components/prism-java.js"></script>
+<script src="/static/front/js/prism-line-numbers.js"></script>
+<!--打赏tab-->
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+<!--未知-->
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+<script type="text/javascript">
+    Prism.highlightAllUnder(document.getElementById("articleContent"));
+</script>
+</body>
+</html>

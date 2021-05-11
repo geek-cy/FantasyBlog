@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myBlog.dao.PhotoMapper">
+    <sql id="tableColumn">
+        id
+        ,url,description,sort,display,create_time,update_time
+    </sql>
+    <select id="listTableBYPage" resultType="photo">
+        select
+        <include refid="tableColumn"/>
+        from t_photo
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        order by id
+    </select>
+</mapper>
