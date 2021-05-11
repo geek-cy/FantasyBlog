@@ -1,11 +1,11 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.common.JsonResult;
-import cn.myBlog.common.TableResult;
-import cn.myBlog.entity.Menu;
-import cn.myBlog.service.MenuService;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.common.TableResult;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

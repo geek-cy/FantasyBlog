@@ -1,7 +1,7 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import cn.myBlog.entity.ArticleTag;
+import cn.fantasyblog.entity.ArticleTag;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package cn.myBlog.security;
+package cn.fantasyblog.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

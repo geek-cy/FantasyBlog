@@ -1,4 +1,4 @@
-package cn.myBlog.config.serializerUtils;
+package cn.fantasyblog.config.serializerUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;

@@ -1,7 +1,7 @@
-package cn.myBlog.security;
+package cn.fantasyblog.security;
 
-//import com.blog.cy.myBlog.exception.ValidateCodeException;
-import cn.myBlog.exception.ValidateCodeException;
+//import com.blog.cy.fantasyblog.exception.ValidateCodeException;
+import cn.fantasyblog.exception.ValidateCodeException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,7 @@
-package cn.myBlog.config;
+package cn.fantasyblog.config;
 
-//import org.quartz.*;
+import cn.fantasyblog.task.Task;
+import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date 2021-05-06 23:39
  */
 
-/*@Configuration
+@Configuration
 public class QuartzConfig {
 
     private static final String LIKE_TASK_IDENTITY = "LikeTaskQuartz";
@@ -33,4 +34,4 @@ public class QuartzConfig {
                 .withSchedule(scheduleBuilder)
                 .build();
     }
-}*/
+}

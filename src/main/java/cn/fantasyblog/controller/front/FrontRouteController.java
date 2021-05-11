@@ -1,4 +1,4 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

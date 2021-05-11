@@ -1,8 +1,8 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Like;
-import cn.myBlog.dto.LikedCount;
-import cn.myBlog.dto.ViewCount;
+import cn.fantasyblog.entity.Like;
+import cn.fantasyblog.dto.LikedCount;
+import cn.fantasyblog.dto.ViewCount;
 
 import java.util.List;
 

@@ -1,13 +1,13 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.TableConstant;
-import cn.myBlog.dao.CategoryMapper;
-import cn.myBlog.entity.Category;
-import cn.myBlog.service.CategoryService;
+import cn.fantasyblog.common.TableConstant;
+import cn.fantasyblog.dao.CategoryMapper;
+import cn.fantasyblog.entity.Category;
+import cn.fantasyblog.service.CategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.query.CategoryQuery;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.query.CategoryQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
-package cn.myBlog.vo;
+package cn.fantasyblog.vo;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.Menu;
-import cn.myBlog.utils.MenuTreeUtil;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.utils.MenuTreeUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
-import cn.myBlog.entity.RoleUser;
+import cn.fantasyblog.entity.RoleUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

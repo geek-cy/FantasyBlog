@@ -1,6 +1,6 @@
-package cn.myBlog.config.serializerUtils;
+package cn.fantasyblog.config.serializerUtils;
 
-import cn.myBlog.utils.StringUtils;
+import cn.fantasyblog.utils.StringUtils;
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.serializer.RedisSerializer;

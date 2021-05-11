@@ -1,13 +1,13 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.JsonResult;
-import cn.myBlog.common.TableResult;
-import cn.myBlog.service.AccessLogService;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.common.TableResult;
+import cn.fantasyblog.service.AccessLogService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.LogQuery;
+import cn.fantasyblog.query.LogQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class AccessLogController {
     public TableResult listByPage(@RequestParam(value = "page",defaultValue = Constant.PAGE) Integer page,
                                   @RequestParam(value = "limit",defaultValue = Constant.PAGE_LIMIT)Integer limit,
                                   LogQuery logQuery){
-        Page<cn.myBlog.entity.AccessLog> pageInfo = accessLogService.listByPage(page, limit, logQuery);
+        Page<cn.fantasyblog.entity.AccessLog> pageInfo = accessLogService.listByPage(page, limit, logQuery);
         return TableResult.tableOk(pageInfo.getRecords(),pageInfo.getTotal());
     }
 

@@ -1,8 +1,8 @@
-package cn.myBlog.exception;
+package cn.fantasyblog.exception;
 
-import cn.myBlog.utils.AjaxUtil;
-import cn.myBlog.utils.RequestHolderUtil;
-import cn.myBlog.utils.ThrowableUtil;
+import cn.fantasyblog.utils.AjaxUtil;
+import cn.fantasyblog.utils.RequestHolderUtil;
+import cn.fantasyblog.utils.ThrowableUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

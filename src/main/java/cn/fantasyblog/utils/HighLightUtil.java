@@ -1,4 +1,4 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;

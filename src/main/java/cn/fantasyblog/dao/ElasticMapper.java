@@ -1,6 +1,6 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
-import cn.myBlog.dto.ArticleDocument;
+import cn.fantasyblog.dto.ArticleDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

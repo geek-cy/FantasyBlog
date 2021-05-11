@@ -1,13 +1,13 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.dto.ArticleDocument;
-import cn.myBlog.entity.Article;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.service.ArticleService;
-import cn.myBlog.service.ElasticSearchService;
-import cn.myBlog.vo.HomeVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.dto.ArticleDocument;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.service.ElasticSearchService;
+import cn.fantasyblog.vo.HomeVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

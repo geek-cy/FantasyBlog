@@ -1,9 +1,8 @@
-/*
-package cn.myBlog.task;
+package cn.fantasyblog.task;
 
-import cn.myBlog.service.LikeService;
-import cn.myBlog.service.RedisService;
-import cn.myBlog.service.ViewService;
+import cn.fantasyblog.service.LikeService;
+import cn.fantasyblog.service.RedisService;
+import cn.fantasyblog.service.ViewService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -12,12 +11,11 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-*/
 /**
  * @Description
  * @Author Cy
  * @Date 2021-05-07 16:07
- *//*
+ */
 
 @Slf4j
 public class Task extends QuartzJobBean {
@@ -44,4 +42,3 @@ public class Task extends QuartzJobBean {
     }
 
 }
-*/

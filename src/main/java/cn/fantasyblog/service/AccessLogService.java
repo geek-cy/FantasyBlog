@@ -1,9 +1,9 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.AccessLog;
-import cn.myBlog.vo.ViewDateVO;
+import cn.fantasyblog.entity.AccessLog;
+import cn.fantasyblog.vo.ViewDateVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.LogQuery;
+import cn.fantasyblog.query.LogQuery;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.Date;

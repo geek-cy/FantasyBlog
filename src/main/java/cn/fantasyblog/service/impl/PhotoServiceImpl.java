@@ -1,13 +1,13 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.Photo;
-import cn.myBlog.service.PhotoService;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Photo;
+import cn.fantasyblog.service.PhotoService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.dao.PhotoMapper;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.query.PhotoQuery;
+import cn.fantasyblog.dao.PhotoMapper;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.query.PhotoQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

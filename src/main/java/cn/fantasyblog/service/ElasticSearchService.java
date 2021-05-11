@@ -1,7 +1,7 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Article;
-import cn.myBlog.dto.ArticleDocument;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.dto.ArticleDocument;
 
 import java.io.IOException;
 import java.util.List;

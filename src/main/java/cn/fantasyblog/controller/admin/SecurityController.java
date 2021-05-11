@@ -1,4 +1,4 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
 
 import com.wf.captcha.utils.CaptchaUtil;

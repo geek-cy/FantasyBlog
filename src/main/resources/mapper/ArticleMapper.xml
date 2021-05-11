@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.ArticleMapper">
-    <resultMap id="tableResultMap" type="cn.myBlog.entity.Article">
+<mapper namespace="cn.fantasyblog.dao.ArticleMapper">
+    <resultMap id="tableResultMap" type="cn.fantasyblog.entity.Article">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="cover" column="cover"/>
@@ -19,43 +19,43 @@
         <result property="updateTime" column="update_time"/>
         <result property="status" column="status"/>
         <result property="sort" column="sort"/>
-        <association property="category" javaType="cn.myBlog.entity.Category">
+        <association property="category" javaType="cn.fantasyblog.entity.Category">
             <id property="id" column="cid"/>
             <result property="name" column="cname"/>
             <result property="color" column="color"/>
         </association>
-        <association property="author" javaType="cn.myBlog.entity.User">
+        <association property="author" javaType="cn.fantasyblog.entity.User">
             <result property="id" column="aid"/>
             <result property="username" column="username"/>
         </association>
-        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+        <collection property="tagList" column="id" select="cn.fantasyblog.dao.TagMapper.selectByArticleId"/>
     </resultMap>
 
-    <resultMap id="recommendResultMap" type="cn.myBlog.entity.Article">
+    <resultMap id="recommendResultMap" type="cn.fantasyblog.entity.Article">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>
         <result property="cover" column="cover"/>
-        <association property="category" javaType="cn.myBlog.entity.Category">
+        <association property="category" javaType="cn.fantasyblog.entity.Category">
             <id property="id" column="cid"/>
             <id property="name" column="cname"/>
         </association>
     </resultMap>
 
-    <resultMap id="previewResultMap" type="cn.myBlog.entity.Article">
+    <resultMap id="previewResultMap" type="cn.fantasyblog.entity.Article">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="summary" column="summary"/>
         <result property="cover" column="cover"/>
         <result property="createTime" column="create_time"/>
-        <association property="category" javaType="cn.myBlog.entity.Category">
+        <association property="category" javaType="cn.fantasyblog.entity.Category">
             <id property="id" column="cid"/>
             <result property="name" column="cname"/>
         </association>
-        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+        <collection property="tagList" column="id" select="cn.fantasyblog.dao.TagMapper.selectByArticleId"/>
     </resultMap>
 
-    <resultMap id="detailResultMap" type="cn.myBlog.entity.Article">
+    <resultMap id="detailResultMap" type="cn.fantasyblog.entity.Article">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>
@@ -68,14 +68,14 @@
         <result property="commentable" column="commentable"/>
         <result property="views" column="views"/>
         <result property="authorId" column="author_id"/>
-        <association property="category" javaType="cn.myBlog.entity.Category">
+        <association property="category" javaType="cn.fantasyblog.entity.Category">
             <id property="categoryId" column="category_id"/>
             <result property="name" column="cname"/>
         </association>
-        <association property="author" javaType="cn.myBlog.entity.User">
+        <association property="author" javaType="cn.fantasyblog.entity.User">
             <id property="username" column="username"/>
         </association>
-        <collection property="tagList" column="id" select="cn.myBlog.dao.TagMapper.selectByArticleId"/>
+        <collection property="tagList" column="id" select="cn.fantasyblog.dao.TagMapper.selectByArticleId"/>
     </resultMap>
 
     <sql id="previewColumn">
@@ -215,7 +215,7 @@
         order by ta.sort desc
     </select>
 
-    <select id="countByDate" resultType="cn.myBlog.vo.ArticleDateVO">
+    <select id="countByDate" resultType="cn.fantasyblog.vo.ArticleDateVO">
         select year(create_time) 'year'
         <choose>
             <when test="dft == 2">

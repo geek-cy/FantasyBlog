@@ -1,6 +1,6 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
-import cn.myBlog.entity.User;
+import cn.fantasyblog.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,11 @@
-package cn.myBlog.aspect;
+package cn.fantasyblog.aspect;
 
-import cn.myBlog.utils.RequestHolderUtil;
-import cn.myBlog.utils.StringUtils;
-import cn.myBlog.utils.ThrowableUtil;
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.AccessLog;
-import cn.myBlog.service.AccessLogService;
+import cn.fantasyblog.utils.RequestHolderUtil;
+import cn.fantasyblog.utils.StringUtils;
+import cn.fantasyblog.utils.ThrowableUtil;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.AccessLog;
+import cn.fantasyblog.service.AccessLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -59,7 +59,7 @@ public class AccessLogAspect {
     /**
      * 配置切入点
      */
-    @Pointcut("@annotation(cn.myBlog.anntation.AccessLog)")
+    @Pointcut("@annotation(cn.fantasyblog.anntation.AccessLog)")
     public void AccessLog(){
         // 该方法无方法体,主要为了让同类中其他方法使用此切入点
     }

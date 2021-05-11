@@ -1,15 +1,15 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.TableConstant;
-import cn.myBlog.dao.AccessLogMapper;
-import cn.myBlog.entity.AccessLog;
-import cn.myBlog.service.AccessLogService;
-import cn.myBlog.utils.StringUtils;
-import cn.myBlog.vo.ViewDateVO;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.TableConstant;
+import cn.fantasyblog.dao.AccessLogMapper;
+import cn.fantasyblog.entity.AccessLog;
+import cn.fantasyblog.service.AccessLogService;
+import cn.fantasyblog.utils.StringUtils;
+import cn.fantasyblog.vo.ViewDateVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.LogQuery;
+import cn.fantasyblog.query.LogQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

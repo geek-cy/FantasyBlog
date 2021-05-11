@@ -1,6 +1,6 @@
-package cn.myBlog.vo;
+package cn.fantasyblog.vo;
 
-import cn.myBlog.entity.*;
+import cn.fantasyblog.entity.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

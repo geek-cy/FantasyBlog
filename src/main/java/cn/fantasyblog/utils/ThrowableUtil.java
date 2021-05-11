@@ -1,4 +1,4 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -1,9 +1,9 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Menu;
-import cn.myBlog.vo.InitInfoVO;
-import cn.myBlog.vo.MenuCheckboxVO;
-import cn.myBlog.vo.MenuSelectVO;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.vo.InitInfoVO;
+import cn.fantasyblog.vo.MenuCheckboxVO;
+import cn.fantasyblog.vo.MenuSelectVO;
 
 import java.util.List;
 

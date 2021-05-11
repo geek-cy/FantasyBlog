@@ -1,10 +1,10 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.dao.ArticleMapper;
-import cn.myBlog.entity.Article;
-import cn.myBlog.service.RedisService;
-import cn.myBlog.service.ViewService;
-import cn.myBlog.dto.ViewCount;
+import cn.fantasyblog.dao.ArticleMapper;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.service.RedisService;
+import cn.fantasyblog.service.ViewService;
+import cn.fantasyblog.dto.ViewCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

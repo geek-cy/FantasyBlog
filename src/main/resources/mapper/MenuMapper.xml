@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.MenuMapper">
+<mapper namespace="cn.fantasyblog.dao.MenuMapper">
     <select id="listMenuByUserId" resultType="menu">
         select sm.*
         from sys_menu sm

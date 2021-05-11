@@ -1,10 +1,10 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.Link;
-import cn.myBlog.service.LinkService;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Link;
+import cn.fantasyblog.service.LinkService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

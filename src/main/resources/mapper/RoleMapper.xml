@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.RoleMapper">
+<mapper namespace="cn.fantasyblog.dao.RoleMapper">
     <sql id="tableColumn">
         r.id,r.role_name,r.description,r.rank,r.color,r.status,r.create_time,r.update_time,count(ru.role_id) userCount
     </sql>

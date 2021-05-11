@@ -1,14 +1,14 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.dao.ArticleMapper;
-import cn.myBlog.dao.LikeMapper;
-import cn.myBlog.entity.Article;
-import cn.myBlog.entity.Like;
-import cn.myBlog.service.LikeService;
-import cn.myBlog.service.RedisService;
+import cn.fantasyblog.dao.ArticleMapper;
+import cn.fantasyblog.dao.LikeMapper;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.entity.Like;
+import cn.fantasyblog.service.LikeService;
+import cn.fantasyblog.service.RedisService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import cn.myBlog.dto.LikedCount;
-import cn.myBlog.exception.BadRequestException;
+import cn.fantasyblog.dto.LikedCount;
+import cn.fantasyblog.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

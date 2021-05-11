@@ -1,8 +1,8 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
-import cn.myBlog.vo.ViewDateVO;
+import cn.fantasyblog.vo.ViewDateVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import cn.myBlog.entity.AccessLog;
+import cn.fantasyblog.entity.AccessLog;
 import org.springframework.stereotype.Repository;
 
 

@@ -1,15 +1,15 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.JsonResult;
-import cn.myBlog.common.TableResult;
-import cn.myBlog.entity.Article;
-import cn.myBlog.query.ArticleQuery;
-import cn.myBlog.service.ArticleService;
-import cn.myBlog.utils.UserInfoUtil;
-import cn.myBlog.vo.AuditVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.common.TableResult;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.query.ArticleQuery;
+import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.utils.UserInfoUtil;
+import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

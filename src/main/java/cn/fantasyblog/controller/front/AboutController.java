@@ -1,15 +1,15 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
 
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.service.ArticleService;
-import cn.myBlog.service.CategoryService;
-import cn.myBlog.service.PhotoService;
-import cn.myBlog.service.TagService;
-import cn.myBlog.utils.DateUtil;
-import cn.myBlog.vo.AboutVO;
-import cn.myBlog.vo.ArticleDateVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.service.CategoryService;
+import cn.fantasyblog.service.PhotoService;
+import cn.fantasyblog.service.TagService;
+import cn.fantasyblog.utils.DateUtil;
+import cn.fantasyblog.vo.AboutVO;
+import cn.fantasyblog.vo.ArticleDateVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

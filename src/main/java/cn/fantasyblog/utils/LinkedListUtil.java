@@ -1,6 +1,6 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
-import cn.myBlog.entity.Comment;
+import cn.fantasyblog.entity.Comment;
 
 import java.util.ArrayList;
 import java.util.List;

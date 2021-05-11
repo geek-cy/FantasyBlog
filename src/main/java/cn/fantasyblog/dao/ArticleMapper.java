@@ -1,11 +1,11 @@
-package cn.myBlog.dao;
+package cn.fantasyblog.dao;
 
-import cn.myBlog.vo.ArticleDateVO;
+import cn.fantasyblog.vo.ArticleDateVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.entity.Article;
+import cn.fantasyblog.entity.Article;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

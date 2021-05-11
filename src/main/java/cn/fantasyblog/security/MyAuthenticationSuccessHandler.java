@@ -1,7 +1,7 @@
 
-package cn.myBlog.security;
+package cn.fantasyblog.security;
 
-import cn.myBlog.entity.User;
+import cn.fantasyblog.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

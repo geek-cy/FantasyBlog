@@ -1,6 +1,6 @@
-package cn.myBlog.security;
+package cn.fantasyblog.security;
 
-import cn.myBlog.utils.AjaxUtil;
+import cn.fantasyblog.utils.AjaxUtil;
 /*import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;*/
 import org.springframework.security.access.AccessDeniedException;

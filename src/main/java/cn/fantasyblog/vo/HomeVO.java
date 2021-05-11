@@ -1,8 +1,8 @@
-package cn.myBlog.vo;
+package cn.fantasyblog.vo;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.entity.Article;
+import cn.fantasyblog.entity.Article;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

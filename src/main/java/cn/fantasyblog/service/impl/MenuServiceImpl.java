@@ -1,15 +1,15 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.dao.MenuMapper;
-import cn.myBlog.entity.Menu;
-import cn.myBlog.service.MenuService;
-import cn.myBlog.vo.InitInfoVO;
-import cn.myBlog.vo.MenuCheckboxVO;
-import cn.myBlog.vo.MenuSelectVO;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.dao.MenuMapper;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.service.MenuService;
+import cn.fantasyblog.vo.InitInfoVO;
+import cn.fantasyblog.vo.MenuCheckboxVO;
+import cn.fantasyblog.vo.MenuSelectVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.utils.MenuTreeUtil;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.utils.MenuTreeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

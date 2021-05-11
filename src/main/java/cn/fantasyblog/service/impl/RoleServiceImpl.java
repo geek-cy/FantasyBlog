@@ -1,16 +1,16 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.dao.RoleMenuMapper;
-import cn.myBlog.entity.Role;
-import cn.myBlog.entity.RoleMenu;
-import cn.myBlog.entity.RoleUser;
-import cn.myBlog.service.RoleService;
+import cn.fantasyblog.dao.RoleMenuMapper;
+import cn.fantasyblog.entity.Role;
+import cn.fantasyblog.entity.RoleMenu;
+import cn.fantasyblog.entity.RoleUser;
+import cn.fantasyblog.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.dao.RoleMapper;
-import cn.myBlog.dao.RoleUserMapper;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.query.RoleQuery;
+import cn.fantasyblog.dao.RoleMapper;
+import cn.fantasyblog.dao.RoleUserMapper;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.query.RoleQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

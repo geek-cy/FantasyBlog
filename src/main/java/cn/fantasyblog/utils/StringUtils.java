@@ -1,10 +1,10 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
 import cn.hutool.core.io.resource.ClassPathResource;
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.User;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.User;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.aspectj.lang.JoinPoint;

@@ -1,4 +1,4 @@
-package cn.myBlog.exception;
+package cn.fantasyblog.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

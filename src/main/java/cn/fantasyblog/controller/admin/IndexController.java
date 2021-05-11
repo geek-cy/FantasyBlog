@@ -1,10 +1,10 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.entity.User;
-import cn.myBlog.service.*;
-import cn.myBlog.vo.IndexVO;
-import cn.myBlog.vo.InitInfoVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.entity.User;
+import cn.fantasyblog.service.*;
+import cn.fantasyblog.vo.IndexVO;
+import cn.fantasyblog.vo.InitInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

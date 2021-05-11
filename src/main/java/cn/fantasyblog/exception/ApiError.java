@@ -1,4 +1,4 @@
-package cn.myBlog.exception;
+package cn.fantasyblog.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

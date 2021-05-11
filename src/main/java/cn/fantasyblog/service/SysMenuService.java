@@ -1,4 +1,4 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
 import java.util.Map;
 

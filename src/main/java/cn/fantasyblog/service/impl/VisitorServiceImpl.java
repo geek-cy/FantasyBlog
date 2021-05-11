@@ -1,14 +1,14 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.dao.VisitorMapper;
-import cn.myBlog.entity.Visitor;
-import cn.myBlog.service.VisitorService;
-import cn.myBlog.vo.VisitorVO;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.dao.VisitorMapper;
+import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.service.VisitorService;
+import cn.fantasyblog.vo.VisitorVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.exception.BadRequestException;
-import cn.myBlog.query.VisitorQuery;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.query.VisitorQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;

@@ -1,11 +1,11 @@
-package cn.myBlog.aspect;
+package cn.fantasyblog.aspect;
 
-import cn.myBlog.utils.RequestHolderUtil;
-import cn.myBlog.utils.StringUtils;
-import cn.myBlog.utils.ThrowableUtil;
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.OperationLog;
-import cn.myBlog.service.OperationLogService;
+import cn.fantasyblog.utils.RequestHolderUtil;
+import cn.fantasyblog.utils.StringUtils;
+import cn.fantasyblog.utils.ThrowableUtil;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.OperationLog;
+import cn.fantasyblog.service.OperationLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -59,7 +59,7 @@ public class OperationLogAspect {
     /**
      * 切入点方法
      */
-    @Pointcut("@annotation(cn.myBlog.anntation.OperationLog)")
+    @Pointcut("@annotation(cn.fantasyblog.anntation.OperationLog)")
     public void OperationLog(){}
 
     /**

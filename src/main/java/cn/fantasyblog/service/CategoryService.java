@@ -1,8 +1,8 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Category;
+import cn.fantasyblog.entity.Category;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.CategoryQuery;
+import cn.fantasyblog.query.CategoryQuery;
 
 import java.util.List;
 

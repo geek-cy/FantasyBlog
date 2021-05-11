@@ -1,11 +1,11 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.dao.MenuMapper;
-import cn.myBlog.dao.UserMapper;
-import cn.myBlog.entity.Menu;
-import cn.myBlog.entity.User;
+import cn.fantasyblog.dao.MenuMapper;
+import cn.fantasyblog.dao.UserMapper;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import cn.myBlog.dto.LoginUser;
+import cn.fantasyblog.dto.LoginUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

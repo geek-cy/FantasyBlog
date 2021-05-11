@@ -1,5 +1,5 @@
 /*
-package com.blog.cy.myBlog.utils;
+package com.blog.cy.fantasyblog.utils;
 
 
 import org.springframework.stereotype.Component;

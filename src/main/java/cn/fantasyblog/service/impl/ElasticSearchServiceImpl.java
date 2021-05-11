@@ -1,13 +1,13 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.TableConstant;
-import cn.myBlog.dao.ArticleMapper;
-import cn.myBlog.dao.ElasticMapper;
-import cn.myBlog.dto.ArticleDocument;
-import cn.myBlog.entity.Article;
-import cn.myBlog.service.ElasticSearchService;
-import cn.myBlog.utils.HighLightUtil;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.TableConstant;
+import cn.fantasyblog.dao.ArticleMapper;
+import cn.fantasyblog.dao.ElasticMapper;
+import cn.fantasyblog.dto.ArticleDocument;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.service.ElasticSearchService;
+import cn.fantasyblog.utils.HighLightUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.CommentMapper">
+<mapper namespace="cn.fantasyblog.dao.CommentMapper">
     <resultMap id="tableResultMap" type="comment">
         <id property="id" column="id"/>
         <result property="articleId" column="article_id"/>
@@ -8,7 +8,7 @@
         <result property="createTime" column="create_time"/>
         <result property="address" column="address"/>
         <association property="visitor" column="visitor_id"
-                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+                     select="cn.fantasyblog.dao.VisitorMapper.selectById"/>
     </resultMap>
     <resultMap id="previewResultMap" type="comment">
         <id property="id" column="id"/>
@@ -17,7 +17,7 @@
         <result property="createTime" column="create_time"/>
         <result property="status" column="status"/>
         <association property="visitor" column="visitor_id"
-                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+                     select="cn.fantasyblog.dao.VisitorMapper.selectById"/>
     </resultMap>
 
     <resultMap id="newestResultMap" type="comment">
@@ -27,7 +27,7 @@
         <result property="createTime" column="create_time"/>
         <result property="status" column="status"/>
         <association property="visitor" column="visitor_id"
-                     select="cn.myBlog.dao.VisitorMapper.selectById"/>
+                     select="cn.fantasyblog.dao.VisitorMapper.selectById"/>
     </resultMap>
 
     <sql id="tableColumn">

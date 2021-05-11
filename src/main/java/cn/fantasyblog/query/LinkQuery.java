@@ -1,4 +1,4 @@
-package cn.myBlog.query;
+package cn.fantasyblog.query;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -1,8 +1,8 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Photo;
+import cn.fantasyblog.entity.Photo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.PhotoQuery;
+import cn.fantasyblog.query.PhotoQuery;
 
 import java.util.List;
 

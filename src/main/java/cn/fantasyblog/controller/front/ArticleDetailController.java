@@ -1,14 +1,14 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.entity.Article;
-import cn.myBlog.service.ArticleService;
-import cn.myBlog.service.LikeService;
-import cn.myBlog.service.RedisService;
-import cn.myBlog.service.ViewService;
-import cn.myBlog.utils.UserInfoUtil;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.service.LikeService;
+import cn.fantasyblog.service.RedisService;
+import cn.fantasyblog.service.ViewService;
+import cn.fantasyblog.utils.UserInfoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

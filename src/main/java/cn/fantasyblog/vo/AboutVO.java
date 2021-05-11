@@ -1,8 +1,8 @@
-package cn.myBlog.vo;
+package cn.fantasyblog.vo;
 
-import cn.myBlog.entity.Category;
-import cn.myBlog.entity.Photo;
-import cn.myBlog.entity.Tag;
+import cn.fantasyblog.entity.Category;
+import cn.fantasyblog.entity.Photo;
+import cn.fantasyblog.entity.Tag;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

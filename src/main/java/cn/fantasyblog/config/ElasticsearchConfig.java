@@ -1,4 +1,4 @@
-package cn.myBlog.config;
+package cn.fantasyblog.config;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package cn.myBlog.anntation;
+package cn.fantasyblog.anntation;
 
 import java.lang.annotation.*;
 

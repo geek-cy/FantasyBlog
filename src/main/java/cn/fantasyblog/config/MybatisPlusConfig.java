@@ -1,4 +1,4 @@
-package cn.myBlog.config;
+package cn.fantasyblog.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParserCountOptimize;
@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync//使用多线程
 @Configuration
-@MapperScan("cn.myBlog.dao")
+@MapperScan("cn.fantasyblog.dao")
 public class MybatisPlusConfig {
     /**
      * 分页

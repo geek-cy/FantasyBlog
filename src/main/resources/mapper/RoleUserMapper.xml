@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.RoleUserMapper">
+<mapper namespace="cn.fantasyblog.dao.RoleUserMapper">
     <update id="updateRoleId" parameterType="roleUser">
         update sys_role_user set role_id=${rid}
         where  user_id=${uid}

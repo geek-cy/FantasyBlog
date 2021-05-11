@@ -1,12 +1,12 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.JsonResult;
-import cn.myBlog.common.TableResult;
-import cn.myBlog.entity.OperationLog;
-import cn.myBlog.query.LogQuery;
-import cn.myBlog.service.OperationLogService;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.common.TableResult;
+import cn.fantasyblog.entity.OperationLog;
+import cn.fantasyblog.query.LogQuery;
+import cn.fantasyblog.service.OperationLogService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +41,7 @@ public class OperationLogController {
     }
 
     @ApiOperation("删除操作日志")
-    @cn.myBlog.anntation.OperationLog("删除操作日志")
+    @cn.fantasyblog.anntation.OperationLog("删除操作日志")
     @PreAuthorize("hasAuthority('sys:operationlog:delete')")
     @DeleteMapping("/{id}")
     public JsonResult remove(@PathVariable("id")Long id){
@@ -50,7 +50,7 @@ public class OperationLogController {
     }
 
     @ApiOperation("批量删除操作日志")
-    @cn.myBlog.anntation.OperationLog("批量删除操作日志")
+    @cn.fantasyblog.anntation.OperationLog("批量删除操作日志")
     @PreAuthorize("hasAuthority('sys:operationlog:delete')")
     @DeleteMapping
     public JsonResult removeList(@RequestBody List<Long> idList){

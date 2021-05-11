@@ -1,4 +1,4 @@
-package cn.myBlog.dto;
+package cn.fantasyblog.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

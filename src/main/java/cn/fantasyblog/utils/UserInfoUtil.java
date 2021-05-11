@@ -1,8 +1,8 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.User;
-import cn.myBlog.entity.Visitor;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.User;
+import cn.fantasyblog.entity.Visitor;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**

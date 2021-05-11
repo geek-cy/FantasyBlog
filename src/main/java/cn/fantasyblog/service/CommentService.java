@@ -1,9 +1,9 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Comment;
-import cn.myBlog.vo.AuditVO;
+import cn.fantasyblog.entity.Comment;
+import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.CommentQuery;
+import cn.fantasyblog.query.CommentQuery;
 
 import java.util.List;
 

@@ -51,17 +51,17 @@ mybatis-plus:
     #   懒加载
     aggressive-lazy-loading: false
   #   直接使用类名
-  type-aliases-package: cn.myBlog.entity
+  type-aliases-package: cn.fantasyblog.entity
 
 logging:
   level:
     com:
       blog:
         cy:
-          myBlog:
+          fantasyblog:
             es: debug
 server:
-  address: 192.168.31.58
+  address: 127.0.0.1
   port: 8000
 
 # es 服务地址

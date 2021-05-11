@@ -1,11 +1,11 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
-import cn.myBlog.exception.BadRequestException;
+import cn.fantasyblog.exception.BadRequestException;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 

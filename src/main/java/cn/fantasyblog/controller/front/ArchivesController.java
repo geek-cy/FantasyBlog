@@ -1,12 +1,12 @@
-package cn.myBlog.controller.front;
+package cn.fantasyblog.controller.front;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.entity.Article;
-import cn.myBlog.service.ArticleService;
-import cn.myBlog.utils.DateUtil;
-import cn.myBlog.vo.ArchivesVO;
-import cn.myBlog.vo.ArticleDateVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.utils.DateUtil;
+import cn.fantasyblog.vo.ArchivesVO;
+import cn.fantasyblog.vo.ArticleDateVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,10 +1,10 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.User;
-import cn.myBlog.vo.UserInfoVO;
-import cn.myBlog.vo.UserLoginVO;
+import cn.fantasyblog.entity.User;
+import cn.fantasyblog.vo.UserInfoVO;
+import cn.fantasyblog.vo.UserLoginVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.VisitorQuery;
+import cn.fantasyblog.query.VisitorQuery;
 
 import java.util.List;
 

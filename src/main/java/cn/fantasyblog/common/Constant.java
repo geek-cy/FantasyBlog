@@ -1,4 +1,4 @@
-package cn.myBlog.common;
+package cn.fantasyblog.common;
 
 /**
  * @Description

@@ -1,9 +1,9 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.vo.MenuCheckboxVO;
-import cn.myBlog.vo.MenuSelectVO;
-import cn.myBlog.vo.MenuVO;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.vo.MenuCheckboxVO;
+import cn.fantasyblog.vo.MenuSelectVO;
+import cn.fantasyblog.vo.MenuVO;
 
 import java.util.ArrayList;
 import java.util.HashMap;

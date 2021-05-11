@@ -1,8 +1,8 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.entity.Role;
-import cn.myBlog.service.*;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.entity.Role;
+import cn.fantasyblog.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

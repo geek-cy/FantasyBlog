@@ -1,9 +1,9 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Message;
-import cn.myBlog.vo.AuditVO;
+import cn.fantasyblog.entity.Message;
+import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.MessageQuery;
+import cn.fantasyblog.query.MessageQuery;
 
 import java.util.List;
 

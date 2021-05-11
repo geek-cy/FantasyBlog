@@ -1,8 +1,8 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Role;
+import cn.fantasyblog.entity.Role;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.RoleQuery;
+import cn.fantasyblog.query.RoleQuery;
 
 import java.util.List;
 

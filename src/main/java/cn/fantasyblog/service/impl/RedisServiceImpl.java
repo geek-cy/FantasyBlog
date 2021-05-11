@@ -1,11 +1,11 @@
-package cn.myBlog.service.impl;
+package cn.fantasyblog.service.impl;
 
-import cn.myBlog.common.Constant;
-import cn.myBlog.dto.LikedCount;
-import cn.myBlog.dto.ViewCount;
-import cn.myBlog.entity.Like;
-import cn.myBlog.service.LikeService;
-import cn.myBlog.service.RedisService;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.dto.LikedCount;
+import cn.fantasyblog.dto.ViewCount;
+import cn.fantasyblog.entity.Like;
+import cn.fantasyblog.service.LikeService;
+import cn.fantasyblog.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;

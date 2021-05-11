@@ -1,4 +1,4 @@
-package cn.myBlog.utils;
+package cn.fantasyblog.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

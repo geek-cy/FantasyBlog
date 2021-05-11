@@ -1,10 +1,10 @@
-package cn.myBlog.service;
+package cn.fantasyblog.service;
 
-import cn.myBlog.entity.Article;
-import cn.myBlog.vo.ArticleDateVO;
-import cn.myBlog.vo.AuditVO;
+import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.vo.ArticleDateVO;
+import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.ArticleQuery;
+import cn.fantasyblog.query.ArticleQuery;
 
 import java.io.IOException;
 import java.util.List;

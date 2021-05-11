@@ -1,16 +1,16 @@
-package cn.myBlog.controller.admin;
+package cn.fantasyblog.controller.admin;
 
-import cn.myBlog.anntation.AccessLog;
-import cn.myBlog.anntation.OperationLog;
-import cn.myBlog.common.Constant;
-import cn.myBlog.common.JsonResult;
-import cn.myBlog.common.TableResult;
-import cn.myBlog.entity.User;
-import cn.myBlog.service.UserService;
-import cn.myBlog.vo.UserInfoVO;
-import cn.myBlog.vo.UserLoginVO;
+import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.common.TableResult;
+import cn.fantasyblog.entity.User;
+import cn.fantasyblog.service.UserService;
+import cn.fantasyblog.vo.UserInfoVO;
+import cn.fantasyblog.vo.UserLoginVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.myBlog.query.VisitorQuery;
+import cn.fantasyblog.query.VisitorQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

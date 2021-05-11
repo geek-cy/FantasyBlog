@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.myBlog.dao.CategoryMapper">
-    <select id="listPreviewByCategory" resultType="cn.myBlog.entity.Category">
+<mapper namespace="cn.fantasyblog.dao.CategoryMapper">
+    <select id="listPreviewByCategory" resultType="cn.fantasyblog.entity.Category">
         select tc.id, tc.name, tc.color, count(ta.id) articleCount
         from t_category tc
                  left join t_article ta
@@ -9,7 +9,7 @@
         where tc.display = 1 and ta.status = 2
         group by tc.id
     </select>
-    <select id="listTableByCategory" resultType="cn.myBlog.entity.Category"
+    <select id="listTableByCategory" resultType="cn.fantasyblog.entity.Category"
             parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select tc.id,
                tc.name,

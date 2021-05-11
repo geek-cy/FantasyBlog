@@ -1,4 +1,4 @@
-package cn.myBlog.vo;
+package cn.fantasyblog.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

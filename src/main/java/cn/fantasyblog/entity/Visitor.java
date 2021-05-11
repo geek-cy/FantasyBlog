@@ -1,4 +1,4 @@
-package cn.myBlog.entity;
+package cn.fantasyblog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -1,9 +1,9 @@
-package cn.myBlog.config;
+package cn.fantasyblog.config;
 
-import cn.myBlog.security.MyAccessDeniedHandler;
-import cn.myBlog.security.MyAuthenticationFailureHandler;
-import cn.myBlog.security.MyAuthenticationSuccessHandler;
-import cn.myBlog.security.ValidateCodeFilter;
+import cn.fantasyblog.security.MyAccessDeniedHandler;
+import cn.fantasyblog.security.MyAuthenticationFailureHandler;
+import cn.fantasyblog.security.MyAuthenticationSuccessHandler;
+import cn.fantasyblog.security.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
-package cn.myBlog.dto;
+package cn.fantasyblog.dto;
 
-import cn.myBlog.entity.Menu;
-import cn.myBlog.entity.User;
+import cn.fantasyblog.entity.Menu;
+import cn.fantasyblog.entity.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;

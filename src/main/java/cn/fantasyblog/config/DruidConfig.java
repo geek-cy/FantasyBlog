@@ -1,4 +1,4 @@
-package cn.myBlog.config;
+package cn.fantasyblog.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
