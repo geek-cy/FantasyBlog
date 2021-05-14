@@ -8,6 +8,7 @@ import cn.fantasyblog.dto.ArticleDocument;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.utils.HighLightUtil;
+import cn.fantasyblog.utils.HtmlUtil;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -17,11 +18,9 @@ import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -46,8 +45,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     @Async
     @Override
     public void save(Article article) {
-        ArticleDocument articleDocument = new ArticleDocument();
-        BeanUtils.copyProperties(article, articleDocument);
+        ArticleDocument articleDocument = copy(article);
         elasticMapper.save(articleDocument);
     }
 
@@ -58,20 +56,24 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         List<Article> articles = articleMapper.selectList(null);
         ArrayList<ArticleDocument> articleDocuments = new ArrayList<>();
         for (Article article : articles) {
-            ArticleDocument articleDocument = new ArticleDocument();
-            articleDocument.setId(article.getId());
+            ArticleDocument articleDocument = copy(article);
+            articleDocuments.add(articleDocument);
         }
+        elasticMapper.saveAll(articleDocuments);
     }
 
     @Async
+    @Override
     public void deleteById(Long id) {
         elasticMapper.deleteById(id);
     }
 
     @Async
+    @Override
     public void deleteAll(List<ArticleDocument> articleDocuments){
         elasticMapper.deleteAll(articleDocuments);
     }
+
     @Override
     public List<ArticleDocument> listByKeyword(String keyword) throws IOException {
         // 匹配查询
@@ -106,10 +108,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             HighLightUtil.parseField(hit,ArticleDocument.Table.TITLE,map);
             HighLightUtil.parseField(hit,ArticleDocument.Table.SUMMARY,map);
             HighLightUtil.parseField(hit,ArticleDocument.Table.CONTENT,map);
-
-            /**
-             * 1. object.toString()方法
-             */
             ArticleDocument articleDocument = new ArticleDocument();
             articleDocument.setId(Long.valueOf(String.valueOf(map.get(ArticleDocument.Table.ID))));
             articleDocument.setTitle((String) map.get(ArticleDocument.Table.TITLE));
@@ -118,5 +116,19 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             articleDocuments.add(articleDocument);
         }
         return articleDocuments;
+    }
+
+    /**
+     * 将Article拷贝给ArticleDocument
+     */
+    private ArticleDocument copy(Article article){
+        ArticleDocument articleDocument = new ArticleDocument();
+        articleDocument.setId(article.getId());
+        articleDocument.setTitle(article.getTitle());
+        articleDocument.setSummary(article.getSummary());
+        articleDocument.setContent(HtmlUtil.removeTag(article.getContent()));
+        articleDocument.setPublished(article.getPublished());
+        articleDocument.setStatus(article.getStatus());
+        return articleDocument;
     }
 }

@@ -22,25 +22,25 @@ public class Photo implements Serializable {
 
     @ApiModelProperty("主键:ID")
     @TableId(type = IdType.AUTO)
-    Long id;
+    private Long id;
 
     @ApiModelProperty("地址")
-    String url;
+    private String url;
 
     @ApiModelProperty("描述")
-    String description;
+    private String description;
 
     @ApiModelProperty("排序值")
-    Integer sort;
+    private Integer sort;
 
     @ApiModelProperty("是否前台显示")
-    Boolean display;
+    private Boolean display;
 
     @ApiModelProperty("创建时间")
-    Date createTime;
+    private Date createTime;
 
     @ApiModelProperty("更新时间")
-    Date updateTime;
+    private Date updateTime;
 
     public interface Table{
         String DESCRIPTION = "description";

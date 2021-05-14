@@ -2,8 +2,8 @@ package cn.fantasyblog.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
-import cn.fantasyblog.config.serializerUtils.FastJsonRedisSerializer;
-import cn.fantasyblog.config.serializerUtils.StringRedisSerializer;
+import cn.fantasyblog.serialize.FastJsonRedisSerializer;
+import cn.fantasyblog.serialize.StringRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

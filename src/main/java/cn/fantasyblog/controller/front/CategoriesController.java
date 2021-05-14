@@ -24,7 +24,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-03-30 16:36
  */
-@Api("前台：分类页面")
+@Api(tags ="前台：分类页面")
 @Controller
 public class CategoriesController {
 

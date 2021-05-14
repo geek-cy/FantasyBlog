@@ -9,6 +9,7 @@ import cn.fantasyblog.entity.Category;
 import cn.fantasyblog.query.CategoryQuery;
 import cn.fantasyblog.service.CategoryService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-03-22 21:16
  */
-@ApiModel("后台：分类管理")
+@Api(tags = "后台：分类管理")
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryController {

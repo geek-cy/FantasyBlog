@@ -3,6 +3,7 @@ package cn.fantasyblog.service.impl;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dao.VisitorMapper;
 import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.VisitorService;
 import cn.fantasyblog.vo.VisitorVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -29,7 +30,7 @@ import java.util.List;
 public class VisitorServiceImpl implements VisitorService {
 
     @Autowired
-    VisitorMapper visitorMapper;
+    private VisitorMapper visitorMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -125,4 +126,5 @@ public class VisitorServiceImpl implements VisitorService {
     public Long countAll() {
         return Long.valueOf(visitorMapper.selectCount(null));
     }
+
 }

@@ -35,17 +35,35 @@ public interface Constant {
 
     Integer FILTER_BY_YEAR = 3;
 
-    // 点赞键
+    /**
+     * 点赞事件
+     */
+    String LIKE = "like";
+
+    /**
+     * 点赞键
+     */
     String LIKE_KEY = "like_map";
 
-    // 点赞数
+    /**
+     * 点赞数
+     */
     String LIKE_COUNT = "like_count";
 
-    // 浏览数
+    /**
+     * 浏览数
+     */
     String VIEW_COUNT = "view_count";
 
-    // redis键符号
+    /**
+     * redis键符号
+     */
     String KEY = "::";
+
+    /**
+     * 菜单键
+     */
+    String MENU = "menu";
 
     /**
      * 用于IP定位转换
@@ -110,7 +128,10 @@ public interface Constant {
      */
     Long COMMENT_LINKED_LIST_ROOT = 0L;
 
-
+    /**
+     * 访客
+     */
+    String VISITOR = "visitor";
     /**
      * 访客状态
      */
@@ -159,4 +180,10 @@ public interface Constant {
     String HIGH_LIGHT_PRE_TAGS = "<em class='search-keyword'>";
 
     String HIGH_LIGHT_POST_TAGS = "</em>";
+
+    Integer GITHUB_CONFIG = 1;
+
+    String HTTP = "http://";
+
+    String HTTPS = "https://";
 }

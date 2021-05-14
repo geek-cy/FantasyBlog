@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author Cy
  * @Date 2021-04-13 22:09
  */
-@Api("前台友链显示")
+@Api(tags ="前台：友链显示")
 @RestController
 @RequestMapping("/links")
 public class LinksController {

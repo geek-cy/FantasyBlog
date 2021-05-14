@@ -6,6 +6,7 @@ import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.JsonResult;
 import cn.fantasyblog.common.TableResult;
 import cn.fantasyblog.entity.User;
+import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.UserService;
 import cn.fantasyblog.vo.UserInfoVO;
 import cn.fantasyblog.vo.UserLoginVO;
@@ -28,13 +29,16 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-04 21:00
  */
-@Api("后台:用户管理")
+@Api(tags ="后台：用户管理")
 @RestController
 @RequestMapping("/admin/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RedisService redisService;
 
     @ApiOperation("后台查询所有用户")
     @PreAuthorize("hasAuthority('sys:user:query')")

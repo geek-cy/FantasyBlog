@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @Author Cy
  * @Date 2021-03-28 13:49
  */
-@Api("前台页面路由")
+@Api(tags ="前台：页面路由")
 @Controller
 public class FrontRouteController {
 

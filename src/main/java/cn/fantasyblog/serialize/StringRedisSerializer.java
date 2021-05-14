@@ -1,4 +1,4 @@
-package cn.fantasyblog.config.serializerUtils;
+package cn.fantasyblog.serialize;
 
 import cn.fantasyblog.utils.StringUtils;
 import cn.hutool.core.lang.Assert;

@@ -24,7 +24,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-17 15:42
  */
-@Api("前台：归档页面")
+@Api(tags ="前台：归档页面")
 @RestController
 public class ArchivesController {
 

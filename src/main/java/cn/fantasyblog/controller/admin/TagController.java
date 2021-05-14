@@ -24,7 +24,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-03-22 21:22
  */
-@Api("后台：标签管理")
+@Api(tags ="后台：标签管理")
 @RestController
 @RequestMapping("/admin/tag")
 public class TagController {

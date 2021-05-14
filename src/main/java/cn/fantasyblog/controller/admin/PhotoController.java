@@ -23,7 +23,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-14 16:11
  */
-@Api("后台：相册管理")
+@Api(tags ="后台：相册管理")
 @RestController
 @RequestMapping("/admin/photo")
 public class PhotoController {

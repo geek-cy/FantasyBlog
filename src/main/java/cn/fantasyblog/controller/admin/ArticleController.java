@@ -26,7 +26,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-03-21 18:42
  */
-@Api("后台：文章管理")
+@Api(tags = "后台：文章管理")
 @RestController
 @RequestMapping("/admin/article")
 public class ArticleController {
@@ -93,8 +93,8 @@ public class ArticleController {
     @ApiOperation("批量删除文章")
     @PreAuthorize("hasAuthority('blog:article:delete')")
     @OperationLog("批量删除文章")
-    @DeleteMapping()
-    public JsonResult remove(@RequestBody List<Long> idList){
+    @DeleteMapping
+    public JsonResult removeList(@RequestBody List<Long> idList){
         articleService.removeList(idList);
         return JsonResult.ok();
     }

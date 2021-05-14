@@ -74,5 +74,5 @@ public class IndexVO implements Serializable {
     private Long increasedComments;
 
     @ApiModelProperty("公告列表")
-    private List<Notice> notices;
+    private List<Announce> announces;
 }

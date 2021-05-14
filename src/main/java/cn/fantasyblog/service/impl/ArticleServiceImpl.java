@@ -4,6 +4,7 @@ import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.TableConstant;
 import cn.fantasyblog.dao.ArticleMapper;
 import cn.fantasyblog.dao.ArticleTagMapper;
+import cn.fantasyblog.dto.ArticleDocument;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.entity.ArticleTag;
 import cn.fantasyblog.entity.Tag;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,6 @@ public class ArticleServiceImpl implements ArticleService {
     private ElasticSearchService elasticSearchService;
 
     @Override
-    // 删除缓存
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(allEntries = true)
     public void saveOrUpdate(Article article) {
@@ -68,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         // 添加新标签
         List<Long> tagIdList = article.getTagList().stream().map(Tag::getId).collect(Collectors.toList());
-        articleTagMapper.insertBatch(article.getId(),tagIdList);
+        articleTagMapper.insertBatch(article.getId(), tagIdList);
         // 添加到ElasticSearch中
         elasticSearchService.save(article);
     }
@@ -97,7 +98,7 @@ public class ArticleServiceImpl implements ArticleService {
             wrapper.eq(Article.Table.PUBLISHED, articleQuery.getPublished());
         }
         if (articleQuery.getStatus() != null) {
-            wrapper.eq(TableConstant.ARTICLE_ALIAS+Article.Table.STATUS, articleQuery.getStatus());
+            wrapper.eq(TableConstant.ARTICLE_ALIAS + Article.Table.STATUS, articleQuery.getStatus());
         }
         if (articleQuery.getTop() != null) {
             wrapper.eq(Article.Table.TOP, articleQuery.getTop());
@@ -119,6 +120,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(auditVO.getId());
         article.setStatus(auditVO.getStatus());
         articleMapper.updateById(article);
+        elasticSearchService.save(article);
     }
 
     @Override
@@ -132,11 +134,11 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> listTop() {
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
         wrapper.select(Article.Table.ID, Article.Table.TITLE, Article.Table.SUMMARY, Article.Table.COVER)
-                .eq(Article.Table.PUBLISHED,true)
-                .eq(Article.Table.TOP,true)
-                .eq(Article.Table.STATUS,Constant.AUDIT_PASS)
+                .eq(Article.Table.PUBLISHED, true)
+                .eq(Article.Table.TOP, true)
+                .eq(Article.Table.STATUS, Constant.AUDIT_PASS)
                 .orderByDesc(Article.Table.SORT)
-                .last(TableConstant.LIMIT+Constant.MAX_TOP_ARTICLES);
+                .last(TableConstant.LIMIT + Constant.MAX_TOP_ARTICLES);
         return articleMapper.selectList(wrapper);
     }
 
@@ -148,6 +150,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Cacheable
     public Article getDetailById(Long id) {
         redisService.incrementView(id);
         return articleMapper.selectDetailById(id);
@@ -162,22 +165,22 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Page<Article> listPreviewPageByCategoryId(Integer current, Integer size, Long categoryId) {
-        Page<Article> page = new Page<>(current,size);
-        return articleMapper.listPreviewPageByCategoryId(page,categoryId);
+        Page<Article> page = new Page<>(current, size);
+        return articleMapper.listPreviewPageByCategoryId(page, categoryId);
     }
 
 
     @Override
     @Cacheable
     public Page<Article> listPreviewPageByTagId(Integer current, Integer size, Long tagId) {
-        Page<Article> page = new Page<>(current,size);
-        return articleMapper.listPreviewPageByTagId(page,tagId);
+        Page<Article> page = new Page<>(current, size);
+        return articleMapper.listPreviewPageByTagId(page, tagId);
     }
 
     @Override
     @Cacheable
     public List<ArticleDateVO> countByDate(Integer dateFilterType) {
-        if(dateFilterType == null) {
+        if (dateFilterType == null) {
             dateFilterType = Constant.FILTER_BY_DAY;
         }
         return articleMapper.countByDate(dateFilterType);
@@ -186,7 +189,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Page<Article> listPreviewPageByDate(Integer current, Integer size) {
-        Page<Article> page = new Page<>(current,size);
+        Page<Article> page = new Page<>(current, size);
         return articleMapper.listPreviewByDate(page);
     }
 
@@ -194,9 +197,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Cacheable
     public List<Article> listNewest() {
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
-        wrapper.select(Article.Table.ID,Article.Table.TITLE,Article.Table.SUMMARY,Article.Table.CREATE_TIME)
+        wrapper.select(Article.Table.ID, Article.Table.TITLE, Article.Table.SUMMARY, Article.Table.CREATE_TIME)
                 .orderByDesc(Article.Table.CREATE_TIME)
-                .last(TableConstant.LIMIT+Constant.NEWEST_PAGE_SIZE);
+                .last(TableConstant.LIMIT + Constant.NEWEST_PAGE_SIZE);
         return articleMapper.selectList(wrapper);
     }
 
@@ -216,12 +219,19 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         articleMapper.deleteById(id);
+        elasticSearchService.deleteById(id);
     }
 
     @Override
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         articleMapper.deleteBatchIds(idList);
+        ArrayList<ArticleDocument> articleDocuments = new ArrayList<>();
+        for (Long id : idList) {
+            ArticleDocument articleDocument = new ArticleDocument();
+            articleDocument.setId(id);
+            articleDocuments.add(articleDocument);
+        }
+        elasticSearchService.deleteAll(articleDocuments);
     }
-
 }

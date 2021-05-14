@@ -6,63 +6,53 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description
+ * @Description 后台：事件管理
  * @Author Cy
- * @Date 2021-04-22 20:30
+ * @Date 2021/5/13 17:38
  */
-@ApiModel("通知")
+@ApiModel("后台：通知管理")
 @Data
-@TableName("sys_notice")
+@TableName("t_notice")
 public class Notice implements Serializable {
 
     @ApiModelProperty("ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("标题")
-    @NotNull(message = "标题不能为空")
-    @Length(max = 20, message = "标题长度在20个字符以内")
-    private String title;
+    @ApiModelProperty("文章ID")
+    private Long articleId;
+
+    @ApiModelProperty("访客ID")
+    private Long visitorId;
 
     @ApiModelProperty("内容")
-    @NotNull(message = "内容不能为空")
-    @Length(max = 100, message = "内容长度在100个字符以内")
     private String content;
 
-    @ApiModelProperty("排序值")
-    @NotNull(message = "排序值不能为空")
-    @Length(min = 1,max = 1024,message = "排序值在1-1024之间")
-    private Integer sort;
-
-    @ApiModelProperty("是否显示")
-    private Boolean display;
+    @ApiModelProperty("事件类型:0:评论, 1:点赞，2:留言，3:删除评论,4:取消点赞，5：删除留言")
+    private Integer type;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
 
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
+    @ApiModelProperty("IP来源")
+    private String address;
+
+    @ApiModelProperty("请求IP")
+    private String requestIp;
 
     public interface Table{
         String ID = "id";
-
-        String TITLE = "title";
-
+        String ARTICLEId = "article_id";
+        String VISITORId = "visitor_id";
         String CONTENT = "content";
-
-        String SORT = "sort";
-
-        String DISPLAY = "display";
-
+        String TYPE = "type";
         String CREATE_TIME = "create_time";
-
-        String UPDATE_TIME = "update_time";
+        String ADDRESS = "address";
+        String REQUEST_IP = "request_ip";
     }
 }

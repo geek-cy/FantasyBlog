@@ -19,11 +19,11 @@ import java.io.Serializable;
 public class RoleMenu implements Serializable {
     @ApiModelProperty("主键:角色Id")
     @TableId
-    Long roleId;
+    private Long roleId;
 
     @ApiModelProperty("主键:菜单Id")
     @TableId
-    Long menuId;
+    private Long menuId;
 
     public interface Table{
         String ROLE_ID = "role_id";

@@ -1,7 +1,9 @@
-package cn.fantasyblog.dao;/**
- * @Description 
- * @Author Cy
- * @Date 2021/5/12 20:13
- */
-public class LocalStorageMapgger {
+package cn.fantasyblog.dao;
+
+import cn.fantasyblog.entity.LocalStorage;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Component;
+
+@Component
+public interface LocalStorageMapper extends BaseMapper<LocalStorage> {
 }

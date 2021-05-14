@@ -1,4 +1,4 @@
-package cn.fantasyblog.config.serializerUtils;
+package cn.fantasyblog.serialize;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
 
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     public FastJsonRedisSerializer(Class<T> clazz) {
         super();

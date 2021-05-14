@@ -31,7 +31,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-09 21:20
  */
-@Api("评论功能")
+@Api(tags = "后台：评论功能")
 @RestController
 @RequestMapping("/admin/comment")
 public class CommentController {

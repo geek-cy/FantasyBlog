@@ -21,7 +21,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-22 16:53
  */
-@Api("后台：操作日志管理")
+@Api(tags ="后台：操作日志管理")
 @RestController
 @RequestMapping("/admin/operation-log")
 public class OperationLogController {

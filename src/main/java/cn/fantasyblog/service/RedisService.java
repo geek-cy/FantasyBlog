@@ -53,5 +53,8 @@ public interface RedisService {
      */
     List<Like> getLikedDataFromRedis();
 
-
+    /**
+     * 删除菜单缓存
+     */
+    void deleteMenu();
 }

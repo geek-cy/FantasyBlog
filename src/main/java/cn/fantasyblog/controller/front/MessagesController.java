@@ -24,7 +24,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-04-18 21:22
  */
-@Api("前台：留言管理")
+@Api(tags ="前台：留言管理")
 @RestController
 @RequestMapping("/messages")
 public class MessagesController {

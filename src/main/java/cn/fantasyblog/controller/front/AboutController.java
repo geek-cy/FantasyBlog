@@ -26,7 +26,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-14 16:57
  */
-@Api("前台：关于我页面")
+@Api(tags ="前台：关于我页面")
 @RestController
 public class AboutController {
     @Autowired

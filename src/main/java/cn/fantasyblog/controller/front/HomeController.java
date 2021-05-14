@@ -26,7 +26,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-03-28 14:07
  */
-@Api("前台首页")
+@Api(tags ="前台：首页")
 @RestController
 public class HomeController {
 

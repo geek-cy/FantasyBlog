@@ -21,7 +21,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-03-27 15:42
  */
-@Api("后台：菜单管理")
+@Api(tags ="后台：菜单管理")
 @RestController
 @RequestMapping("/admin/menu")
 public class MenuController {

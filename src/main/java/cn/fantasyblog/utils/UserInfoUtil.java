@@ -3,7 +3,11 @@ package cn.fantasyblog.utils;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.entity.User;
 import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.vo.VisitorVO;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @Description
@@ -11,11 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @Date 2021-03-14 20:27
  */
 public class UserInfoUtil {
-    public static String getUsername() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getNickname();
-    }
-
     public static Long getUserId() {
         /*Object o = RequestHolder.getHttpServletRequest().getSession().getAttribute(Constant.USER);
         Long id = null;
@@ -31,13 +30,9 @@ public class UserInfoUtil {
     }
 
     public static Long getVisitorId() {
-        Object o = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.USER);
-        Long id = null;
-        if (o != null) {
-            Visitor visitor = (Visitor) o;
-            id = visitor.getId();
-            return id;
-        } else id = 0L;
-        return id;
+        HttpSession session = RequestHolderUtil.getHttpServletRequest().getSession();
+        Object attribute = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.VISITOR);
+        if (attribute == null) throw new BadRequestException("您未登录请先登录");
+        return (Long) attribute;
     }
 }

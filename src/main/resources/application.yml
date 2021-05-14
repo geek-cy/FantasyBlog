@@ -30,28 +30,40 @@ spring:
 #            multi-statement-allow: true
       # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
   redis:
-    #数据库索引
-    database: 0
+    database: 0  #数据库索引
     host: 127.0.0.1
     port: 6379
     password:
-    #连接超时时间
-    timeout: 5000
+    timeout: 5000   #连接超时时间
+
   thymeleaf:
     cache: false
-#    prefix:
-#    suffix:
+
+  servlet:
+    multipart:
+      max-file-size: 100MB # 设置传输文件大小
+      max-request-size: 100MB
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: blog-consumer-group # 群组ID
+      enable-auto-commit: true # 开启自动提交
+      auto-commit-interval: 3000 # 自动提交频率3s
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 mybatis-plus:
   configuration:
-    #   输出日志
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    #   开启驼峰映射
-    map-underscore-to-camel-case: true
-    #   懒加载
-    aggressive-lazy-loading: false
-  #   直接使用类名
-  type-aliases-package: cn.fantasyblog.entity
+#   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出日志
+    map-underscore-to-camel-case: true  # 开启驼峰映射
+    aggressive-lazy-loading: false # 懒加载
+  type-aliases-package: cn.fantasyblog.entity  # 直接使用类名
 
 logging:
   level:
@@ -60,11 +72,17 @@ logging:
         cy:
           fantasyblog:
             es: debug
+
 server:
-  address: 127.0.0.1
+  address: 192.168.31.92
   port: 8000
 
-# es 服务地址
 elasticsearch:
   host: 127.0.0.1
   port: 9200
+
+file:
+  path: F:\fantasyblog\
+  avatar: F:\fantasyblog\avatar\
+  maxSize: 100  # 文件大小 /M
+  avatarMaxSize: 5

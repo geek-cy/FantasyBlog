@@ -1,4 +1,4 @@
-package cn.fantasyblog.config.serializerUtils;
+package cn.fantasyblog.serialize;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;

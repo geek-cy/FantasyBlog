@@ -20,11 +20,11 @@ public class RoleUser implements Serializable {
 
     @ApiModelProperty("主键:角色Id")
     @TableId
-    Long roleId;
+    private Long roleId;
 
     @ApiModelProperty("主键:角色I")
     @TableId
-    Long userId;
+    private Long userId;
 
     public interface Table{
         String ROLE_ID = "role_id";

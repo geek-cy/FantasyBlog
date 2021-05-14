@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -63,6 +64,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         Object principal = authentication.getPrincipal();
         if(principal != null){
             User user = (User) principal;
+            HttpSession session = request.getSession();
             request.getSession().setAttribute("user",user);
             userId = user.getId().toString();
         }

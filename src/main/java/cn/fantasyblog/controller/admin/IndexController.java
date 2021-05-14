@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-@Api("后台：控制面板")
+@Api(tags ="后台：控制面板")
 @Controller
 @RequestMapping("/admin")
 public class IndexController {
@@ -56,7 +56,10 @@ public class IndexController {
     private MessageService messageService;
 
     @Autowired
-    private NoticeService noticeService;
+    private AnnounceService announceService;
+
+    @Autowired
+    private RedisService redisService;
 
     @ApiOperation("初始化菜单")
     @ResponseBody
@@ -81,6 +84,8 @@ public class IndexController {
                 User user = (User) o;
                 userId = user.getId();
             }
+            // 重置菜单缓存
+            redisService.deleteMenu();
         }
         if (userId != null) {
             InitInfoVO initInfoVO = menuService.menu(userId);
@@ -115,7 +120,7 @@ public class IndexController {
         indexVO.setArticles(articleService.listNewest());
         indexVO.setFrontViews(accessLogService.countByLast7Days());
         indexVO.setBackViews(operationLogService.countByLast7Days());
-        indexVO.setNotices(noticeService.listNewest());
+        indexVO.setAnnounces(announceService.listNewest());
         return new ResponseEntity<>(indexVO,HttpStatus.OK);
     }
 }

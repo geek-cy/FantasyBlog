@@ -565,10 +565,8 @@
                             <!--打赏-->
                             <div id="reward">
                                 <a href="#rewardModal"
-                                   class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red"
-                                   th:if="${article.appreciable}">赏</a>
-                                <a class="reward-link btn-floating btn-medium waves-effect waves-light teal"
-                                   id="likeBtn" @click="likeIt">赞</a>
+                                   class="reward-link btn-floating btn-medium waves-effect waves-light teal"
+                                   id="likeBtn" th:if="${article.appreciable}"@click="likeIt">赞</a>
                                 <!-- Modal Structure -->
                                 <div id="rewardModal" class="modal">
                                     <div class="modal-content">
@@ -593,6 +591,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--登录-->
                     <div id="loginModal" class="modal">
                         <div class="modal-content">
                             <div class="row">
@@ -624,6 +623,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--注册-->
                     <div id="registerModal" class="modal">
                         <div class="modal-content">
                             <div class="row">
@@ -1044,6 +1044,7 @@
                 $('#loginModal').modal('open');
             },
             likeIt: function () {
+                let visitor = this.toLogin();
                 axios({
                     url: '/article/' + this.articleId + '/likes',
                     method: 'PUT',

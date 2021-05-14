@@ -9,6 +9,7 @@ import cn.fantasyblog.vo.VisitorVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -23,7 +25,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-04-02 20:41
  */
-@Api("前台访客功能")
+@Api(tags ="前台：访客功能")
 @Controller
 @RequestMapping("/visitor")
 public class VisitorsController {
@@ -47,8 +49,10 @@ public class VisitorsController {
     @ApiOperation("访客登录")
     @AccessLog("访客登录")
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody VisitorVO visitorVO){
+    public ResponseEntity<Object> login(@RequestBody VisitorVO visitorVO, HttpServletRequest request){
         visitorVO.setPassword(MD5Util.code(visitorVO.getPassword()));
-        return new ResponseEntity<>(visitorService.login(visitorVO),HttpStatus.OK);
+        Visitor visitor = visitorService.login(visitorVO);
+        request.getSession().setAttribute("visitor",visitor.getId());
+        return new ResponseEntity<>(visitor,HttpStatus.OK);
     }
 }

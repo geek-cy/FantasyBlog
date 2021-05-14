@@ -1,11 +1,14 @@
 package cn.fantasyblog.dao;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import cn.fantasyblog.entity.Notice;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-@Repository
+/**
+ * @Description
+ * @Author Cy
+ * @Date 2021/5/14 17:04
+ */
+@Component
 public interface NoticeMapper extends BaseMapper<Notice> {
 }

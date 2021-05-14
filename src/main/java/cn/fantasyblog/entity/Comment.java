@@ -26,45 +26,45 @@ public class Comment implements Serializable {
 
     @ApiModelProperty("ID")
     @TableId(type = IdType.AUTO)
-    Long id;
+    private Long id;
 
     @ApiModelProperty("ID")
-    Long pid;
+    private Long pid;
 
     @ApiModelProperty("文章ID")
-    Long articleId;
+    private Long articleId;
 
     @ApiModelProperty("访客ID")
-    Long visitorId;
+    private Long visitorId;
 
     @ApiModelProperty("用户ID")
-    Long userId;
+    private Long userId;
 
     @ApiModelProperty("内容")
     @NotBlank(message = "评论内容不能为空")
     @Length(max = 80, message = "评论内容不能超过80个字符")
-    String content;
+    private String content;
 
     @ApiModelProperty("审核状态[0:审核未过, 1:等待审核, 2:审核通过]")
-    int status;
+    private int status;
 
     @ApiModelProperty("创建时间")
-    Date createTime;
+    private Date createTime;
 
     @ApiModelProperty("浏览器")
-    String browser;
+    private String browser;
 
     @ApiModelProperty("系统")
-    String os;
+    private String os;
 
     @ApiModelProperty("IP来源")
-    String address;
+    private String address;
 
     @ApiModelProperty("请求IP")
-    String requestIp;
+    private String requestIp;
 
     @ApiModelProperty("父级评论昵称")
-    String parentNickname;
+    private String parentNickname;
 
     @ApiModelProperty("访客")
     @TableField

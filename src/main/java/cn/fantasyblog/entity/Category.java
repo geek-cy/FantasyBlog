@@ -23,29 +23,29 @@ public class Category implements Serializable {
 
     @ApiModelProperty("Id")
     @TableId(type = IdType.AUTO)
-    Long Id;
+    private Long Id;
 
     @ApiModelProperty("名称")
-    String name;
+    private String name;
 
     @ApiModelProperty("是否前台显示")
-    Boolean display;
+    private Boolean display;
 
     @ApiModelProperty("简介")
-    String introduction;
+    private String introduction;
 
     @ApiModelProperty("颜色")
-    String color;
+    private String color;
 
     @ApiModelProperty("创建时间")
-    Date createTime;
+    private Date createTime;
 
     @ApiModelProperty("更新时间")
-    Date updateTime;
+    private Date updateTime;
 
     @ApiModelProperty("关联文章数量")
     @TableField(exist = false)
-    Long articleCount;
+    private Long articleCount;
 
     public interface Table {
         String ID = "id";

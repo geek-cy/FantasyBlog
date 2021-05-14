@@ -24,7 +24,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-04-03 16:26
  */
-@Api("前台:评论页面")
+@Api(tags ="前台：评论页面")
 @RestController
 @RequestMapping("/comments")
 public class CommentsController {

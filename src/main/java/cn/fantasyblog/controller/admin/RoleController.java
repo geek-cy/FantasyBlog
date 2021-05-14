@@ -23,7 +23,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-07 11:02
  */
-@Api("后台:角色管理")
+@Api(tags ="后台：角色管理")
 @RestController
 @RequestMapping("/admin/role")
 public class RoleController {

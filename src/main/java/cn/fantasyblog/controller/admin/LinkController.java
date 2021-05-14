@@ -26,7 +26,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-11 20:40
  */
-@Api("后台：友链管理")
+@Api(tags ="后台：友链管理")
 @RestController
 @RequestMapping("/admin/link")
 public class LinkController {

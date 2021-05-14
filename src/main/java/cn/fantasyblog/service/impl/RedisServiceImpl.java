@@ -104,6 +104,11 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void deleteMenu() {
+        redisTemplate.delete(Constant.MENU);
+    }
+
+    @Override
     public List<ViewCount> getViewCountFromRedis() {
         Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.VIEW_COUNT, ScanOptions.NONE);
         List<ViewCount> list = new ArrayList<>();

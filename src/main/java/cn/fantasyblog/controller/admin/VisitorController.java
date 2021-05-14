@@ -25,7 +25,7 @@ import java.util.List;
  * @Author Cy
  * @Date 2021-04-03 20:07
  */
-@Api("后台查询访客")
+@Api(tags ="后台：查询访客")
 @RestController
 @RequestMapping("/admin/visitor")
 public class VisitorController {

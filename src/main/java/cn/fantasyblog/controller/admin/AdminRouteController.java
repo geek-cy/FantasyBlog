@@ -19,7 +19,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-03-22 20:29
  */
-@Api("后台：各种编辑页面")
+@Api(tags = "后台：各种编辑页面")
 @Controller
 @RequestMapping("/admin")
 public class AdminRouteController {
@@ -46,7 +46,7 @@ public class AdminRouteController {
     private PhotoService photoService;
 
     @Autowired
-    private NoticeService noticeService;
+    private AnnounceService announceService;
 
     @Autowired
     private MenuService menuService;
@@ -130,11 +130,11 @@ public class AdminRouteController {
 
     @ApiOperation("更新公告页面")
     @OperationLog("更新公告页面")
-    @PreAuthorize("hasAuthority('blog:notice:edit')")
-    @GetMapping("/notice/{id}")
+    @PreAuthorize("hasAuthority('blog:announce:edit')")
+    @GetMapping("/announce/{id}")
     public String editNotice(@PathVariable("id") Long id,Model model){
-        model.addAttribute("notice",noticeService.getById(id));
-        return "admin/notice/notice-edit";
+        model.addAttribute("announce",announceService.getById(id));
+        return "admin/announce/announce-edit";
     }
 
     @ApiOperation("更新菜单页面")

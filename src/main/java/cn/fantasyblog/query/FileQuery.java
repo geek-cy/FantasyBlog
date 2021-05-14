@@ -9,9 +9,9 @@ import lombok.Data;
  * @Author Cy
  * @Date 2021/5/12 20:16
  */
-@ApiModel("文件条件")
+@ApiModel("文件查询条件")
 @Data
-public class LocalStorageQuery {
+public class FileQuery {
 
     @ApiModelProperty("文件名")
     private String name;

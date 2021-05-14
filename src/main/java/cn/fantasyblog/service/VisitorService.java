@@ -54,4 +54,5 @@ public interface VisitorService {
      * @return
      */
     Long countAll();
+
 }
