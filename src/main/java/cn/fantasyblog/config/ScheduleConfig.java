@@ -1,5 +1,6 @@
 package cn.fantasyblog.config;
 
+import cn.fantasyblog.service.CommentService;
 import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.service.LikeService;
 import cn.fantasyblog.service.ViewService;
@@ -31,6 +32,9 @@ public class ScheduleConfig {
     @Autowired
     private ViewService viewService;
 
+    @Autowired
+    private CommentService commentService;
+
     @Scheduled(cron = "0 0 0 * * ?")
     private void resetElasticSearch() {
         log.info("每天0点重置elasticsearch");
@@ -45,6 +49,7 @@ public class ScheduleConfig {
         likeService.transLiked();
         // 将 Redis 里的浏览量同步到数据库
         viewService.transViewCount(true);
+        // 将 Redis 里的评论量同步到数据库
+        commentService.transCommentCount(true);
     }
-
 }

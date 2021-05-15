@@ -493,7 +493,7 @@
                                 <!--评论量-->
                                 <div class="info-break-policy">
                                     <i class="fa fa-comment fa-fw"></i>评论量:&nbsp;&nbsp;<span
-                                        th:text="${article.comments}">0</span>
+                                        th:text="${comments}">0</span>
                                 </div>
 
                             </div>
@@ -566,28 +566,7 @@
                             <div id="reward">
                                 <a href="#rewardModal"
                                    class="reward-link btn-floating btn-medium waves-effect waves-light teal"
-                                   id="likeBtn" th:if="${article.appreciable}"@click="likeIt">赞</a>
-                                <!-- Modal Structure -->
-                                <div id="rewardModal" class="modal">
-                                    <div class="modal-content">
-                                        <a class="close modal-close"><i class="fas fa-times"></i></a>
-                                        <h4 class="reward-title">你的赏识是我前进的动力</h4>
-                                        <div class="reward-content">
-                                            <div class="reward-tabs">
-                                                <ul class="tabs row">
-                                                    <li class="tab col s12 wechat-tab waves-effect waves-light"><a
-                                                            href="#">微 信</a></li>
-                                                </ul>
-                                                <div id="wechat">
-                                                    <img src="/static/front/image/wepay.jpg"
-                                                         class="reward-img lazy"
-                                                         alt="微信打赏二维码">
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                   id="likeBtn" th:if="${article.appreciable}" @click="likeIt">赞</a>
                             </div>
                         </div>
                     </div>
@@ -816,7 +795,7 @@
                                         <div class="publish-info">
                                         <span class="publish-date">
                                             <i class="far fa-clock fa-fw icon-date"></i><span
-                                                th:text="${#dates.format(prevPreview.createTime,'yyyy-MM-dd')}">2020-03-11</span>
+                                                th:text="${#dates.format(prevPreview.createTime,'yyyy-MM-dd')}">时间</span>
                                         </span>
                                             <span class="publish-author">
                                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -993,7 +972,7 @@
                         }
                     }).then((result) => {
                         swal({
-                            text: "注册成功,请登录!",
+                            text: "注册成功,请注意查收邮箱激活账号!",
                             icon: "success",
                             button: {
                                 text: "确定",
@@ -1053,7 +1032,15 @@
                     },
                 }).then((result) => {
                     $('#likeBtn').addClass('disabled');
-                })
+                }).catch(error => {
+                    swal({
+                        text: `${error.response.data.message}`,
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
+                    });
+                });
                 return false;
             },
             clearForm: function () {
@@ -1072,14 +1059,6 @@
                 $('#veditor').focus();
             },
             validate: function () {
-                /* if (this.nickname.trim() === '') {
-                     alert('昵称不能为空');
-                     return false;
-                 }
-                 if (this.email.trim() === '') {
-                     alert('邮箱地址不能为空');
-                     return false;
-                 }*/
                 if (this.content.trim() === '') {
                     swal({
                         text: "评论内容不能为空",
@@ -1090,13 +1069,6 @@
                     });
                     return false;
                 }
-                /*if (this.link !== '') {
-                    let pattern = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-                    if (!pattern.test(this.link)) {
-                        alert('请填写完整地址（包含协议）');
-                        return false;
-                    }
-                }*/
                 return true;
             },
             saveComment: function () {
@@ -1137,13 +1109,15 @@
                             this.content = '';
                             this.getComments();
                         }, 1000);
-                    }).catch((error) => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '提交失败！',
+                    }).catch(error => {
+                    swal({
                         text: `${error.response.data.message}`,
+                        icon: "error",
+                        button: {
+                            text: "确定",
+                        },
                     });
-                })
+                });
                 return false;
             },
             getComments: function () {
@@ -1218,7 +1192,6 @@
                 $tocWidget.removeClass('toc-fixed');
             }
         });
-
 
         /* 修复文章卡片 div 的宽度. */
         let fixPostCardWidth = function (srcId, targetId) {
@@ -1295,8 +1268,8 @@
 
         var url = document.location.href;
         newdiv.innerHTML += '<br />'
-            + '来源: GeeBlog<br />'
-            + '文章作者: AlanLiang<br />'
+            + '来源: FantasyBlog<br />'
+            + '文章作者: geek_cy<br />'
             + '文章链接: <a href="' + url + '">' + url + '</a><br />'
             + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
 

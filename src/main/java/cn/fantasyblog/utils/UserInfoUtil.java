@@ -5,8 +5,10 @@ import cn.fantasyblog.entity.User;
 import cn.fantasyblog.entity.Visitor;
 import cn.fantasyblog.exception.BadRequestException;
 import cn.fantasyblog.vo.VisitorVO;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -29,10 +31,13 @@ public class UserInfoUtil {
         return user.getId();
     }
 
-    public static Long getVisitorId() {
-        HttpSession session = RequestHolderUtil.getHttpServletRequest().getSession();
-        Object attribute = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.VISITOR);
-        if (attribute == null) throw new BadRequestException("您未登录请先登录");
+    public static String getVisitorName() {
+        Object attribute = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.VISITOR_NAME);
+        return (String) attribute;
+    }
+
+    public static Long getVisitorId(){
+        Object attribute = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.VISITOR_ID);
         return (Long) attribute;
     }
 }

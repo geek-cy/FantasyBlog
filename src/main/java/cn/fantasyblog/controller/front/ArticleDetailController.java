@@ -7,10 +7,8 @@ import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dto.Event;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.event.EventProducer;
-import cn.fantasyblog.service.ArticleService;
-import cn.fantasyblog.service.LikeService;
-import cn.fantasyblog.service.RedisService;
-import cn.fantasyblog.service.ViewService;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.service.*;
 import cn.fantasyblog.utils.UserInfoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,6 +47,9 @@ public class ArticleDetailController {
     @Autowired
     private EventProducer eventProducer;
 
+    @Autowired
+    private CommentService commentService;
+
     @ApiOperation("文章详情页面")
     @AccessLog("文章详情页面")
     @GetMapping("/article/{id}")
@@ -59,8 +60,10 @@ public class ArticleDetailController {
         model.addAttribute("article", detail);
         Integer likedCount = detail.getLikes() + likeService.transLikedCount(false);
         Integer viewCount = detail.getViews() + viewService.transViewCount(false);
+        Integer commentCount = detail.getComments() + commentService.transCommentCount(false);
         model.addAttribute("likes", likedCount);
         model.addAttribute("views", viewCount);
+        model.addAttribute("comments",commentCount);
         model.addAttribute("prevPreview", prev);
         model.addAttribute("nextPreview", next);
         return "front/article";
@@ -70,9 +73,11 @@ public class ArticleDetailController {
     @OperationLog("点赞文章")
     @PutMapping("/article/{id}/likes")
     public ResponseEntity<Object> articleLike(@PathVariable("id") Long id) {
-        redisService.saveLiked(id, UserInfoUtil.getVisitorId());
+        Long visitorId = UserInfoUtil.getVisitorId();
+        if (visitorId == null) throw new BadRequestException("您未登录请先登录");
+        redisService.saveLiked(id, visitorId);
         // 触发点赞事件
-        Event event = new Event().setTopic(Constant.LIKE).setArticleId(id).setVisitorId(UserInfoUtil.getVisitorId());
+        Event event = new Event().setTopic(Constant.LIKE).setArticleId(id).setVisitorName(UserInfoUtil.getVisitorName());
         eventProducer.fireEvent(event);
         return new ResponseEntity<>(HttpStatus.OK);
     }

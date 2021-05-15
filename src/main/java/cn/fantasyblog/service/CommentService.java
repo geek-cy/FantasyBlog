@@ -65,7 +65,7 @@ public interface CommentService {
     List<Comment> listNewest();
 
     /**
-     * 统计上次访问首页至现在增加的评论数
+     * 持久化评论数
      */
-//    Integer countByLastIndexViewToNow();
+    Integer transCommentCount(boolean flag);
 }

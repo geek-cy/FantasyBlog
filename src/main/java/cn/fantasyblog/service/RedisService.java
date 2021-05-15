@@ -1,5 +1,7 @@
 package cn.fantasyblog.service;
 
+import cn.fantasyblog.dto.CommentCount;
+import cn.fantasyblog.entity.Comment;
 import cn.fantasyblog.entity.Like;
 import cn.fantasyblog.dto.LikedCount;
 import cn.fantasyblog.dto.ViewCount;
@@ -39,6 +41,11 @@ public interface RedisService {
     void deleteView(Long articleId);
 
     /**
+     * 删除评论量
+     */
+    void deleteComment(Long articleId);
+
+    /**
      * 获得点赞量
      */
     List<LikedCount> getLikedCountFromRedis();
@@ -49,6 +56,11 @@ public interface RedisService {
     List<ViewCount> getViewCountFromRedis();
 
     /**
+     * 获得评论量
+     */
+    List<CommentCount> getCommentCountFromRedis();
+
+    /**
      * 获得赞对象
      */
     List<Like> getLikedDataFromRedis();
@@ -57,4 +69,10 @@ public interface RedisService {
      * 删除菜单缓存
      */
     void deleteMenu();
+
+    /**
+     * 评论量+1
+     */
+    void incrementComment(Long articleId);
+
 }

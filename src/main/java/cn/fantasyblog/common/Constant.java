@@ -41,6 +41,11 @@ public interface Constant {
     String LIKE = "like";
 
     /**
+     * 评论事件
+     */
+    String COMMENT = "comment";
+
+    /**
      * 点赞键
      */
     String LIKE_KEY = "like_map";
@@ -129,16 +134,26 @@ public interface Constant {
     Long COMMENT_LINKED_LIST_ROOT = 0L;
 
     /**
-     * 访客
+     * 访客Id
      */
-    String VISITOR = "visitor";
+    String VISITOR_ID = "visitorId";
+
     /**
-     * 访客状态
+     * 访客名称
+     */
+    String VISITOR_NAME = "visitorName";
+
+    /**
+     * 访客激活状态
      */
     Integer VISITOR_ENABLE = 1;
 
+    /**
+     * 访客未激活状态
+     */
     Integer VISITOR_DISABLE = 0;
 
+    String ACTIVATION_EMAIL = "激活账号";
     /**
      * 审核状态
      */
@@ -186,4 +201,15 @@ public interface Constant {
     String HTTP = "http://";
 
     String HTTPS = "https://";
+
+    String EMAIL = "geek_cy@qq.com";
+
+    String BLOG_ADMIN = "http://192.168.31.92:8000/admin";
+
+    String DOMAIN = "http://192.168.31.92:8000";
+
+    /**
+     * redis存密钥key
+     */
+    String CODE = "code";
 }

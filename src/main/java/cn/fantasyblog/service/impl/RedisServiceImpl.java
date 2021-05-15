@@ -1,8 +1,10 @@
 package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.dto.CommentCount;
 import cn.fantasyblog.dto.LikedCount;
 import cn.fantasyblog.dto.ViewCount;
+import cn.fantasyblog.entity.Comment;
 import cn.fantasyblog.entity.Like;
 import cn.fantasyblog.service.LikeService;
 import cn.fantasyblog.service.RedisService;
@@ -61,8 +63,18 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void incrementComment(Long articleId) {
+        redisTemplate.opsForHash().increment(Constant.COMMENT, articleId, 1);
+    }
+
+    @Override
     public void deleteView(Long articleId) {
         redisTemplate.opsForHash().delete(Constant.VIEW_COUNT,articleId);
+    }
+
+    @Override
+    public void deleteComment(Long articleId) {
+        redisTemplate.opsForHash().delete(Constant.COMMENT,articleId);
     }
 
     /**
@@ -114,9 +126,21 @@ public class RedisServiceImpl implements RedisService {
         List<ViewCount> list = new ArrayList<>();
         while (cursor.hasNext()) {
             Map.Entry<Object, Object> map = cursor.next();
-            // 将浏览数量存储在 ViewCount
             Long key = Long.parseLong((String) map.getKey());
             ViewCount dto = new ViewCount(key, (Integer) map.getValue());
+            list.add(dto);
+        }
+        return list;
+    }
+
+    @Override
+    public List<CommentCount> getCommentCountFromRedis() {
+        Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.COMMENT, ScanOptions.NONE);
+        List<CommentCount> list = new ArrayList<>();
+        while (cursor.hasNext()) {
+            Map.Entry<Object, Object> map = cursor.next();
+            Long key = Long.parseLong((String) map.getKey());
+            CommentCount dto = new CommentCount(key, (Integer) map.getValue());
             list.add(dto);
         }
         return list;

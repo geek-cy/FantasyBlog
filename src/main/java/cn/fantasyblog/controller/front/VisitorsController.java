@@ -1,23 +1,30 @@
 package cn.fantasyblog.controller.front;
 
 import cn.fantasyblog.anntation.AccessLog;
+import cn.fantasyblog.anntation.OperationLog;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.exception.BadRequestException;
 import cn.fantasyblog.service.VisitorService;
 import cn.fantasyblog.utils.MD5Util;
+import cn.fantasyblog.utils.UserInfoUtil;
 import cn.fantasyblog.vo.VisitorVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
@@ -33,6 +40,9 @@ public class VisitorsController {
     @Autowired
     VisitorService visitorService;
 
+    @Autowired
+    RedisTemplate<Object,Object> redisTemplate;
+
     @ApiOperation("访客注册")
     @AccessLog("访客注册")
     @PostMapping
@@ -41,7 +51,7 @@ public class VisitorsController {
         visitor.setAvatar(Constant.DEFAULT_AVATAR);
         visitor.setCreateTime(new Date());
         visitor.setUpdateTime(visitor.getCreateTime());
-        visitor.setStatus(Constant.VISITOR_ENABLE);
+        visitor.setStatus(Constant.VISITOR_DISABLE);
         visitorService.save(visitor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -52,7 +62,33 @@ public class VisitorsController {
     public ResponseEntity<Object> login(@RequestBody VisitorVO visitorVO, HttpServletRequest request){
         visitorVO.setPassword(MD5Util.code(visitorVO.getPassword()));
         Visitor visitor = visitorService.login(visitorVO);
-        request.getSession().setAttribute("visitor",visitor.getId());
+        HttpSession session=request.getSession();
+//        redisTemplate.opsForValue().set(session.getId(),visitorVO);
+        session.setAttribute(Constant.VISITOR_ID,visitor.getId());
+        session.setAttribute(Constant.VISITOR_NAME,visitor.getUsername());
         return new ResponseEntity<>(visitor,HttpStatus.OK);
+    }
+
+    @ApiOperation("访客激活")
+    @OperationLog("访客激活")
+    @ResponseBody
+    @GetMapping("/activation/{id}/{code}")
+    public String activation(Model model, @PathVariable("id") Long id, @PathVariable("code")String code){
+        String activation = visitorService.activation(id, code);
+        model.addAttribute("msg",activation);
+        return "激活成功";
+    }
+
+    @ApiOperation("访客登出")
+    @ResponseBody
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+        HttpSession session=request.getSession();
+        Object attribute = session.getAttribute(Constant.VISITOR_ID);
+        if(attribute != UserInfoUtil.getVisitorId()){
+            throw new BadRequestException("您未登录无需注销");
+        }
+        session.removeAttribute(Constant.VISITOR_ID);
+        return "登出成功";
     }
 }

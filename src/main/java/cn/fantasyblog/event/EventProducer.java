@@ -2,6 +2,7 @@ package cn.fantasyblog.event;
 
 import cn.fantasyblog.dto.Event;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -12,10 +13,11 @@ import org.springframework.stereotype.Component;
  * @Date 2021/5/13 23:46
  */
 @Component
+@Slf4j
 public class EventProducer {
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String,String> kafkaTemplate;
 
     // 处理事件
     public void fireEvent(Event event){

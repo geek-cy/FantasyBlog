@@ -64,7 +64,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         Object principal = authentication.getPrincipal();
         if(principal != null){
             User user = (User) principal;
-            HttpSession session = request.getSession();
             request.getSession().setAttribute("user",user);
             userId = user.getId().toString();
         }

@@ -4,9 +4,13 @@ import cn.fantasyblog.anntation.AccessLog;
 import cn.fantasyblog.anntation.OperationLog;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.JsonResult;
+import cn.fantasyblog.dto.Event;
 import cn.fantasyblog.entity.Comment;
+import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.event.EventProducer;
 import cn.fantasyblog.service.CommentService;
 import cn.fantasyblog.utils.StringUtils;
+import cn.fantasyblog.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +34,10 @@ import java.util.Date;
 public class CommentsController {
 
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @ApiOperation("新增评论")
     @OperationLog("新增评论")
@@ -43,6 +50,8 @@ public class CommentsController {
         comment.setAddress(StringUtils.getCityInfo(comment.getRequestIp()));
         comment.setStatus(Constant.AUDIT_WAIT);
         commentService.save(comment);
+        Event event = new Event().setTopic(Constant.COMMENT).setArticleId(comment.getArticleId()).setVisitorName(UserInfoUtil.getVisitorName());
+        eventProducer.fireEvent(event);
         return JsonResult.ok();
     }
 
@@ -55,5 +64,4 @@ public class CommentsController {
         Page<Comment> pageInfo = commentService.listByArticleId(articleId,current,size);
         return new ResponseEntity<>(pageInfo, HttpStatus.OK);
     }
-
 }

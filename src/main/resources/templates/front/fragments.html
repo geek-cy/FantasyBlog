@@ -10,15 +10,13 @@
     <meta content="telephone=no" name="format-detection">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
-
-    <title th:replace="${title}">blog</title>
-
     <link href="/static/front/css/all.css" rel="stylesheet" type="text/css">
     <link href="/static/front/css/materialize.min.css" rel="stylesheet">
     <link href="/static/front/css/aos.css" rel="stylesheet" type="text/css">
     <link href="/static/front/css/animate.min.css" rel="stylesheet" type="text/css">
     <link href="/static/front/css/matery.css" rel="stylesheet" type="text/css">
     <link href="/static/front/css/my.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="/static/admin/layuimini/images/favicon.ico">
     <style>
         .nav-transparent .github-corner {
             display: none !important;
@@ -176,6 +174,8 @@
             elements_selector: ".lazy"
         });
     </script>
+    <!--浏览器标签栏上的标题-->
+    <title>FantasyBlog</title>
 </head>
 <!--end head-->
 <body>
@@ -186,7 +186,7 @@
             <!--LOGO-->
             <div class="brand-logo">
                 <a class="waves-effect waves-light" href="">
-                    <span class="logo-span">ㄗs宇の博客</span>
+                    <span class="logo-span">FantasyBlog</span>
                 </a>
             </div>
             <!--移动设备导航栏-->
@@ -229,22 +229,28 @@
                         <span>友情链接</span>
                     </a>
                 </li>
+                <li class="hide-on-med-and-down nav-item">
+                    <a class="waves-effect waves-light" href="#searchModal" @click="logout">
+                        <i class="fas fa-comment" style="zoom: 0.6;" ></i>
+                        <span>登出</span>
+                    </a>
+                </li>
                 <li>
                     <a class="modal-trigger waves-effect waves-light" href="#searchModal" id="searchBtn">
                         <i class="fas fa-search" id="searchIcon" style="zoom: 0.85;" title="搜索"></i>
                     </a>
                 </li>
             </ul>
-            <!--侧边导航栏-->
+            <!--&lt;!&ndash;侧边导航栏&ndash;&gt;
             <div class="side-nav sidenav" id="mobile-nav">
-                <!--头部-->
+                &lt;!&ndash;头部&ndash;&gt;
                 <div class="mobile-head bg-color">
-                    <div class="logo-name" style="margin-top: 10px">ㄗs宇の博客</div>
+                    <div class="logo-name" style="margin-top: 10px">FantasyBlog</div>
                     <div class="logo-desc">
                         热爱编程，热爱生活
                     </div>
                 </div>
-                <!--侧边导航菜单-->
+                &lt;!&ndash;侧边导航菜单&ndash;&gt;
                 <ul class="menu-list mobile-menu-list">
                     <li class="m-nav-item">
                         <a class="waves-effect waves-light" th:href="@{/}"><i class="fa-fw fas fa-home"></i>首页</a>
@@ -273,7 +279,7 @@
                         <div class="divider"></div>
                     </li>
                 </ul>
-            </div>
+            </div>-->
         </div>
         <!--github-corner-->
         <a class="github-corner tooltipped hide-on-med-and-down" data-delay="50" data-position="left"
@@ -300,7 +306,7 @@
         <div class="row">
             <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                 <div class="brand">
-                    <div class="title center-align">ㄗs宇の博客</div>
+                    <div class="title center-align">FantasyBlog</div>
                     <div class="description center-align">
                         <span id="subtitle"></span>
                     </div>
@@ -319,7 +325,7 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
-            <a href="javascript:;" target="_blank">AlanLiang</a>
+            <a href="javascript:;" target="_blank">geek_cy</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
@@ -339,17 +345,13 @@
         <div class="col s12 m4 l4 social-link social-statis">
             <!--联系图标-->
             <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="访问我的GitHub"
-               href="https://github.com/AlanLiang1998"
+               href="https://github.com/geek-cy/FantasyBlog"
                target="_blank">
                 <i class="fab fa-github"></i>
             </a>
             <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="邮件联系我"
-               href="mailto:610469022@qq.com" target="_blank">
+               href="mailto:geek_cy@qq.com" target="_blank">
                 <i class="fas fa-envelope-open"></i>
-            </a>
-            <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="QQ联系我: 610469022"
-               href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1114173646" target="_blank">
-                <i class="fab fa-qq"></i>
             </a>
         </div>
     </div>
@@ -423,6 +425,32 @@
                     }).then((result) => {
                         this.searchResult = result.data;
                     })
+                },
+                logout: function () {
+                    axios({
+                        url: 'visitor/logout',
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                    }).then((result) => {
+                        swal({
+                            text: "注销成功!",
+                            icon: "success",
+                            button: {
+                                text: "确定",
+                            },
+                        })
+                    }).catch(error => {
+                        swal({
+                            text: `${error.response.data.message}`,
+                            icon: "error",
+                            button: {
+                                text: "确定",
+                            },
+                        });
+                    });
+                    return false;
                 },
             },
             watch: {

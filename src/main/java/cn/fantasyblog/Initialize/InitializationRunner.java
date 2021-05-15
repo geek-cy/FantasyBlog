@@ -1,5 +1,6 @@
 package cn.fantasyblog.Initialize;
 
+import cn.fantasyblog.filter.SensitiveFilter;
 import cn.fantasyblog.service.ElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -17,8 +18,12 @@ public class InitializationRunner implements ApplicationRunner {
     @Autowired
     private ElasticSearchService elasticSearchService;
 
+    @Autowired
+    private SensitiveFilter sensitiveFilter;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        elasticSearchService.sync();
+//        elasticSearchService.sync();
+        sensitiveFilter.init();
     }
 }

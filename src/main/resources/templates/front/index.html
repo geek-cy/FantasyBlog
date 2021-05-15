@@ -48,7 +48,7 @@
     <script>
         $(function () {
             var typed = new Typed("#subtitle", {
-                strings: ['既然像羊一样被投入狼群，就需要像蛇一样聪明，并像鸽子一样无害'],
+                strings: ['能够通过人传授的智慧来躲避的困难实在少之又少。真正要掌握的，并不是有关某个问题的知识，而是寻找那个问题的方法。那样的东西可不是一朝一夕能掌握过来的。'],
                 startDelay: 300,
                 typeSpeed: 100,
                 loop: true,
@@ -81,7 +81,7 @@
                     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
                         <div class="brand">
                             <!--标题-->
-                            <div class="title center-align">FantasyGeekBlog</div>
+                            <div class="title center-align">FantasyBlog</div>
                             <!--副标题-->
                             <div class="description center-align">
                                 <span id="subtitle"></span>
@@ -96,17 +96,13 @@
                 </div>
                 <div class="cover-social-link">
                     <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="访问我的GitHub"
-                       href="https://github.com/AlanLiang1998"
+                       href="https://github.com/geek-cy"
                        target="_blank">
                         <i class="fab fa-github"></i>
                     </a>
                     <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="邮件联系我"
-                       href="mailto:1114173646@qq.com" target="_blank">
+                       href="mailto:geek_cy@qq.com" target="_blank">
                         <i class="fas fa-envelope-open"></i>
-                    </a>
-                    <a class="tooltipped" data-delay="50" data-position="top" data-tooltip="QQ联系我: 610469022"
-                       href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1114173646" target="_blank">
-                        <i class="fab fa-qq"></i>
                     </a>
                 </div>
             </div>
@@ -114,7 +110,7 @@
         <!--end carousel-item-first-->
         <div v-for="(article, index) in topArticles" :key="article.id">
             <div class="carousel-item  white-text carousel-post bg-cover lazy"
-                 :style="{backgroundImage: 'url(http://cdn.alanliang.site/loading.png)' }"
+                 :style="{backgroundImage: 'url(https://cdn.jsdelivr.net/gh/geek-cy/img/blog/background1.jpg)' }"
                  :data-bg="article.cover">
                 <div class="container">
                     <div class="row">
@@ -144,12 +140,14 @@
                         <!--名言-->
                         <div class="dream">
                             <div class="title center-align">
-                                <i class="far fa-lightbulb"></i>&nbsp;&nbsp;支仓冻砂《狼与香辛料》
+                                <i class="far fa-lightbulb"></i>&nbsp;&nbsp;C.A.R. Hoare
                             </div>
 
                             <div class="row">
                                 <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-                                    能够通过人传授的智慧来躲避的困难实在少之又少。真正要掌握的，并不是有关某个陷阱的知识，而是寻找那个陷阱的方法。 那样的东西可不是一朝一夕能掌握过来的。
+                                    我们有两个方法来进行软件设计：一个是让其足够的简单以至于让BUG无法藏身；另一个就是让其足够的复杂，让人找不到BUG。前者更难一些<br>
+                                    There are two ways of constructing a software design: One way is to make it so simple that there are obviously no deficiencies,
+                                    and the other way is to make it so complicated that there are no obvious deficiencies. The first method is far more difficult.
                                 </div>
                             </div>
                         </div>
@@ -160,7 +158,7 @@
                                 <div v-for="(article, index) in recommendArticles" :key="article.id">
                                     <div class="col s12 m6" data-aos="zoom-in-up">
                                         <div class="post-card lazy"
-                                             :style="{backgroundImage: 'url(http://cdn.alanliang.site/loading.png)' }"
+                                             :style="{backgroundImage: 'url()' }"
                                              :data-bg="article.cover">
                                             <div class="post-body">
                                                 <!--分类-->
@@ -201,7 +199,7 @@
                             <a :href="'/article/'+article.id" target="_blank">
                                 <div class="card-image">
                                     <!--文章图片-->
-                                    <img class="responsive-img lazy" src="http://cdn.alanliang.site/loading.png"
+                                    <img class="responsive-img lazy" src=""
                                          :data-src="article.cover">
                                     <!--文章标题-->
                                     <span class="card-title">{{article.title}}</span>
@@ -365,7 +363,7 @@
                     let autoCarousel = function () {
                         carouselIntervalId = setInterval(function () {
                             coverSlider.carousel('next');
-                        }, 10000);
+                        }, 20000);
                     };
                     autoCarousel();
 
@@ -380,7 +378,7 @@
                         coverSlider.carousel('prev');
                         restartPlay();
                     });
-                    $('#next-cover').click(function () {l
+                    $('#next-cover').click(function () {
                         coverSlider.carousel('next');
                         restartPlay();
                     });
