@@ -51,4 +51,9 @@ public interface VisitorService {
      */
     String activation(Long id,String code);
 
+    /**
+     * 删除未激活访客
+     */
+    void removeVisitors();
+
 }

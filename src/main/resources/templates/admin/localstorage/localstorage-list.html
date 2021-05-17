@@ -136,8 +136,20 @@
                             return '<a class="clip-btn layui-btn-primary" data-clipboard-text="' + url + '"><i class="layui-icon layui-icon-link" alt="复制至剪切板"></i></a>&nbsp&nbsp;<span>' + url + '</span>';
                         }
                     },
-                    {field: 'createTime', title: '创建时间', minWidth: 200, sort: true},
-                    {field: 'updateTime', title: '更新时间', minWidth: 200, sort: true},
+                    {
+                        field: 'createTime',
+                        title: '创建时间',
+                        minWidth: 200,
+                        sort: true,
+                        templet: "<div>{{layui.util.toDateString(d.createTime.date, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+                    },
+                    {
+                        field: 'updateTime',
+                        title: '更新时间',
+                        minWidth: 200,
+                        sort: true,
+                        templet: "<div>{{layui.util.toDateString(d.createTime.date, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+                    },
                     {
                         title: '操作',
                         minWidth: 150,

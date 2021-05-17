@@ -1,4 +1,4 @@
-package cn.fantasyblog.event;
+package cn.fantasyblog.component;
 
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dto.Event;
@@ -9,8 +9,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 
 /**
@@ -31,7 +29,7 @@ public class EventConsumer {
         // 发送点赞通知
         String subject = "访客"+ event.getVisitorName() + "赞了你的文章" + event.getArticleId();
         // 推送到邮箱
-//        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
+        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
         log.info(subject);
     }
 
@@ -41,7 +39,7 @@ public class EventConsumer {
         // 发送评论通知
         String subject = "访客"+ event.getVisitorName() + "评论了你的文章" + event.getArticleId();
         // 推送到邮箱
-//        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
+        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
         log.info(subject);
     }
 }

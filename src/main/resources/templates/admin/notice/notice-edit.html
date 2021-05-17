@@ -61,23 +61,23 @@
             layer = layui.layer,
             $ = layui.$;
 
-        var announce = [[${announce}]];
-        $('.layui-form input[name="id"]').val(announce.id);
-        $('.layui-form input[name="title"]').val(announce.title);
-        $('.layui-form textarea[name="content"]').val(announce.content);
-        $('.layui-form input[name="sort"]').val(announce.sort);
-        $('.layui-form input[name="display"]').prop('checked', announce.display);
+        var notice = [[${notice}]];
+        $('.layui-form input[name="id"]').val(notice.id);
+        $('.layui-form input[name="title"]').val(notice.title);
+        $('.layui-form textarea[name="content"]').val(notice.content);
+        $('.layui-form input[name="sort"]').val(notice.sort);
+        $('.layui-form input[name="display"]').prop('checked', notice.display);
         form.render();
 
         //自定义验证规则
         form.verify({
             title: function (value) {
-                if (value.length > 20) {
+                if (value.length > 30) {
                     return '标题长度在20个字符以内';
                 }
             },
             content: function (value) {
-                if (value.length > 100) {
+                if (value.length > 200) {
                     return '内容长度在100个字符以内';
                 }
             },
@@ -93,7 +93,7 @@
         form.on('submit(saveBtn)', function (data) {
             axios({
                 method: 'put',
-                url: '/admin/announce',
+                url: '/admin/notice',
                 data: data.field,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'

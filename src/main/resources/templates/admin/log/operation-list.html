@@ -158,7 +158,7 @@
                         }
                     },
                     {field: 'browser', width: 150, title: '浏览器'},
-                    {field: 'createTime', width: 220, title: '创建时间', sort: true},
+                    {field: 'createTime', width: 220, title: '创建时间', sort: true,templet: "<div>{{layui.util.toDateString(d.createTime.date, 'yyyy-MM-dd HH:mm:ss')}}</div>"},
                     {
                         title: '操作',
                         minWidth: 120,

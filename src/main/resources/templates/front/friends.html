@@ -550,7 +550,7 @@
                                             <span class="vsys">{{message.address}}</span>
                                         </div>
                                         <div class="vmeta">
-                                            <span class="vtime">{{message.createTime | dateFormat}}</span>
+                                            <span class="vtime">{{message.createTime}}</span>
                                             <span class="vat"
                                                   @click="reply(message.id, message.nickname)">回复</span>
                                         </div>
@@ -633,6 +633,7 @@
                 current: 1,
                 pages: 0,
                 total: 0,
+                createTime: '',
             },
             messages: [],
             friend: {
@@ -644,15 +645,6 @@
             loading: false,
         },
         methods: {
-            getForm: function () {
-                let item = localStorage.getItem("visitor");
-                if (item != null) {
-                    let visitor = JSON.parse(item)
-                    this.message.nickname = visitor.nickname;
-                    this.message.email = visitor.email;
-                    this.message.link = visitor.link;
-                }
-            },
             clearForm: function () {
                 this.message.nickname = '';
                 this.message.email = '';
@@ -670,56 +662,7 @@
                 $.scrollTo('#message-area', 500);
                 $('#veditor').focus();
             },
-            validate: function () {
-                if (this.message.nickname.trim() === '') {
-                    swal({
-                        text: "昵称不能为空",
-                        icon: "error",
-                        button: {
-                            text: "确定",
-                        },
-                    });
-                    return false;
-                }
-                if (this.message.email.trim() === '') {
-                    swal({
-                        text: "邮箱地址不能为空",
-                        icon: "error",
-                        button: {
-                            text: "确定",
-                        },
-                    });
-                    return false;
-                }
-                if (this.message.content.trim() === '') {
-                    swal({
-                        text: "留言内容不能为空",
-                        icon: "error",
-                        button: {
-                            text: "确定",
-                        },
-                    });
-                    return false;
-                }
-                if (this.message.link !== '') {
-                    let pattern = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-                    if (!pattern.test(this.message.link)) {
-                        swal({
-                            text: "请填写完整地址（包含协议）",
-                            icon: "error",
-                            button: {
-                                text: "确定",
-                            },
-                        });
-                        return false;
-                    }
-                }
-                return true;
-            },
             saveMessage: function () {
-                if (!this.validate()) {
-                    return false;
-                }
                 let newMessage = {
                     'pid': this.message.pid,
                     'nickname': this.message.nickname,
@@ -790,7 +733,6 @@
             }
         },
         created() {
-            this.getForm();
             this.getMessages();
             this.getLinks();
         },

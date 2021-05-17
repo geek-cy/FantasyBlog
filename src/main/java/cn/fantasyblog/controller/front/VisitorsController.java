@@ -63,7 +63,6 @@ public class VisitorsController {
         visitorVO.setPassword(MD5Util.code(visitorVO.getPassword()));
         Visitor visitor = visitorService.login(visitorVO);
         HttpSession session=request.getSession();
-//        redisTemplate.opsForValue().set(session.getId(),visitorVO);
         session.setAttribute(Constant.VISITOR_ID,visitor.getId());
         session.setAttribute(Constant.VISITOR_NAME,visitor.getUsername());
         return new ResponseEntity<>(visitor,HttpStatus.OK);
@@ -73,22 +72,7 @@ public class VisitorsController {
     @OperationLog("访客激活")
     @ResponseBody
     @GetMapping("/activation/{id}/{code}")
-    public String activation(Model model, @PathVariable("id") Long id, @PathVariable("code")String code){
-        String activation = visitorService.activation(id, code);
-        model.addAttribute("msg",activation);
-        return "激活成功";
-    }
-
-    @ApiOperation("访客登出")
-    @ResponseBody
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response){
-        HttpSession session=request.getSession();
-        Object attribute = session.getAttribute(Constant.VISITOR_ID);
-        if(attribute != UserInfoUtil.getVisitorId()){
-            throw new BadRequestException("您未登录无需注销");
-        }
-        session.removeAttribute(Constant.VISITOR_ID);
-        return "登出成功";
+    public String activation(@PathVariable("id") Long id, @PathVariable("code")String code){
+        return visitorService.activation(id, code);
     }
 }

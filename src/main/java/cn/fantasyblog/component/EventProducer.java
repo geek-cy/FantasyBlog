@@ -1,4 +1,4 @@
-package cn.fantasyblog.event;
+package cn.fantasyblog.component;
 
 import cn.fantasyblog.dto.Event;
 import com.alibaba.fastjson.JSONObject;

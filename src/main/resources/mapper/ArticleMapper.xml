@@ -240,4 +240,8 @@
             </when>
         </choose>
     </select>
+
+    <select id="countViews" resultType="Long">
+        select sum(views) from t_article
+    </select>
 </mapper>

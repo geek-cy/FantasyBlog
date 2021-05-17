@@ -6,7 +6,7 @@ import cn.fantasyblog.anntation.OperationLog;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dto.Event;
 import cn.fantasyblog.entity.Article;
-import cn.fantasyblog.event.EventProducer;
+import cn.fantasyblog.component.EventProducer;
 import cn.fantasyblog.exception.BadRequestException;
 import cn.fantasyblog.service.*;
 import cn.fantasyblog.utils.UserInfoUtil;
@@ -20,8 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-
-import java.util.Date;
 
 /**
  * @Description

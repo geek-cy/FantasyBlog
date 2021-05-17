@@ -63,13 +63,13 @@
         //自定义验证规则
         form.verify({
             title: function (value) {
-                if (value.length > 30) {
-                    return '标题长度在30个字符以内';
+                if (value.length > 40) {
+                    return '标题长度在40个字符以内';
                 }
             },
             content: function (value) {
-                if (value.length > 100) {
-                    return '内容长度在100个字符以内';
+                if (value.length > 200) {
+                    return '内容长度在200个字符以内';
                 }
             },
             //验证排序值
@@ -84,7 +84,7 @@
         form.on('submit(saveBtn)', function (data) {
             axios({
                 method: 'post',
-                url: '/admin/announce',
+                url: '/admin/notice',
                 data: data.field,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'

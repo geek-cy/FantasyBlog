@@ -140,4 +140,9 @@ public interface ArticleService {
      * @return 文章列表
      */
     List<Article> listNewest();
+
+    /**
+     * 所有文章浏览量
+     */
+    Long countViewAll();
 }

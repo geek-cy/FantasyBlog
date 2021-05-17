@@ -5,9 +5,9 @@ import cn.fantasyblog.anntation.OperationLog;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.JsonResult;
 import cn.fantasyblog.common.TableResult;
-import cn.fantasyblog.entity.Announce;
-import cn.fantasyblog.query.AnnounceQuery;
-import cn.fantasyblog.service.AnnounceService;
+import cn.fantasyblog.entity.Notice;
+import cn.fantasyblog.query.NoticeQuery;
+import cn.fantasyblog.service.NoticeService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,59 +25,59 @@ import java.util.List;
  */
 @Api(tags ="后台：公告管理")
 @RestController
-@RequestMapping("admin/announce")
-public class AnnounceController {
+@RequestMapping("admin/notice")
+public class NoticeController {
 
     @Autowired
-    private AnnounceService announceService;
+    private NoticeService noticeService;
 
     @ApiOperation("后台分页查询公告")
-    @PreAuthorize("hasAuthority('sys:announce:query')")
+    @PreAuthorize("hasAuthority('sys:notice:query')")
     @AccessLog("后台分页查询公告")
     @GetMapping
     public TableResult listTableByPage(@RequestParam(value = "page",defaultValue = Constant.PAGE)Integer page,
                                        @RequestParam(value = "limit",defaultValue = Constant.PAGE_LIMIT)Integer limit,
-                                       AnnounceQuery announceQuery){
-        Page<Announce> pageInfo = announceService.listTableByPage(page, limit, announceQuery);
+                                       NoticeQuery noticeQuery){
+        Page<Notice> pageInfo = noticeService.listTableByPage(page, limit, noticeQuery);
         return TableResult.tableOk(pageInfo.getRecords(),pageInfo.getTotal());
     }
 
     @ApiOperation("后台新增公告")
     @OperationLog("后台新增公告")
-    @PreAuthorize("hasAuthority('sys:announce:add')")
+    @PreAuthorize("hasAuthority('sys:notice:add')")
     @PostMapping
-    public JsonResult add(@Validated @RequestBody Announce announce){
-        announce.setCreateTime(new Date());
-        announce.setUpdateTime(announce.getCreateTime());
-        announceService.saveOrUpdate(announce);
+    public JsonResult add(@Validated @RequestBody Notice notice){
+        notice.setCreateTime(new Date());
+        notice.setUpdateTime(notice.getCreateTime());
+        noticeService.saveOrUpdate(notice);
         return JsonResult.ok();
     }
 
     @ApiOperation("后台编辑公告")
     @OperationLog("后台编辑公告")
-    @PreAuthorize("hasAuthority('sys:announce:edit')")
+    @PreAuthorize("hasAuthority('sys:notice:edit')")
     @PutMapping
-    public JsonResult update(@Validated @RequestBody Announce announce){
-        announce.setUpdateTime(new Date());
-        announceService.saveOrUpdate(announce);
+    public JsonResult update(@Validated @RequestBody Notice notice){
+        notice.setUpdateTime(new Date());
+        noticeService.saveOrUpdate(notice);
         return JsonResult.ok();
     }
 
     @ApiOperation("后台删除公告")
     @OperationLog("后台删除公告")
-    @PreAuthorize("hasAuthority('sys:announce:delete')")
+    @PreAuthorize("hasAuthority('sys:notice:delete')")
     @DeleteMapping("/{id}")
     public JsonResult remove(@PathVariable("id") Long id){
-        announceService.remove(id);
+        noticeService.remove(id);
         return JsonResult.ok();
     }
 
     @ApiOperation("后台批量删除公告")
     @OperationLog("后台批量删除公告")
-    @PreAuthorize("hasAuthority('sys:announce:delete')")
+    @PreAuthorize("hasAuthority('sys:notice:delete')")
     @DeleteMapping
     public JsonResult removeList(@RequestBody List<Long> idList){
-        announceService.removeList(idList);
+        noticeService.removeList(idList);
         return JsonResult.ok();
     }
 }

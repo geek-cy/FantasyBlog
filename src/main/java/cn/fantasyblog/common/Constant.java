@@ -209,7 +209,8 @@ public interface Constant {
     String DOMAIN = "http://192.168.31.92:8000";
 
     /**
-     * redis存密钥key
+     * redis存访问量
      */
-    String CODE = "code";
+    String COUNT = "count";
+
 }

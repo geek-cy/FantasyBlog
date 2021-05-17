@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -19,8 +20,8 @@ import java.util.Date;
  */
 @ApiModel("通知")
 @Data
-@TableName("sys_announcement")
-public class Announce implements Serializable {
+@TableName("sys_notice")
+public class Notice implements Serializable {
 
     @ApiModelProperty("ID")
     @TableId(type = IdType.AUTO)
@@ -28,17 +29,17 @@ public class Announce implements Serializable {
 
     @ApiModelProperty("标题")
     @NotNull(message = "标题不能为空")
-    @Length(max = 20, message = "标题长度在20个字符以内")
+    @Length(max = 40, message = "标题长度在40个字符以内")
     private String title;
 
     @ApiModelProperty("内容")
     @NotNull(message = "内容不能为空")
-    @Length(max = 100, message = "内容长度在100个字符以内")
+    @Length(max = 200, message = "内容长度在200个字符以内")
     private String content;
 
     @ApiModelProperty("排序值")
-    @NotNull(message = "排序值不能为空")
-    @Length(min = 1,max = 1024,message = "排序值在1-1024之间")
+    @NotNull(message = "排序中不能为空")
+    @Range(min = 1,max = 1024,message = "排序值在1-1024之间")
     private Integer sort;
 
     @ApiModelProperty("是否显示")

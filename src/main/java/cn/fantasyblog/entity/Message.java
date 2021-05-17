@@ -1,5 +1,6 @@
 package cn.fantasyblog.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -25,7 +26,7 @@ import java.util.Date;
 public class Message implements Serializable {
 
     @ApiModelProperty("主键:ID")
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty("父级留言ID")
@@ -51,6 +52,7 @@ public class Message implements Serializable {
     private String avatar;
 
     @ApiModelProperty("邮箱")
+    @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不正确")
     private String email;
 

@@ -13,7 +13,7 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <fieldset class="table-search-fieldset" permission="sys:announce:query">
+        <fieldset class="table-search-fieldset" permission="sys:notice:query">
             <legend>搜索信息</legend>
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane">
@@ -64,10 +64,10 @@
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm data-add-btn" lay-event="add" permission="sys:announce:add">添加公告
+                <button class="layui-btn layui-btn-sm data-add-btn" lay-event="add" permission="sys:notice:add">添加公告
                 </button>
                 <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"
-                        permission="sys:announce:delete">批量删除
+                        permission="sys:notice:delete">批量删除
                 </button>
             </div>
         </script>
@@ -75,9 +75,9 @@
         <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
 
         <script type="text/html" id="currentTableBar">
-            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit" permission="sys:announce:edit">编辑</a>
+            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit" permission="sys:notice:edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete"
-               permission="sys:announce:delete">删除</a>
+               permission="sys:notice:delete">删除</a>
         </script>
 
     </div>
@@ -104,7 +104,7 @@
 
         table.render({
             elem: '#currentTableId',
-            url: '/admin/announce',
+            url: '/admin/notice',
             toolbar: '#toolbarDemo',
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
@@ -136,8 +136,20 @@
                             return '<span class="layui-badge ' + bgColor + '">' + text + '</span>';
                         }
                     },
-                    {field: 'createTime', title: '创建时间', minWidth: 200, sort: true},
-                    {field: 'updateTime', title: '更新时间', minWidth: 200, sort: true},
+                    {
+                        field: 'createTime',
+                        title: '创建时间',
+                        minWidth: 200,
+                        sort: true,
+                        templet: "<div>{{layui.util.toDateString(d.createTime.date, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+                    },
+                    {
+                        field: 'updateTime',
+                        title: '更新时间',
+                        minWidth: 200,
+                        sort: true,
+                        templet: "<div>{{layui.util.toDateString(d.createTime.date, 'yyyy-MM-dd HH:mm:ss')}}</div>"
+                    },
                     {
                         title: '操作',
                         minWidth: 150,
@@ -145,7 +157,7 @@
                         toolbar: '#currentTableBar',
                         fixed: "right",
                         align: "center",
-                        hide: (!hasPermission('sys:announce:edit') && !hasPermission('sys:announce:delete'))
+                        hide: (!hasPermission('sys:notice:edit') && !hasPermission('sys:notice:delete'))
                     }
                 ]
             ],
@@ -212,7 +224,7 @@
                         return new Promise((resolve, reject) => {
                             axios({
                                 method: 'delete',
-                                url: '/admin/announce',
+                                url: '/admin/notice',
                                 data: idList,
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
@@ -244,7 +256,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['50%', '60%'],
-                    content: '/admin/page/announce/announce-add',
+                    content: '/admin/page/notice/notice-add',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -269,7 +281,7 @@
                         return new Promise((resolve, reject) => {
                             axios({
                                 method: 'delete',
-                                url: '/admin/announce/' + data.id,
+                                url: '/admin/notice/' + data.id,
                                 headers: {
                                     'X-Requested-With': 'XMLHttpRequest'
                                 }
@@ -300,7 +312,7 @@
                     maxmin: true,
                     shadeClose: true,
                     area: ['50%', '80%'],
-                    content: '/admin/announce/' + data.id,
+                    content: '/admin/notice/' + data.id,
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

@@ -56,7 +56,7 @@ public class IndexController {
     private MessageService messageService;
 
     @Autowired
-    private AnnounceService announceService;
+    private NoticeService noticeService;
 
     @Autowired
     private RedisService redisService;
@@ -120,7 +120,7 @@ public class IndexController {
         indexVO.setArticles(articleService.listNewest());
         indexVO.setFrontViews(accessLogService.countByLast7Days());
         indexVO.setBackViews(operationLogService.countByLast7Days());
-        indexVO.setAnnounces(announceService.listNewest());
+        indexVO.setNotices(noticeService.listNewest());
         return new ResponseEntity<>(indexVO,HttpStatus.OK);
     }
 }

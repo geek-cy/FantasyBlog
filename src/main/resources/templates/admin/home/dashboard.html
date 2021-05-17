@@ -112,11 +112,11 @@
             background-color: #F8F8F8;
         }
 
-        .layuimini-announce:hover {
+        .layuimini-notice:hover {
             background: #f6f6f6;
         }
 
-        .layuimini-announce {
+        .layuimini-notice {
             padding: 7px 16px;
             clear: both;
             font-size: 12px !important;
@@ -125,19 +125,19 @@
             transition: background 0.2s ease-in-out;
         }
 
-        .layuimini-announce-title, .layuimini-announce-label {
+        .layuimini-notice-title, .layuimini-notice-label {
             padding-right: 70px !important;
             text-overflow: ellipsis !important;
             overflow: hidden !important;
             white-space: nowrap !important;
         }
 
-        .layuimini-announce-title {
+        .layuimini-notice-title {
             line-height: 28px;
             font-size: 14px;
         }
 
-        .layuimini-announce-extra {
+        .layuimini-notice-extra {
             position: absolute;
             top: 50%;
             margin-top: -8px;
@@ -553,14 +553,14 @@
             </div>
 
             <div class="layui-col-md4">
-                <div class="layui-card" permission="sys:announce:query">
+                <div class="layui-card" permission="sys:notice:query">
                     <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>系统公告</div>
                     <div class="layui-card-body layui-text">
-                        <div class="layuimini-announce" v-for="(announce, index) in announces" :key="announce.id">
-                            <div class="layuimini-announce-title">{{announce.title}}</div>
-                            <div class="layuimini-announce-extra">{{announce.createTime}}</div>
-                            <div class="layuimini-announce-content layui-hide">
-                                {{announce.content}}
+                        <div class="layuimini-notice" v-for="(notice, index) in notices" :key="notice.id">
+                            <div class="layuimini-notice-title">{{notice.title}}</div>
+                            <div class="layuimini-notice-extra">{{notice.createTime}}</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                {{notice.content}}
                             </div>
                         </div>
                     </div>
@@ -719,7 +719,7 @@
                 increasedArticles: 0,
                 increasedMessages: 0,
                 increasedComments: 0,
-                announces: [],
+                notices: [],
             },
             methods: {
                 getData: function () {
@@ -747,7 +747,7 @@
                         this.increasedArticles = data.increasedArticles;
                         this.increasedMessages = data.increasedMessages;
                         this.increasedComments = data.increasedComments;
-                        this.announces = data.announces;
+                        this.notices = data.notices;
                         this.$nextTick(function () {
                             this.initChart();
                         })
@@ -869,10 +869,10 @@
         /**
          * 查看公告信息
          **/
-        $('body').on('click', '.layuimini-announce', function () {
-            var title = $(this).children('.layuimini-announce-title').text(),
-                noticeTime = $(this).children('.layuimini-announce-extra').text(),
-                content = $(this).children('.layuimini-announce-content').html();
+        $('body').on('click', '.layuimini-notice', function () {
+            var title = $(this).children('.layuimini-notice-title').text(),
+                noticeTime = $(this).children('.layuimini-notice-extra').text(),
+                content = $(this).children('.layuimini-notice-content').html();
             var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
                 '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
                 '<div style="font-size: 12px">' + content + '</div>\n' +
@@ -882,7 +882,7 @@
                 title: '系统公告' + '<span style="float: right;right: 1px;font-size: 12px;color: #b1b3b9;margin-top: 1px">' + noticeTime + '</span>',
                 area: '300px;',
                 shade: 0.8,
-                id: 'layuimini-announce',
+                id: 'layuimini-notice',
                 btn: ['取消'],
                 btnAlign: 'c',
                 moveType: 1,

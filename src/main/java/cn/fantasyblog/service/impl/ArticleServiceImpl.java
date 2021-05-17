@@ -205,6 +205,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Cacheable
+    public Long countViewAll() {
+        return articleMapper.countViews();
+    }
+
+    @Override
+    @Cacheable
     public Article getPrevPreviewById(Long id) {
         return articleMapper.selectPrevPreviewById(id);
     }

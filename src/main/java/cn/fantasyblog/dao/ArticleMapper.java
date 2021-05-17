@@ -92,4 +92,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     List<ArticleDateVO> countByDate(@Param("dft") Integer dateFilterType);
 
+    /**
+     * 查询所有文章浏览量
+     */
+    Long countViews();
 }

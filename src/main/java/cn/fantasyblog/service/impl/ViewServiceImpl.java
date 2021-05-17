@@ -1,10 +1,14 @@
 package cn.fantasyblog.service.impl;
 
+import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dao.ArticleMapper;
+import cn.fantasyblog.dao.VisitorMapper;
 import cn.fantasyblog.entity.Article;
+import cn.fantasyblog.entity.Visitor;
 import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.ViewService;
 import cn.fantasyblog.dto.ViewCount;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,4 +47,6 @@ public class ViewServiceImpl implements ViewService {
         }
         return 0;
     }
+
+
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.CacheErrorHandler;
@@ -18,9 +19,12 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.time.Duration;
@@ -46,16 +50,33 @@ import java.util.Map;
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**
-     * 设置 redis 数据默认过期时间，默认为1h
+     * 设置 redis 数据默认过期时间
+     * key集中失效容易引起缓存雪崩因此需要多设置几个
      * 设置@cacheable 序列化方式
      */
     @Bean
-    public RedisCacheConfiguration redisCacheConfiguration() {
-        RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig();
-        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
-        //覆盖value的序列化方式
-        configuration = configuration.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new FastJsonRedisSerializer<>(Object.class))).entryTtl(Duration.ofHours(1));
-        return configuration;
+    public CacheManager cacheManager(RedisConnectionFactory  redisConnectionFactory) {
+        return new RedisCacheManager(
+                RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
+                this.getRedisCacheConfigurationWithTtl(36000),//默认策略，未配置的key会使用这个
+                this.getRedisCacheConfigurationMap() //指定key策略
+        );
+    }
+
+    private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
+        Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
+        // 需要作缓存在这里加上就加一个put即可
+        redisCacheConfigurationMap.put("article", this.getRedisCacheConfigurationWithTtl(3600));
+        return redisCacheConfigurationMap;
+    }
+
+    private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Integer seconds) {
+        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
+        redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(new FastJsonRedisSerializer<>(Object.class))
+        ).entryTtl(Duration.ofSeconds(seconds));
+
+        return redisCacheConfiguration;
     }
 
     /**
@@ -142,4 +163,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         };
     }
 
+    /**
+     * 监听配置
+     * */
+    /*@Bean
+    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        return container;
+    }*/
 }

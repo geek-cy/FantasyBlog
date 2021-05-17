@@ -8,6 +8,7 @@ import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.VisitorService;
 import cn.fantasyblog.utils.MD5Util;
 import cn.fantasyblog.vo.VisitorVO;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.fantasyblog.exception.BadRequestException;
@@ -90,7 +91,7 @@ public class VisitorServiceImpl implements VisitorService {
         try {
             Context context = new Context();
             context.setVariable("email", visitor.getEmail());
-            String url = Constant.DOMAIN + "/visitor/activation/" + visitor.getId() + "/"+ code;
+            String url = Constant.DOMAIN + "/visitor/activation/" + visitor.getId() + "/" + code;
             context.setVariable("url", url);
             String content = templateEngine.process("/front/activation", context);
             mailService.sendHtmlMail(visitor.getEmail(), Constant.ACTIVATION_EMAIL, content);
@@ -104,7 +105,7 @@ public class VisitorServiceImpl implements VisitorService {
     public String activation(Long id, String code) {
 //        Visitor visitor = visitorMapper.selectById(id); 这里失效只能查部分属性，原因暂未知
         QueryWrapper<Visitor> wrapper = new QueryWrapper<>();
-        wrapper.select(Visitor.Table.ID,Visitor.Table.STATUS,Visitor.Table.USERNAME).eq(Visitor.Table.ID,id);
+        wrapper.select(Visitor.Table.ID, Visitor.Table.STATUS, Visitor.Table.USERNAME).eq(Visitor.Table.ID, id);
         Visitor visitor = visitorMapper.selectOne(wrapper);
         if (visitor.getStatus().equals(Constant.VISITOR_ENABLE)) {
             return "该账号已激活过";
@@ -186,4 +187,11 @@ public class VisitorServiceImpl implements VisitorService {
         return Long.valueOf(visitorMapper.selectCount(null));
     }
 
+    @Override
+    @CacheEvict(allEntries = true)
+    public void removeVisitors() {
+        QueryWrapper<Visitor> wrapper = new QueryWrapper<>();
+        wrapper.select(Visitor.Table.ID).eq(Visitor.Table.STATUS, Constant.VISITOR_DISABLE);
+        visitorMapper.delete(wrapper);
+    }
 }

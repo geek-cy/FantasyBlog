@@ -14,6 +14,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class MessageServiceImpl implements MessageService {
     MessageMapper messageMapper;
 
     @Override
+    @CacheEvict
+    @Transactional(rollbackFor = Exception.class)
     public void save(Message message) {
         messageMapper.insert(message);
     }

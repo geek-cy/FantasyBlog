@@ -46,10 +46,11 @@ public class AdminRouteController {
     private PhotoService photoService;
 
     @Autowired
-    private AnnounceService announceService;
+    private NoticeService noticeService;
 
     @Autowired
     private MenuService menuService;
+
     //ModelAndView类用来存储处理完后的结果数据，以及显示该数据的视图
     //（1）封装后端数据。
     //（2）设置view的url，即跳转到前端的url。
@@ -130,11 +131,11 @@ public class AdminRouteController {
 
     @ApiOperation("更新公告页面")
     @OperationLog("更新公告页面")
-    @PreAuthorize("hasAuthority('blog:announce:edit')")
-    @GetMapping("/announce/{id}")
+    @PreAuthorize("hasAuthority('sys:notice:edit')")
+    @GetMapping("/notice/{id}")
     public String editNotice(@PathVariable("id") Long id,Model model){
-        model.addAttribute("announce",announceService.getById(id));
-        return "admin/announce/announce-edit";
+        model.addAttribute("notice",noticeService.getById(id));
+        return "admin/notice/notice-edit";
     }
 
     @ApiOperation("更新菜单页面")

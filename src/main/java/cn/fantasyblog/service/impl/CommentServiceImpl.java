@@ -76,6 +76,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
+        // 先持久化
+        transCommentCount(true);
         decrease(id);
         commentMapper.deleteById(id);
     }
@@ -88,6 +90,7 @@ public class CommentServiceImpl implements CommentService {
      * @param id
      */
     public void decrease(Long id) {
+        transCommentCount(true);
         QueryWrapper<Comment> commentWrapper = new QueryWrapper<>();
         commentWrapper.select(Comment.Table.ARTICLE_ID).eq(Comment.Table.ID, id);
         Comment comment = commentMapper.selectOne(commentWrapper);

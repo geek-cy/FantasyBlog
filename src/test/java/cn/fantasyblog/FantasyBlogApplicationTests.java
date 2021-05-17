@@ -5,7 +5,9 @@ import cn.fantasyblog.dao.VisitorMapper;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.entity.Visitor;
 import cn.fantasyblog.filter.SensitiveFilter;
+import cn.fantasyblog.service.ArticleService;
 import cn.fantasyblog.service.MailService;
+import cn.fantasyblog.service.VisitorService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,11 +23,15 @@ class FantasyBlogApplicationTests {
     @Autowired
     private VisitorMapper visitorMapper;
 
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private VisitorService visitorService;
+
     @Test
     void contextLoads() {
-        String text = "这里是陈宇、陈杨翰宇、陈琪宇陈";
-        text = sensitiveFilter.filter(text);
-        System.out.println(text);
+        visitorService.removeVisitors();
     }
 
 }

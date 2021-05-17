@@ -1,9 +1,9 @@
 package cn.fantasyblog.config;
 
-import cn.fantasyblog.service.CommentService;
-import cn.fantasyblog.service.ElasticSearchService;
-import cn.fantasyblog.service.LikeService;
-import cn.fantasyblog.service.ViewService;
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Visitor;
+import cn.fantasyblog.service.*;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +35,9 @@ public class ScheduleConfig {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private VisitorService visitorService;
+
     @Scheduled(cron = "0 0 0 * * ?")
     private void resetElasticSearch() {
         log.info("每天0点重置elasticsearch");
@@ -51,5 +54,11 @@ public class ScheduleConfig {
         viewService.transViewCount(true);
         // 将 Redis 里的评论量同步到数据库
         commentService.transCommentCount(true);
+    }
+
+    @Scheduled(fixedDelay=3*60*60*1000)
+    private void deleteVisitor(){
+        log.info("三小时删除未激活访客");
+        visitorService.removeVisitors();
     }
 }

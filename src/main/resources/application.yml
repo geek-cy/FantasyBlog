@@ -75,20 +75,18 @@ spring:
     default-encoding: utf-8
     from: geek_cy@qq.com #与上面的username保持一致
 
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    # 时区设置
+    time-zone: GMT+8
+
+
 mybatis-plus:
   configuration:
 #   log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出日志
     map-underscore-to-camel-case: true  # 开启驼峰映射
     aggressive-lazy-loading: false # 懒加载
   type-aliases-package: cn.fantasyblog.entity  # 直接使用类名
-
-logging:
-  level:
-    com:
-      blog:
-        cy:
-          fantasyblog:
-            es: debug
 
 server:
   address: 192.168.31.92

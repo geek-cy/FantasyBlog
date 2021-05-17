@@ -74,11 +74,13 @@
         }
 
         #toc-content .is-active-link {
-            color: #42b983;
+            /*文章目录颜色*/
+            color: #00B271;
         }
 
         #toc-content .is-active-link::before {
-            background-color: #42b983;
+            /*文章目录进度条颜色*/
+            background-color: #00B271;
         }
 
         #floating-toc-btn {
@@ -427,11 +429,14 @@
             visibility: visible;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="static/front/asserts/waifu.css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body>
 <!--navbar-->
 <header th:replace="front/fragments :: header"></header>
+
 <!--end navbar-->
 <div id="app">
     <!--bgcover-->
@@ -690,6 +695,11 @@
                                             <button type="button" class="vsubmit vbtn" @click="saveComment">回复</button>
                                         </div>
                                     </div>
+                                    <div class="vcontrol" style="float: left">
+                                        <div class="col col-10 text-left">
+                                            <button type="button" class="vsubmit vbtn" @click="logout">注销</button>
+                                        </div>
+                                    </div>
                                     <div style="display:none;" class="vmark"></div>
                                 </div>
                                 <div class="vinfo" style="display:block;">
@@ -906,6 +916,22 @@
             loading: false,
         },
         methods: {
+            logout: function () {
+                let visitor = localStorage.getItem('visitor');
+                if (visitor !== null) {
+                    localStorage.removeItem("visitor");
+                    swal({
+                        text: "注销成功",
+                        icon: "success",
+                        timer: 1000
+                    })
+                } else {
+                    swal({
+                        text: "您已注销",
+                        timer: 5000
+                    })
+                }
+            },
             postLogin: function () {
                 if (this.login.username === "" || this.login.password === "") {
                     swal({
@@ -941,6 +967,7 @@
                             icon: "error",
                             button: {
                                 text: "确定",
+                                text: "重发邮箱",
                             },
                         });
                     });
@@ -972,7 +999,7 @@
                         }
                     }).then((result) => {
                         swal({
-                            text: "注册成功,请注意查收邮箱激活账号!",
+                            text: "注册成功,请三小时内查收邮箱激活账号，否则需重新注册",
                             icon: "success",
                             button: {
                                 text: "确定",
@@ -1033,13 +1060,15 @@
                 }).then((result) => {
                     $('#likeBtn').addClass('disabled');
                 }).catch(error => {
-                    swal({
-                        text: `${error.response.data.message}`,
-                        icon: "error",
-                        button: {
-                            text: "确定",
-                        },
-                    });
+                    if (visitor != null) {
+                        swal({
+                            text: `${error.response.data.message}`,
+                            icon: "error",
+                            button: {
+                                text: "确定",
+                            },
+                        });
+                    }
                 });
                 return false;
             },

@@ -1,21 +1,22 @@
 package cn.fantasyblog.service;
 
-import cn.fantasyblog.entity.Announce;
-import cn.fantasyblog.query.AnnounceQuery;
+import cn.fantasyblog.entity.Notice;
+import cn.fantasyblog.query.NoticeQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.util.List;
 
-public interface AnnounceService {
+public interface NoticeService {
 
     /**
      * 后台分页查询公告
      */
-    Page<Announce> listTableByPage(Integer current, Integer size, AnnounceQuery announceQuery);
+    Page<Notice> listTableByPage(Integer current, Integer size, NoticeQuery noticeQuery);
 
     /**
      * 新增或更新公告
      */
-    void saveOrUpdate(Announce announce);
+    void saveOrUpdate(Notice notice);
 
     /**
      * 删除公告
@@ -30,15 +31,15 @@ public interface AnnounceService {
     /**
      * 是否显示公告
      */
-    void audit(Announce announce);
+    void audit(Notice notice);
 
     /**
      * 显示最近公告
      */
-    List<Announce> listNewest();
+    List<Notice> listNewest();
 
     /**
      * 根据Id获取公告
     */
-    Announce getById(Long id);
+    Notice getById(Long id);
 }
