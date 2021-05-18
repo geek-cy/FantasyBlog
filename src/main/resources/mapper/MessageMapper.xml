@@ -1,20 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fantasyblog.dao.MessageMapper">
-    <select id="listPreviewByPage" resultType="message">
-        select content, nickname, link, avatar, email
+    <resultMap id="previewResultMap" type="message">
+        <id property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="content" column="content"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="link" column="link"/>
+        <result property="createTime" column="create_time"/>
+        <result property="browser" column="browser"/>
+        <result property="os" column="os"/>
+        <result property="address" column="address"/>
+        <result property="status" column="status"/>
+        <association property="parentMessage" javaType="message">
+            <result property="nickname" column="parent_nickname"/>
+        </association>
+    </resultMap>
+
+    <select id="listRootByPage" resultMap="previewResultMap"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
+        select id,
+               pid,
+               content,
+               nickname,
+               avatar,
+               link,
+               create_time,
+               browser,
+               os,
+               address
         from t_message
-        where status &lt;&gt; 0
+        where pid = 0
+          and status &lt;&gt; 0
         order by create_time desc
     </select>
 
-    <select id="listTableByPage" resultType="message"
-            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
-        select id,pid,user_id,content,nickname, link, avatar, email,status,create_time,browser,os,address,request_ip
-        from t_message
-        <if test="ew != null and ew.emptyOfWhere == false">
-            ${ew.customSqlSegment}
-        </if>
-        order by create_time desc
+    <select id="listAll" resultMap="previewResultMap">
+        select t.id,
+               t.pid,
+               t.content,
+               t.nickname,
+               t.avatar,
+               t.link,
+               t.create_time,
+               t.browser,
+               t.os,
+               t.address,
+               p.nickname as parent_nickname
+        from t_message t
+                 left join (select id, nickname from t_message) p on p.id = t.pid
+            and t.status &lt;&gt; 0
+        order by t.create_time desc
     </select>
 </mapper>

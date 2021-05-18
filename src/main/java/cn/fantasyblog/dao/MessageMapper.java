@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author Cy
@@ -17,12 +19,13 @@ import org.springframework.stereotype.Repository;
 public interface MessageMapper extends BaseMapper<Message> {
 
     /**
-     * 前台分页查询所有留言
+     * 分页查询所有顶级留言
      */
-    Page<Message> listPreviewByPage(IPage<Message> page);
+    Page<Message> listRootByPage(IPage<Message> page);
 
     /**
-     * 后台分页查询所有留言
+     * 查询所有留言,子留言中包含父留言的nickname
      */
-    Page<Message> listTableByPage(IPage<Message> page, @Param("ew") QueryWrapper<Message> wrapper);
+    List<Message> listAll();
+
 }

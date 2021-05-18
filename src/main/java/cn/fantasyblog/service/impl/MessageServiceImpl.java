@@ -2,8 +2,12 @@ package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.TableConstant;
-import cn.fantasyblog.entity.Message;
+import cn.fantasyblog.entity.*;
+import cn.fantasyblog.exception.BadRequestException;
+import cn.fantasyblog.filter.SensitiveFilter;
 import cn.fantasyblog.service.MessageService;
+import cn.fantasyblog.utils.LinkedListUtil;
+import cn.fantasyblog.utils.UserInfoUtil;
 import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -31,17 +35,24 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     MessageMapper messageMapper;
 
+    @Autowired
+    SensitiveFilter sensitiveFilter;
+
     @Override
     @CacheEvict
     @Transactional(rollbackFor = Exception.class)
     public void save(Message message) {
+        message.setContent(sensitiveFilter.filter(message.getContent()));
         messageMapper.insert(message);
     }
 
     @Override
     public Page<Message> listPreviewByPage(Integer current, Integer size) {
         Page<Message> page = new Page<>(current, size);
-        return messageMapper.listPreviewByPage(page);
+        Page<Message> pageInfo = messageMapper.listRootByPage(page);
+        List<Message> messages = messageMapper.listAll();
+        LinkedListUtil.toMessageLinkedList(pageInfo.getRecords(), messages);
+        return pageInfo;
     }
 
     @Override
@@ -74,7 +85,7 @@ public class MessageServiceImpl implements MessageService {
         if (messageQuery.getStatus() != null) {
             wrapper.eq(Message.Table.STATUS, messageQuery.getStatus());
         }
-        return messageMapper.listTableByPage(page, wrapper);
+        return messageMapper.selectPage(page, wrapper);
     }
 
     @Override

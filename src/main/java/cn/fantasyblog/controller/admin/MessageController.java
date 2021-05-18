@@ -85,7 +85,6 @@ public class MessageController {
         Object o = session.getAttribute("user");
         if (o != null) {
             User user = (User) o;
-            message.setUserId(user.getId());
             message.setNickname(user.getNickname());
             message.setEmail(user.getEmail());
             message.setAvatar(user.getAvatar());

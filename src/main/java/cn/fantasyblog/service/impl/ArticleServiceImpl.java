@@ -152,7 +152,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Article getDetailById(Long id) {
-        redisService.incrementView(id);
         return articleMapper.selectDetailById(id);
     }
 

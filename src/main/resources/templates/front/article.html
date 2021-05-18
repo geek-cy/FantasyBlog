@@ -759,7 +759,7 @@
                                                         <div class="vmeta">
                                                             <span class="vtime">{{child.createTime | dateFormat}}</span>
                                                             <span class="vat"
-                                                                  @click="reply(child.visitor.id, child.visitor.nickname)">回复</span>
+                                                                  @click="reply(child.id, child.visitor.nickname)">回复</span>
                                                         </div>
                                                         <div class="vcontent">
                                                             <p>
@@ -966,8 +966,7 @@
                             text: `${error.response.data.message}`,
                             icon: "error",
                             button: {
-                                text: "确定",
-                                text: "重发邮箱",
+                                text: "确定"
                             },
                         });
                     });
@@ -1157,6 +1156,7 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                 }).then((result) => {
+                    console.log(result.data.records)
                     this.current = result.data.current;
                     this.pages = result.data.pages;
                     this.total = result.data.total;

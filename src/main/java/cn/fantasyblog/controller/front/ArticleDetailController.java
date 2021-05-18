@@ -52,6 +52,7 @@ public class ArticleDetailController {
     @AccessLog("文章详情页面")
     @GetMapping("/article/{id}")
     public String articleDetail(@PathVariable("id") Long id, Model model) {
+        redisService.incrementView(id);
         Article detail = articleService.getDetailById(id);
         Article prev = articleService.getPrevPreviewById(id);
         Article next = articleService.getNextPreviewById(id);

@@ -1,6 +1,7 @@
 package cn.fantasyblog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description
@@ -31,9 +33,6 @@ public class Message implements Serializable {
 
     @ApiModelProperty("父级留言ID")
     private Long pid;
-
-    @ApiModelProperty("用户ID")
-    private Long userId;
 
     @ApiModelProperty("内容")
     @NotBlank(message = "评论内容不能为空")
@@ -73,6 +72,12 @@ public class Message implements Serializable {
 
     @ApiModelProperty("请求IP")
     private String requestIp;
+
+    @TableField(exist = false)
+    private List<Message> children;
+
+    @TableField(exist = false)
+    private Message parentMessage;
 
     public interface Table{
         String ID = "id";

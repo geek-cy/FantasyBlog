@@ -51,6 +51,7 @@ public class MessagesController {
         message.setRequestIp(StringUtils.getIp(request));
         message.setAddress(StringUtils.getCityInfo(message.getRequestIp()));
         message.setStatus(Constant.AUDIT_WAIT);
+        message.setAvatar(Constant.DEFAULT_AVATAR);
         messageService.save(message);
         return JsonResult.ok();
     }

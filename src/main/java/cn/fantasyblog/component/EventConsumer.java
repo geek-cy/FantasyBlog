@@ -39,7 +39,7 @@ public class EventConsumer {
         // 发送评论通知
         String subject = "访客"+ event.getVisitorName() + "评论了你的文章" + event.getArticleId();
         // 推送到邮箱
-        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
+//        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
         log.info(subject);
     }
 }

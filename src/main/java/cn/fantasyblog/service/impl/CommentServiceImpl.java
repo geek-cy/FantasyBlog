@@ -165,6 +165,7 @@ public class CommentServiceImpl implements CommentService {
 //            comment.setVisitorId();
             comment.setParentNickname(user.getNickname());
         }
+
         commentMapper.insert(comment);
     }
 

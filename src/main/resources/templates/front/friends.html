@@ -550,7 +550,7 @@
                                             <span class="vsys">{{message.address}}</span>
                                         </div>
                                         <div class="vmeta">
-                                            <span class="vtime">{{message.createTime}}</span>
+                                            <span class="vtime">{{message.createTime | dateFormat}}</span>
                                             <span class="vat"
                                                   @click="reply(message.id, message.nickname)">回复</span>
                                         </div>
@@ -656,6 +656,7 @@
                 this.getMessages();
             },
             reply: function (messageId, nickname) {
+                console.log(messageId)
                 this.message.placeholder = '@' + nickname;
                 this.message.pid = messageId;
                 this.clearForm();
@@ -703,9 +704,11 @@
                         'X-Requested-With': 'XMLHttpRequest'
                     },
                 }).then((result) => {
+                    console.log(result.data.records)
                     this.message.current = result.data.current;
                     this.message.pages = result.data.pages;
                     this.message.total = result.data.total;
+                    console.log(this.message)
                     if (this.message.current <= 1) {
                         this.messages = result.data.records;
                     } else {

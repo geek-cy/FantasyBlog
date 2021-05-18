@@ -1,6 +1,7 @@
 package cn.fantasyblog.utils;
 
 import cn.fantasyblog.entity.Comment;
+import cn.fantasyblog.entity.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,4 +31,25 @@ public class LinkedListUtil {
             }
         }
     }
+
+    public static List<Message> toMessageLinkedList(List<Message> rootList, List<Message> commentList){
+        ArrayList<Message> linkedList = new ArrayList<>();
+        for(Message parent : rootList){
+            List<Message> children = new ArrayList<>();
+            findMessageChildren(children,parent,commentList);
+            parent.setChildren(children);
+            linkedList.add(parent);
+        }
+        return linkedList;
+    }
+
+    private static void findMessageChildren(List<Message> children,Message parent,List<Message> commentList){
+        for(Message child:commentList){
+            if(parent.getId().equals(child.getPid())){
+                children.add(child);
+                findMessageChildren(children, child, commentList);
+            }
+        }
+    }
+
 }
