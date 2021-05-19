@@ -140,6 +140,7 @@ public class AdminRouteController {
 
     @ApiOperation("更新菜单页面")
     @OperationLog("更新菜单页面")
+    @PreAuthorize("hasAuthority('sys:menu:edit')")
     @GetMapping("/menu/{id}")
     public String editMenu(@PathVariable("id")Long id,Model model){
         model.addAttribute("menu",menuService.getById(id));
@@ -148,6 +149,7 @@ public class AdminRouteController {
 
     @ApiOperation("更新用户页面")
     @OperationLog("更新用户页面")
+    @PreAuthorize("hasAuthority('sys:user:edit')")
     @GetMapping("/user/{id}")
     public String editUser(@PathVariable("id")Long id,Model model){
         model.addAttribute("user",userService.getById(id));
@@ -156,6 +158,7 @@ public class AdminRouteController {
 
     @ApiOperation("更新角色页面")
     @OperationLog("更新角色页面")
+    @PreAuthorize("hasAuthority('sys:role:edit')")
     @GetMapping("/role/{id}")
     public String editRole(@PathVariable("id")Long id,Model model){
         Role role = roleService.getById(id);

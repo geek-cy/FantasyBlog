@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.serialize;
 
 import com.esotericsoftware.kryo.Kryo;
@@ -10,11 +11,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+*/
 /**
  * @Description Kryo序列化方式
  * @Author Cy
  * @Date 2021-05-02 19:52
- * */
+ * *//*
+
 @Slf4j
 public class KryoRedisSerializer<T> implements RedisSerializer<T> {
 
@@ -57,3 +60,4 @@ public class KryoRedisSerializer<T> implements RedisSerializer<T> {
         }
     }
 }
+*/

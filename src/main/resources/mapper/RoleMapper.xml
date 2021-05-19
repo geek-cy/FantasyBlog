@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fantasyblog.dao.RoleMapper">
     <sql id="tableColumn">
-        r.id,r.role_name,r.description,r.rank,r.color,r.status,r.create_time,r.update_time,count(ru.role_id) userCount
+        r.id,r.role_name,r.description,r.sort,r.color,r.status,r.create_time,r.update_time,count(ru.role_id) userCount
     </sql>
     <select id="listTableByPage" resultType="role" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
@@ -13,5 +13,4 @@
         </if>
         group by r.id
     </select>
-
 </mapper>

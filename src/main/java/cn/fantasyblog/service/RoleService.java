@@ -51,4 +51,9 @@ public interface RoleService {
      * 根据id获取角色
      */
     Role getById(Long id);
+
+    /**
+     * 改变角色状态
+     */
+    void changeStatus(Role role);
 }

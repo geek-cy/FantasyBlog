@@ -1,9 +1,11 @@
 package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.dao.RoleMenuMapper;
+import cn.fantasyblog.dao.UserMapper;
 import cn.fantasyblog.entity.Role;
 import cn.fantasyblog.entity.RoleMenu;
 import cn.fantasyblog.entity.RoleUser;
+import cn.fantasyblog.entity.User;
 import cn.fantasyblog.service.RoleService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,14 +36,16 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    RoleMapper roleMapper;
+    private RoleMapper roleMapper;
 
     @Autowired
-    RoleMenuMapper roleMenuMapper;
+    private RoleMenuMapper roleMenuMapper;
 
     @Autowired
-    RoleUserMapper roleUserMapper;
+    private RoleUserMapper roleUserMapper;
 
+    @Autowired
+    private UserMapper userMapper;
     @Override
     @Cacheable
     public Page<Role> listTableByPage(Integer current, Integer size, RoleQuery roleQuery) {
@@ -133,7 +137,7 @@ public class RoleServiceImpl implements RoleService {
     public Role getById(Long id) {
         // 查询角色信息
         QueryWrapper<Role> roleWrapper = new QueryWrapper<>();
-        roleWrapper.select(Role.Table.ID,Role.Table.ROLE_NAME,Role.Table.DESCRIPTION,Role.Table.RANK,Role.Table.COLOR,Role.Table.STATUS).eq(Role.Table.ID,id);
+        roleWrapper.select(Role.Table.ID,Role.Table.ROLE_NAME,Role.Table.DESCRIPTION,Role.Table.SORT,Role.Table.COLOR,Role.Table.STATUS).eq(Role.Table.ID,id);
         Role role = roleMapper.selectOne(roleWrapper);
         // 查询角色权限信息
         QueryWrapper<RoleMenu> roleMenuWrapper = new QueryWrapper<>();
@@ -143,5 +147,25 @@ public class RoleServiceImpl implements RoleService {
         List<Long> menuIdList = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
         role.setMenuIdList(menuIdList);
         return role;
+    }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    public void changeStatus(Role role){
+        // 手动清除用户缓存
+
+        // 更新角色状态
+        roleMapper.updateById(role);
+        //更新用户状态
+        QueryWrapper<RoleUser> wrapper = new QueryWrapper<>();
+        wrapper.select(RoleUser.Table.USER_ID).eq(RoleUser.Table.ROLE_ID, role.getId());
+        List<RoleUser> roleUsers = roleUserMapper.selectList(wrapper);
+        for (RoleUser roleUser : roleUsers) {
+            User user = new User();
+            user.setId(roleUser.getUserId());
+            user.setStatus(role.getStatus());
+            userMapper.updateById(user);
+        }
     }
 }

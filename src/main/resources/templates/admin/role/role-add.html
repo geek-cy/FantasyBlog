@@ -37,7 +37,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">级别</label>
         <div class="layui-input-block">
-            <input type="number" name="rank" placeholder="请输入角色级别" value="" class="layui-input" lay-verify="number|rank"
+            <input type="number" name="sort" placeholder="请输入角色级别" value="" class="layui-input" lay-verify="number|sort"
                    required="">
         </div>
     </div>
@@ -160,7 +160,7 @@
                 }
             },
             //验证级别
-            rank: function (value) {
+            sort: function (value) {
                 if (value < 1 || value > 1024) {
                     return '级别数值在1-1024之间'
                 }

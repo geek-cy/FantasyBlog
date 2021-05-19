@@ -38,7 +38,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">级别</label>
         <div class="layui-input-block">
-            <input type="number" name="rank" placeholder="请输入角色级别" value="" class="layui-input" lay-verify="number|rank"
+            <input type="number" name="sort" placeholder="请输入角色级别" value="" class="layui-input" lay-verify="number|sort"
                    required="">
         </div>
     </div>
@@ -119,7 +119,7 @@
         $('.layui-form input[name="id"]').val(role.id);
         $('.layui-form input[name="roleName"]').val(role.roleName);
         $('.layui-form textarea[name="description"]').val(role.description);
-        $('.layui-form input[name="rank"]').val(role.rank);
+        $('.layui-form input[name="sort"]').val(role.sort);
         $('.layui-form input[name="status"]').prop('checked', (role.status === 1));
         colorSelect.setValue([role.color]);
         form.render();
@@ -181,7 +181,7 @@
                 }
             },
             //验证级别
-            rank: function (value) { //value：表单的值、item：表单的DOM对象
+            sort: function (value) { //value：表单的值、item：表单的DOM对象
                 if (value < 1 || value > 1024) {
                     return '级别数值在1-1024之间'
                 }

@@ -81,10 +81,19 @@ public class RoleController {
     @ApiOperation("更新角色")
     @OperationLog("更新角色")
     @PreAuthorize("hasAuthority('sys:role:edit')")
-    @PutMapping
+    @PutMapping()
     public JsonResult update(@RequestBody Role role){
         role.setUpdateTime(new Date());
         roleService.saveOrUpdate(role);
+        return JsonResult.ok();
+    }
+
+    @ApiOperation("更新角色状态")
+    @PreAuthorize("hasAuthority('sys:role:edit')")
+    @OperationLog("更新角色状态")
+    @PutMapping("/status")
+    public JsonResult changeStatus(@RequestBody Role role) {
+        roleService.changeStatus(role);
         return JsonResult.ok();
     }
 }

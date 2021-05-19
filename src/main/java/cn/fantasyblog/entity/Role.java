@@ -42,7 +42,7 @@ public class Role implements Serializable {
     @ApiModelProperty("级别")
     @Max(value = 1024, message = "角色级别数值不能超过1024")
     @Min(value = 1, message = "角色级别数值不能小于1")
-    private Integer rank;
+    private Integer sort;
 
     @ApiModelProperty("颜色")
     private String color;
@@ -69,7 +69,7 @@ public class Role implements Serializable {
         String ID = "id";
         String ROLE_NAME = "role_name";
         String DESCRIPTION = "description";
-        String RANK = "rank";
+        String SORT = "sort";
         String COLOR = "color";
         String STATUS = "status";
         String CREATE_TIME = "create_time";
