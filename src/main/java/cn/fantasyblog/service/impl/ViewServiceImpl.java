@@ -9,7 +9,9 @@ import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.ViewService;
 import cn.fantasyblog.dto.ViewCount;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ import java.util.List;
  * @Date 2021-05-08 14:46
  */
 @Service
+@Slf4j
 public class ViewServiceImpl implements ViewService {
 
     @Autowired
@@ -47,6 +50,5 @@ public class ViewServiceImpl implements ViewService {
         }
         return 0;
     }
-
 
 }

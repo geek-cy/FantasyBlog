@@ -8,7 +8,7 @@
 - 使用Spring Data集成缓存中间件Redis，加快访问速度。
 - 使用Spring Data集成全文搜索搜索引擎ElasticSearch，实现文章信息的快速搜索和关键字的高亮显示。
 - 使用Spring集成Kafka实现事件异步处理
-- 使用SpringBoot的Schedule实现定时任务
+- 使用Spring集成Quartz实现定时任务
 - 使用SpringBoot的mail完成邮件发送
 - 前台前端使用HTTP客户端Axios进行异步请求，使用Vue完成数据的绑定和渲染。
 - 前台静态页面来自：Hexo博客Matery主题（项目地址：https://github.com/blinkfox/hexo-theme-matery)，后台模板来自layuimini（主页：http://layuimini.99php.cn/）。

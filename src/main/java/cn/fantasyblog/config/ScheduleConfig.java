@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.config;
 
 import cn.fantasyblog.common.Constant;
@@ -13,15 +14,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+*/
 /**
  * @Description
  * @Author Cy
  * @Date 2021/5/12 11:09
- */
+ *//*
+
 @Slf4j
 @Configuration
 @EnableScheduling
-public class ScheduleConfig {
+public class    ScheduleConfig {
 
     @Autowired
     private ElasticSearchService elasticSearchService;
@@ -62,3 +65,4 @@ public class ScheduleConfig {
         visitorService.removeVisitors();
     }
 }
+*/

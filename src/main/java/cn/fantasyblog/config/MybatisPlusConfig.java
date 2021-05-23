@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@EnableAsync//使用多线程
+//@EnableAsync
 @Configuration
 @MapperScan("cn.fantasyblog.dao")
 public class MybatisPlusConfig {

@@ -6,7 +6,7 @@ import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.JsonResult;
 import cn.fantasyblog.dto.Event;
 import cn.fantasyblog.entity.Comment;
-import cn.fantasyblog.component.EventProducer;
+/*import cn.fantasyblog.component.EventProducer;*/
 import cn.fantasyblog.service.CommentService;
 import cn.fantasyblog.utils.StringUtils;
 import cn.fantasyblog.utils.UserInfoUtil;
@@ -35,8 +35,8 @@ public class CommentsController {
     @Autowired
     private CommentService commentService;
 
-    @Autowired
-    private EventProducer eventProducer;
+/*    @Autowired
+    private EventProducer eventProducer;*/
 
     @ApiOperation("新增评论")
     @OperationLog("新增评论")
@@ -49,8 +49,8 @@ public class CommentsController {
         comment.setAddress(StringUtils.getCityInfo(comment.getRequestIp()));
         comment.setStatus(Constant.AUDIT_WAIT);
         commentService.save(comment);
-        Event event = new Event().setTopic(Constant.COMMENT).setArticleId(comment.getArticleId()).setVisitorName(UserInfoUtil.getVisitorName());
-        eventProducer.fireEvent(event);
+        /*Event event = new Event().setTopic(Constant.COMMENT).setArticleId(comment.getArticleId()).setVisitorName(UserInfoUtil.getVisitorName());
+        eventProducer.fireEvent(event);*/
         return JsonResult.ok();
     }
 

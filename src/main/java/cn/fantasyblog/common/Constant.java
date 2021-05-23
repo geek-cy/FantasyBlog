@@ -10,7 +10,7 @@ public interface Constant {
 
     String HOME_HREF = "/admin/page/home/dashboard";
 
-    String LOGO_TITLE = "ㄗs宇の博客";
+    String LOGO_TITLE = "FantasyBlog";
 
     String LOGO_IMAGE = "/static/admin/layuimini/images/logo.png";
 

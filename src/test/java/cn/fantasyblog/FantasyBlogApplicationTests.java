@@ -22,28 +22,8 @@ import java.util.List;
 @SpringBootTest
 class FantasyBlogApplicationTests {
 
-    @Autowired
-    private SensitiveFilter sensitiveFilter;
-
-    @Autowired
-    private VisitorMapper visitorMapper;
-
-    @Autowired
-    private ArticleService articleService;
-
-    @Autowired
-    private VisitorService visitorService;
-
-    @Autowired
-    private ArticleMapper articleMapper;
-
-    @Autowired
-    private ElasticMapper elasticMapper;
     @Test
     void contextLoads() {
-
-        Article article = articleMapper.selectDetailById(3L);
-
 
     }
 

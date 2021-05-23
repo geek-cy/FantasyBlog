@@ -23,7 +23,7 @@
                            on tt.id = tat.tag_id
                  left join t_article ta
                            on ta.id = tat.article_id
-        where ta.status = 2
+        where ta.status &lt;&gt; 0 and ta.published = 1
         group by tt.id
     </select>
     <select id="listTableByTag" resultType="cn.fantasyblog.entity.Tag"

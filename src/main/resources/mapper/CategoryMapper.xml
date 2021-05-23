@@ -6,7 +6,7 @@
         from t_category tc
                  left join t_article ta
                            on ta.category_id = tc.id
-        where tc.display = 1 and ta.status = 2
+        where tc.display = 1 and ta.status &lt;&gt;0  and ta.published = 1
         group by tc.id
     </select>
     <select id="listTableByCategory" resultType="cn.fantasyblog.entity.Category"

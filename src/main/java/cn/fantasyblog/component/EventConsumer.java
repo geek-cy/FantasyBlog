@@ -1,6 +1,6 @@
 package cn.fantasyblog.component;
 
-import cn.fantasyblog.common.Constant;
+/*import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.dto.Event;
 import cn.fantasyblog.service.MailService;
 import com.alibaba.fastjson.JSONObject;
@@ -8,15 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;*/
 
 
 /**
- * @Description
+ * @Description 吃内存，服务器弃用
  * @Author Cy
  * @Date 2021/5/13 23:49
  */
-@Slf4j
+/*@Slf4j
 @Component
 public class EventConsumer {
 
@@ -42,4 +42,4 @@ public class EventConsumer {
 //        mailService.sendSimpleMail(Constant.EMAIL,subject,Constant.BLOG_ADMIN);
         log.info(subject);
     }
-}
+}*/

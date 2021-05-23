@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.component;
 
 import cn.fantasyblog.dto.Event;
@@ -7,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+*/
 /**
  * @Description
  * @Author Cy
  * @Date 2021/5/13 23:46
- */
+ *//*
+
 @Component
 @Slf4j
 public class EventProducer {
@@ -25,3 +28,4 @@ public class EventProducer {
         kafkaTemplate.send(event.getTopic(), JSONObject.toJSONString(event));
     }
 }
+*/
