@@ -6,7 +6,4 @@
         FROM sys_access_log
         WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date (create_time) group BY date;
     </select>
-
-
-
 </mapper>

@@ -50,7 +50,7 @@ public class QuartzConfig {
         factoryBean.setJobDetail(simpleDetail);
         factoryBean.setName("simple");
         factoryBean.setGroup("simpleGroup");
-        factoryBean.setRepeatInterval(2*60*60*1000);// 频率
+        factoryBean.setRepeatInterval(24*60*60*1000);// 频率
         factoryBean.setJobDataMap(new JobDataMap());// 存储状态
         return factoryBean;
     }
@@ -72,7 +72,7 @@ public class QuartzConfig {
         factoryBean.setJobDetail(cronDetail);
         factoryBean.setName("cron");
         factoryBean.setGroup("cronGroup");
-        factoryBean.setCronExpression("0 0 0 * * ?");
+        factoryBean.setCronExpression("0 0 0 */1 * ?");
 //        factoryBean.setTimeZone();
         factoryBean.setJobDataMap(new JobDataMap());// 存储状态
         return factoryBean;

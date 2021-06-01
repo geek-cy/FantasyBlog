@@ -93,7 +93,7 @@ public class VisitorServiceImpl implements VisitorService {
             context.setVariable("email", visitor.getEmail());
             String url = Constant.DOMAIN + "/visitor/activation/" + visitor.getId() + "/" + code;
             context.setVariable("url", url);
-            String content = templateEngine.process("/front/activation", context);
+            String content = templateEngine.process("front/activation", context);
             mailService.sendHtmlMail(visitor.getEmail(), Constant.ACTIVATION_EMAIL, content);
             redisTemplate.opsForValue().set(visitor.getUsername(), code);
         } catch (MessagingException e) {

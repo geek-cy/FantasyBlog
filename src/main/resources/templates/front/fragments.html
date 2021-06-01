@@ -311,105 +311,6 @@
 
 <!--commons-->
 <div th:fragment="commons">
-    <!--&lt;!&ndash;登录&ndash;&gt;
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <h4 class="col s12">登录</h4>
-                <form class="col s12">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input id="certificate" type="text" class="validate" required
-                                   v-model="login.certificate" placeholder="请输入用户名或邮箱">
-                            <label for="certificate">用户名</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">credit_card</i>
-                            <input id="password" type="password" class="validate" required
-                                   v-model="login.password" placeholder="请输入密码">
-                            <label for="password">密码</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <a class="col s12 waves-effect waves-light btn" @click="postLogin">登录</a>
-                        </div>
-                        <div class="input-field col s12">
-                            <a href="#registerModal"
-                               class="col s12 waves-effect waves-light btn materialize-red modal-trigger">注册</a>
-                        </div>
-                        <a class="col s12 center" href="#">忘记密码？</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    &lt;!&ndash;注册&ndash;&gt;
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <div class="row">
-                <h4 class="col s12">注册</h4>
-                <form class="col s12">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">account_circle</i>
-                            <input id="reg-username" type="text" class="validate" required
-                                   placeholder="请输入用户名"
-                                   pattern="^[A-Za-z0-9]{4,16}$"
-                                   v-model="register.username">
-                            <label for="reg-username">用户名</label>
-                            <span class="error red-text"
-                                  id="reg-username-tip"
-                                  v-show="!checkUsername()">用户名只能为数字或字母，长度为4-16个字符</span>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">credit_card</i>
-                            <input id="reg-password" type="password" class="validate" required
-                                   placeholder="请输入密码"
-                                   pattern="^[A-Za-z0-9]{6,16}$"
-                                   v-model="register.password">
-                            <label for="reg-password">密码</label>
-                            <span class="error red-text"
-                                  id="reg-password-tip"
-                                  v-show="!checkPassword()">密码只能为数字或字母，长度为6-16个字符</span>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">verified_user</i>
-                            <input id="reg-repeat" type="password" required
-                                   pattern="^[A-Za-z0-9]{6,16}$"
-                                   v-model="register.repeat">
-                            <label for="reg-repeat">重复密码</label>
-                            <span class="error red-text"
-                                  id="reg-repeat-tip" v-show="!checkRepeat()">两次密码输入不一致</span>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">email</i>
-                            <input id="reg-email" type="email" class="validate" required
-                                   v-model="register.email">
-                            <label for="reg-email">邮件</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">perm_identity</i>
-                            <input type="text" class="validate" required v-model="register.nickname"
-                                   :class="{invalid: !checkNickname()}">
-                            <label>昵称</label>
-                            <span class="error red-text"
-                                  v-show="!checkNickname()">昵称只能为字母或汉字，长度为2-8个字符</span>
-                        </div>
-                        <div class="input-field col s12">
-                            <i class="material-icons prefix">http</i>
-                            <input type="url" class="validate" v-model="register.link">
-                            <label>网址(可选)</label>
-                        </div>
-                        <div class="input-field col s12">
-                            <a type="submit"
-                               class="col s12 waves-effect waves-light btn materialize-red white-text"
-                               @click.prevent="postRegister()">注册</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>-->
     <!--进度条-->
     <div class="progress-bar"></div>
     <!-- 搜索遮罩框 -->
@@ -560,7 +461,7 @@
             minutes - 0-59之间的整数，做为date对象的分钟数
             seconds - 0-59之间的整数，做为date对象的秒数
             microseconds - 0-999之间的整数，做为date对象的毫秒数 */
-            var t1 = Date.UTC(2021, 0o5, 16, 0o0, 0o0, 0o0); // 北京时间2018-2-13 00:00:00
+            var t1 = Date.UTC(2021, 0o6, 0o1, 19, 20, 0o0); // 北京时间2021-6-1 19:20:00
             var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
             var diff = t2 - t1;
             var diffYears = Math.floor(diff / years);

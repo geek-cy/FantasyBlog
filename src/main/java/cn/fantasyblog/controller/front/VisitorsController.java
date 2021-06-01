@@ -44,7 +44,7 @@ public class VisitorsController {
     RedisTemplate<Object,Object> redisTemplate;
 
     @ApiOperation("访客注册")
-    @AccessLog("访客注册")
+    @OperationLog("访客注册")
     @PostMapping
     public ResponseEntity<Object> register(@Validated @RequestBody Visitor visitor){
         visitor.setPassword(MD5Util.code(visitor.getPassword()));
