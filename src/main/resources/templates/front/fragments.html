@@ -10,6 +10,9 @@
     <meta content="telephone=no" name="format-detection">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+    <meta itemprop="name" content="FantasyBlog"/>
+    <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/geek-cy/img/blog/quanyecha.jpg"/>
+    <meta name="description" itemprop="description" content="基于SpringBoot的个人博客系统"/>
     <link href="/static/front/css/all.css" rel="stylesheet" type="text/css">
     <link href="/static/front/css/materialize.min.css" rel="stylesheet">
     <link href="/static/front/css/aos.css" rel="stylesheet" type="text/css">
@@ -187,7 +190,7 @@
             <!--LOGO-->
             <div class="brand-logo">
                 <a class="waves-effect waves-light" href="../admin">
-                    <span class="logo-span" >FantasyBlog后台</span>
+                    <span class="logo-span">FantasyBlog后台</span>
                 </a>
             </div>
             <!--移动设备导航栏-->
@@ -278,19 +281,24 @@
     <!--网站信息-->
     <div id="recode" class="container row center-align" style="margin-bottom: 15px !important;">
         <!--copyright-->
-        <div class="col s12 m8 l8 copy-right" >
+        <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             <span id="year">2020</span>
             <a href="javascript:;" target="_blank">geek_cy</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
-            <a> 所有文章访问量 <a><span >{{count}}</span> </a> 次 &nbsp;&nbsp;&nbsp;</a>
-            <a> 注册的访客数 <a><span >{{visitor}}</span> </a> 人 </a>
+            <a> 所有文章访问量 <a><span>{{count}}</span> </a> 次 &nbsp;&nbsp;&nbsp;</a>
+            <a> 注册的访客数 <a><span>{{visitor}}</span> </a> 人 </a>
             <br/>
             <!--网站运行时间-->
             <span id="sitetime">载入运行时间...</span>
             <br>
+            <!--ICP备案-->
+            <span id="icp">
+            <img src="https://cdn.jsdelivr.net/gh/geek-cy/img/ICP/icp.png" style="vertical-align: text-bottom;">
+            <a href="http://beian.miit.gov.cn/" target="_blank">苏ICP备2021023808号</a>
+            </span>
         </div>
         <!--联系方式-->
         <div class="col s12 m4 l4 social-link social-statis">
@@ -349,9 +357,9 @@
 <!--scripts--->
 <div th:fragment="scripts">
     <!--网页离子背景-->
-<!--    <script color="0,0,255" count="99" opacity='0.7' pointcolor="0,0,255" src="/static/front/js/xuehuapiaoluo.js"-->
-<!--            type="text/javascript"-->
-<!--            zindex="-2"></script>-->
+    <!--    <script color="0,0,255" count="99" opacity='0.7' pointcolor="0,0,255" src="/static/front/js/xuehuapiaoluo.js"-->
+    <!--            type="text/javascript"-->
+    <!--            zindex="-2"></script>-->
     <!--<script color="122 103 238" count="200" opacity='0.7' src="/static/front/js/xuehuapiaoluo.min.js"
             type="text/javascript"
             zindex="-2"></script>-->
@@ -405,7 +413,7 @@
                 },
             },
             /*自动加载*/
-            created(){
+            created() {
                 this.load();
             }
         });

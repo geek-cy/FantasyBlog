@@ -49,13 +49,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
 /**
      *
-     * @param request
-     * @param response
-     * @param authentication 描述当前用户的相关信息
-     * @throws IOException
-     * @throws ServletException
+     * @param request 用于服务端跳转
+     * @param response 用于客户端跳转或返回Json数据
+     * @param authentication 登录成功的用户信息
      */
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         log.info("登录成功");
@@ -67,14 +64,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             request.getSession().setAttribute("user",user);
             userId = user.getId().toString();
         }
-        String parameter = request.getParameter("remember-me");
-        //String类型转boolean类型的一个方法
-        boolean rememberMe = Boolean.parseBoolean(parameter);
-        if(rememberMe){
-            Cookie cookie = new Cookie("userId", userId);
-            cookie.setMaxAge(14*24*60*60);
-            response.addCookie(cookie);
-        }
+
         // 覆盖Spring Security设置的标头。 确保CSS，JavaScript和图像等正确缓存
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "*");

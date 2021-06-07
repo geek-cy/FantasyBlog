@@ -66,19 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // 自定义认证规则
         // AuthenticationProvider: ProviderManager持有一组AuthenticationProvider,每个AuthenticationProvider负责一种认证.
-        auth.authenticationProvider(authenticationProvider());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
-
-    // 解决UserDetailsService中抛出的UsernameNotFoundException无法被捕获
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setHideUserNotFoundExceptions(false);
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
-
 
     /**
      * 配置Spring Security，下面说明几点注意事项。
@@ -86,7 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * 并且在logout中，咱们必须经过POST到/logout的方法来退出用户
      * 2. 开启了rememberMe()功能后，咱们必须提供rememberMeServices
      * 并且咱们只能在TokenBasedRememberMeServices中设置cookie名称、过时时间等相关配置,若是在别的地方同时配置，会报错。
-     * 错误示例：xxxx.and().rememberMe().rememberMeServices(getRememberMeServices()).rememberMeCookieName("cookie-name")
      */
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -112,17 +100,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .rememberMe()
-                .rememberMeServices(getRememberMeServices())// 必须提供
-                .key(SECRET_KEY)// 此SECRET须要和生成TokenBasedRememberMeServices的密钥相同
+                .rememberMeServices(getRememberMeServices())
+                .key(SECRET_KEY)// 此SECRET须要和生成TokenBasedRememberMeServices的密钥相同,如果服务端重启，这个 key 会变，这样就导致之前派发出去的所有 remember-me 自动登录令牌失效
                 .and()
                 // Security底层默认会拦截/logout请求因此需要覆盖它的默认逻辑
                 .logout().permitAll()
                 .logoutUrl("/admin/logout")
-                .invalidateHttpSession(true)
+                .invalidateHttpSession(true)// 清空所有已定义session
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/admin/login.html");
 
-        // 处理权限异常
+        // 处理权限异常，这里用SpringBoot处理了
 //        http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
 
         //禁用拦截除GET方式以外的请求即关闭打开的csrf保护
@@ -139,8 +127,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     private TokenBasedRememberMeServices getRememberMeServices() {
         TokenBasedRememberMeServices services = new TokenBasedRememberMeServices(SECRET_KEY, userDetailsService);
-        services.setCookieName("remember-cookie");
-//        services.setTokenValiditySeconds(100); // 默认14天
+        services.setCookieName("remember-me");
+      services.setTokenValiditySeconds(20); // 默认14天
         return services;
     }
 }

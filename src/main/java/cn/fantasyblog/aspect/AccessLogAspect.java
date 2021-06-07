@@ -6,6 +6,7 @@ import cn.fantasyblog.utils.ThrowableUtil;
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.entity.AccessLog;
 import cn.fantasyblog.service.AccessLogService;
+import cn.fantasyblog.utils.UserInfoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -85,7 +86,7 @@ public class AccessLogAspect {
         // 获取请求IP来源
         address = StringUtils.getCityInfo(ip);
         // 获取请求用户名
-        userName = StringUtils.getUsername();
+        userName = UserInfoUtil.getUserName();
         // 创建时间
         Date date = new Date();
         accessLog.setDescription(description);

@@ -22,9 +22,12 @@ import java.util.List;
 @SpringBootTest
 class FantasyBlogApplicationTests {
 
+    @Autowired
+    private MailService mailService;
+
     @Test
     void contextLoads() {
-
+        mailService.sendSimpleMail("3","5","6");
     }
 
 }

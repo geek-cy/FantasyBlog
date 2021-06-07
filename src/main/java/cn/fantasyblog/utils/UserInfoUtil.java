@@ -30,6 +30,10 @@ public class UserInfoUtil {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getId();
     }
+    public static String getUserName(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
+    }
 
     public static String getVisitorName() {
         Object attribute = RequestHolderUtil.getHttpServletRequest().getSession().getAttribute(Constant.VISITOR_NAME);

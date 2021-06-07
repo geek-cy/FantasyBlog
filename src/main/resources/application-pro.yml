@@ -101,7 +101,7 @@ mybatis-plus:
   type-aliases-package: cn.fantasyblog.entity  # 直接使用类名
 
 server:
-  address: 127.0.0.1
+  address: 0.0.0.0
   port: 8000
 
 elasticsearch:

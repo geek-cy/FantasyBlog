@@ -227,7 +227,7 @@
         </choose>
         ,count(id) 'articleCount'
         from t_article
-        where create_time >= Date_sub(curdate(),INTERVAL 1 YEAR) and published = 1 and status = 2
+        where create_time >= Date_sub(curdate(),INTERVAL 1 YEAR) and published = 1 and status &lt;&gt; 0
         <choose>
             <when test="dft == 3">
                 group by year(create_time)

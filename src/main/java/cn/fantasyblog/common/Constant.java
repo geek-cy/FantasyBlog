@@ -206,7 +206,7 @@ public interface Constant {
 
     String BLOG_ADMIN = "http://192.168.31.92:8000/admin";
 
-    String DOMAIN = "http://192.168.31.92:8000";
+    String DOMAIN = "http://www.fantasyblog.cn";
 
     /**
      * redis存访问量

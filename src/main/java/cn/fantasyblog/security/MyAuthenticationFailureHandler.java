@@ -39,10 +39,10 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
 
         //具体错误
         HashMap<String, Object> map = new HashMap<>();
-        if(e instanceof UsernameNotFoundException){
-            map.put("message","用户名不存在");
+        if(e instanceof UsernameNotFoundException){// 此异常会被拦截为BadCredentialsException
+            map.put("message","用户名或密码错误");
         } else if(e instanceof BadCredentialsException){
-            map.put("message","密码错误");
+            map.put("message","用户名或密码错误");
         }else if(e instanceof DisabledException){
             map.put("message","账号已停用");
         } else if(e instanceof LockedException){

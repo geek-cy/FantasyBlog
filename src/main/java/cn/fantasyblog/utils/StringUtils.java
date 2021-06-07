@@ -251,10 +251,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
         return params.toString() + "}";
     }
+
     /**
      * 获取用户名
      */
-    public static String getUsername() {
+    /*public static String getUsername() {
         HttpServletRequest request = RequestHolderUtil.getHttpServletRequest();
         HttpSession session = request.getSession();
         Object o = session.getAttribute("user");
@@ -263,7 +264,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             return user.getUsername();
         }
         return "访客";
-    }
+    }*/
 
     /**
      * 获取访问切面注解的描述
