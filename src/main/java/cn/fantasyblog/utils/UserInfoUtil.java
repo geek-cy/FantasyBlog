@@ -18,21 +18,15 @@ import javax.servlet.http.HttpSession;
  */
 public class UserInfoUtil {
     public static Long getUserId() {
-        /*Object o = RequestHolder.getHttpServletRequest().getSession().getAttribute(Constant.USER);
-        Long id = null;
-        if(o != null){
-            User user = (User) o;
-            id = user.getId();
-        } else {
-            throw new BadRequestException("用户未登录");
-        }
-        return id;*/
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return user.getId();
     }
     public static String getUserName(){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getUsername();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof User){
+            return ((User) principal).getUsername();
+        }
+        return getVisitorName();
     }
 
     public static String getVisitorName() {

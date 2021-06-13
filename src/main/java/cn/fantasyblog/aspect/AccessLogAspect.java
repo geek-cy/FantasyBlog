@@ -21,7 +21,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-03-13 17:32
  */
-@Aspect//声明该类为一个注解类
+@Aspect //切面声明
 @Component
 @Slf4j
 public class AccessLogAspect {

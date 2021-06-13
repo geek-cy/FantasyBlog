@@ -3,6 +3,7 @@ package cn.fantasyblog.controller.admin;
 import cn.fantasyblog.anntation.AccessLog;
 import cn.fantasyblog.entity.User;
 import cn.fantasyblog.service.*;
+import cn.fantasyblog.utils.UserInfoUtil;
 import cn.fantasyblog.vo.IndexVO;
 import cn.fantasyblog.vo.InitInfoVO;
 import io.swagger.annotations.Api;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-@Api(tags ="后台：控制面板")
+@Api(tags = "后台：控制面板")
 @Controller
 @RequestMapping("/admin")
 public class IndexController {
@@ -68,17 +69,17 @@ public class IndexController {
      * 响应主体初始化
      */
     public ResponseEntity<Object> init(HttpSession session, HttpServletRequest request) {
-        Long userId = null;
-        Cookie[] cookies = request.getCookies();
+        Long userId = UserInfoUtil.getUserId();
+        /*Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("userId")) {
                 // 接收上一次的cookie
                 userId = Long.valueOf(cookie.getValue());
                 break;
             }
-        }
+        }*/
         // 第一次登录
-        if (userId == null) {
+        /*if (userId == null) {
             Object o = session.getAttribute("user");
             if (o != null) {
                 User user = (User) o;
@@ -86,7 +87,7 @@ public class IndexController {
             }
             // 重置菜单缓存
             redisService.deleteMenu();
-        }
+        }*/
         if (userId != null) {
             InitInfoVO initInfoVO = menuService.menu(userId);
             return new ResponseEntity<>(initInfoVO, HttpStatus.OK);
@@ -121,6 +122,6 @@ public class IndexController {
         indexVO.setFrontViews(accessLogService.countByLast7Days());
         indexVO.setBackViews(operationLogService.countByLast7Days());
         indexVO.setNotices(noticeService.listNewest());
-        return new ResponseEntity<>(indexVO,HttpStatus.OK);
+        return new ResponseEntity<>(indexVO, HttpStatus.OK);
     }
 }

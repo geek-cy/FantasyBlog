@@ -14,10 +14,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -76,7 +80,9 @@ public class ArticleController {
     @PreAuthorize("hasAuthority('blog:article:audit')")
     @OperationLog("审核文章")
     @PutMapping("/audit")
-    public JsonResult audit(@RequestBody AuditVO auditVO) {
+    public JsonResult audit(@RequestBody AuditVO auditVO, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        System.out.println(cookies);
         articleService.audit(auditVO);
         return JsonResult.ok();
     }

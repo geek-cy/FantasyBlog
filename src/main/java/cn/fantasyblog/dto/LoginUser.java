@@ -27,10 +27,11 @@ public class LoginUser extends User implements UserDetails {
     private List<Menu> permissions;
 
     //应用内唯一的用户名
-    //用户的加密后的密码， 不加密会使用{noop}前缀
-    //用户的权限集， 默认需要添加ROLE_ 前缀
+    //用户的加密后的密码，不加密会使用{noop}前缀
+    //用户的权限集，默认需要添加ROLE_前缀
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // list转为Collection,map处理流中的每一个元素
         return permissions.parallelStream()
                 .map(p -> new SimpleGrantedAuthority(p.getAuthority()))
                 .collect(Collectors.toSet());

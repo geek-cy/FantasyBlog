@@ -6,6 +6,7 @@ import cn.fantasyblog.entity.Menu;
 import cn.fantasyblog.entity.User;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.fantasyblog.dto.LoginUser;
+import lombok.EqualsAndHashCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
  * @Date 2021-03-20 20:11
  */
 @Service
+@EqualsAndHashCode
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
@@ -37,7 +39,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         wrapper.eq(User.Table.USERNAME,username);
         User user = userMapper.selectOne(wrapper);
         if(StringUtils.isEmpty(user)){
-            throw new UsernameNotFoundException("用户名不存在");
+            throw new UsernameNotFoundException("用户名不能为空");
         }
         LoginUser loginUser = new LoginUser();
         // 将源对象的属性拷贝到目标对象

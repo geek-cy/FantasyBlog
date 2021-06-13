@@ -32,8 +32,6 @@ import java.io.IOException;
  * @Author Cy
  * @Date 2021-03-18 19:52
  */
-
-
 @Slf4j
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -56,15 +54,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException{
         log.info("登录成功");
-        String userId = null;
-        // 取到代表当前用户的信息
-        Object principal = authentication.getPrincipal();
-        if(principal != null){
-            User user = (User) principal;
-            request.getSession().setAttribute("user",user);
-            userId = user.getId().toString();
-        }
-
         // 覆盖Spring Security设置的标头。 确保CSS，JavaScript和图像等正确缓存
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "*");

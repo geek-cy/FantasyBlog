@@ -22,7 +22,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-03-13 17:33
  */
-@Aspect
+@Aspect //切面声明
 @Component
 @Slf4j
 public class OperationLogAspect {

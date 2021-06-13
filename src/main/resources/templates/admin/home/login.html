@@ -156,9 +156,11 @@
 <script charset="utf-8" src="/static/admin/layuimini/lib/jq-module/jquery.particleground.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+<script src="/static/admin/layuimini/js/jquery.cookie.js"></script>
 <script>
-    layui.use(['form'], function () {
-        var form = layui.form,
+    layui.use(['form','jquery'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
             layer = layui.layer;
 
         //刷新验证码
@@ -193,7 +195,8 @@
                 url: '/admin/login',
                 data: $("#login-form").serialize(),
                 headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    // 'X-CSRFToken': $.cookie('XSRF-TOKEN')
                 }
             }).then((response) => {
                 let result = response.data;
