@@ -5,13 +5,13 @@
         id
         ,url,description,sort,display,create_time,update_time
     </sql>
-    <select id="listTableBYPage" resultType="photo">
+    <select id="listTableBYPage" resultType="photo"
+            parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
         <include refid="tableColumn"/>
         from t_photo
         <if test="ew != null and ew.emptyOfWhere == false">
             ${ew.customSqlSegment}
         </if>
-        order by id
     </select>
 </mapper>

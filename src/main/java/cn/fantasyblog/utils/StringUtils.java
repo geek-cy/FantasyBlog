@@ -244,7 +244,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         Object[] argValues = joinPoint.getArgs();
         // 参数名称
         String[] argNames = signature.getParameterNames();
-        if(argValues != null){
+        if(argValues != null && argNames != null){
             for(int i = 0;i < argValues.length;i++){
                 params.append(" ").append(argNames[i]).append(": ").append(argValues[i]);
             }

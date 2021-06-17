@@ -23,11 +23,12 @@ import java.util.List;
 class FantasyBlogApplicationTests {
 
     @Autowired
-    private MailService mailService;
+    private ArticleMapper articleMapper;
 
     @Test
     void contextLoads() {
-        mailService.sendSimpleMail("3","5","6");
+        Article article = articleMapper.selectPrevPreviewById(10L);
+        System.out.println(article);
     }
 
 }

@@ -8,6 +8,6 @@
         SELECT
         <include refid="Base_Column_List"></include>
         FROM sys_user
-        WHERE username = #{username,jdbcType=VARCHAR} AND password = #{password,jdbcType=VARCHAR} AND status = 1
+        WHERE username = #{username} AND password = #{password} AND status = 1
     </select>
 </mapper>

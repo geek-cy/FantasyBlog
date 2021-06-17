@@ -103,10 +103,7 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public String activation(Long id, String code) {
-//        Visitor visitor = visitorMapper.selectById(id); 这里失效只能查部分属性，原因暂未知
-        QueryWrapper<Visitor> wrapper = new QueryWrapper<>();
-        wrapper.select(Visitor.Table.ID, Visitor.Table.STATUS, Visitor.Table.USERNAME).eq(Visitor.Table.ID, id);
-        Visitor visitor = visitorMapper.selectOne(wrapper);
+        Visitor visitor = visitorMapper.selectById(id);
         if (visitor.getStatus().equals(Constant.VISITOR_ENABLE)) {
             return "该账号已激活过";
         } else if (Objects.equals(redisTemplate.opsForValue().get(visitor.getUsername()), code)) {

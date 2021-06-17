@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fantasyblog.dao.MenuMapper">
+    <!--尚未优化 Using join buffer 左连接影响图标-->
     <select id="listMenuByUserId" resultType="menu">
-        select sm.*
+        select *
         from sys_menu sm
-                 left join sys_role_menu srm
-                           on sm.id = srm.menu_id
-                 left join sys_role_user sru
-                           on srm.role_id = sru.role_id
-        where sru.user_id = #{userId} and `status` = 1
+                left join sys_role_menu srm
+                      on sm.id = srm.menu_id
+                left join sys_role_user sru
+                      on srm.role_id = sru.role_id
+        where sru.user_id = #{userId}
+          and `status` = 1
         order by sm.sort
     </select>
     <select id="listPermissionByUserId" resultType="menu">
-        select sm.*
+        select sm.authority
         from sys_menu sm
-                 left join sys_role_menu srm
-                           on sm.id = srm.menu_id
-                 left join sys_role_user sru
-                           on srm.role_id = sru.role_id
-        where sru.user_id = #{userId} and `authority` is not null
+                 join sys_role_menu srm
+                      on sm.id = srm.menu_id
+                 join sys_role_user sru
+                      on srm.role_id = sru.role_id
+        where sru.user_id = #{userId}
+          and `authority` is not null
     </select>
 </mapper>

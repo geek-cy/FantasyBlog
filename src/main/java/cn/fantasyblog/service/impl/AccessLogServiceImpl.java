@@ -48,9 +48,7 @@ public class AccessLogServiceImpl implements AccessLogService {
         Page<AccessLog> page = new Page<>(current, size);
         // 实体对象封装操作类
         QueryWrapper<AccessLog> wrapper = new QueryWrapper<>();
-        wrapper.select(AccessLog.Table.ID, AccessLog.Table.REQUEST_IP, AccessLog.Table.ADDRESS, AccessLog.Table.DESCRIPTION,
-                AccessLog.Table.BROWSER, AccessLog.Table.TIME, AccessLog.Table.CREATE_TIME, AccessLog.Table.STATUS)
-                .orderByDesc(AccessLog.Table.CREATE_TIME);
+        wrapper.orderByDesc(AccessLog.Table.CREATE_TIME);
         if (!StringUtils.isEmpty(logQuery.getRequestIp())) {
             wrapper.like(AccessLog.Table.REQUEST_IP, logQuery.getRequestIp());
         }

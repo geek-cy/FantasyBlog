@@ -123,7 +123,7 @@ public interface ArticleService {
      * @param dateFilterType
      * @return 文章日期统计
      */
-    List<ArticleDateVO> countByDate(Integer dateFilterType);
+    List<ArticleDateVO> countByDate();
 
     /**
      * 根据日期分页获取所有文章预览

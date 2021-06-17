@@ -178,11 +178,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Cacheable
-    public List<ArticleDateVO> countByDate(Integer dateFilterType) {
-        if (dateFilterType == null) {
-            dateFilterType = Constant.FILTER_BY_DAY;
-        }
-        return articleMapper.countByDate(dateFilterType);
+    public List<ArticleDateVO> countByDate() {
+        return articleMapper.countByDate();
     }
 
     @Override

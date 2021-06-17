@@ -19,7 +19,6 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import javax.sql.DataSource;
 
-
 /**
  * @Description 安全配置
  * @Author Cy
@@ -28,7 +27,7 @@ import javax.sql.DataSource;
 // WebSecurityConfigurerAdapter是个适配器
 // 启动基于注解的安全性
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -58,18 +57,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // AuthenticationManagerBuilder: 用于构建AuthenticationManager对象的工具.
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 自定义认证规则
-        // AuthenticationProvider: ProviderManager持有一组AuthenticationProvider,每个AuthenticationProvider负责一种认证.
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    /**
-     * 配置Spring Security，下面说明几点注意事项。
-     * 1. Spring Security 默认是开启了CSRF的，此时咱们提交的POST表单必须有隐藏的字段来传递CSRF，
-     * 并且在logout中，咱们必须经过POST到/logout的方法来退出用户
-     * 2. 开启了rememberMe()功能后，咱们必须提供rememberMeServices
-     * 并且咱们只能在TokenBasedRememberMeServices中设置cookie名称、过时时间等相关配置,若是在别的地方同时配置，会报错。
-     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         String SECRET_KEY = "123456";
@@ -95,7 +85,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenticationFailureHandler)
                 .and()
                 .rememberMe()
-//                .rememberMeServices(getRememberMeServices())
                 .userDetailsService(userDetailsService)
                 .tokenRepository(jdbcTokenRepository())// 设置数据访问层
                 .key(SECRET_KEY)// 此SECRET须要和生成TokenBasedRememberMeServices的密钥相同,如果服务端重启，这个 key 会变，这样就导致之前派发出去的所有 remember-me 自动登录令牌失效
@@ -106,7 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/admin/logout")
                 .invalidateHttpSession(true)// 清空所有已定义session
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/admin/login.html")
+//                .logoutSuccessUrl("/admin/login.html")
                 .and()
 //                .csrf().disable()//禁用拦截除GET方式以外的请求即关闭打开的csrf保护
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -121,7 +110,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     JdbcTokenRepositoryImpl jdbcTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
-        jdbcTokenRepository.setCreateTableOnStartup(true);
         return jdbcTokenRepository;
     }
 }

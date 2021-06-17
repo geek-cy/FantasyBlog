@@ -21,6 +21,7 @@ import java.util.HashMap;
  * 能够很方便地将Java对象转为Json格式的数据，
  * 用于后端Servlet向AJAX传递Json数据，动态地将数据展示在页面上。
  */
+
 /**
  * @Description Spring的OncePerRequestFilter类实际上是一个实现了Filter接口的抽象类。
  * spring对Filter进行了一些封装处理。
@@ -35,8 +36,6 @@ import java.util.HashMap;
 
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {
-
-    private ObjectMapper objectMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

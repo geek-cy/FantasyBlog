@@ -36,7 +36,7 @@
     <sql id="previewColumn">
         id,pid,user_id,visitor_id,content,parent_nickname,create_time,browser,os,address
     </sql>
-    <select id="listTableByPage" resultMap="tableResultMap">
+    <select id="listTableByPage" resultMap="tableResultMap" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
         <include refid="tableColumn"/>
         from t_comment
@@ -53,7 +53,7 @@
         order by create_time desc
     </select>
 
-    <select id="listByArticleId" resultMap="previewResultMap">
+    <select id="listByArticleId" resultMap="previewResultMap" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
         <include refid="previewColumn"/>
         from t_comment where article_id = #{articleId} and status &lt;&gt; 0

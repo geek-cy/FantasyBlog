@@ -2,6 +2,7 @@ package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.TableConstant;
+import cn.fantasyblog.entity.AccessLog;
 import cn.fantasyblog.entity.OperationLog;
 import cn.fantasyblog.service.OperationLogService;
 import cn.fantasyblog.vo.ViewDateVO;
@@ -40,6 +41,7 @@ public class OperationLogServiceImpl implements OperationLogService {
         wrapper.select(OperationLog.Table.ID, OperationLog.Table.REQUEST_IP, OperationLog.Table.ADDRESS, OperationLog.Table.USERNAME, OperationLog.Table.CREATE_TIME, OperationLog.Table.DESCRIPTION, OperationLog.Table.STATUS)
                 .orderByDesc(OperationLog.Table.CREATE_TIME)
                 .last(TableConstant.LIMIT + Constant.NEWEST_PAGE_SIZE);
+
         return operationLogMapper.selectList(wrapper);
     }
 
@@ -62,6 +64,7 @@ public class OperationLogServiceImpl implements OperationLogService {
     public Page<OperationLog> listTableByPage(Integer current, Integer size, LogQuery logQuery) {
         Page<OperationLog> page = new Page<>(current, size);
         QueryWrapper<OperationLog> wrapper = new QueryWrapper<>();
+        wrapper.orderByDesc(OperationLog.Table.CREATE_TIME);
         if (!StringUtils.isEmpty(logQuery.getAddress())) {
             wrapper.like(OperationLog.Table.ADDRESS,logQuery.getAddress());
         }

@@ -7,7 +7,7 @@
     <select id="listTableByPage" resultType="role" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
         <include refid="tableColumn"/>
-        from sys_role r left join sys_role_user ru on r.id = ru.role_id
+        from sys_role r join sys_role_user ru on r.id = ru.role_id
         <if test="ew != null and ew.emptyOfWhere == false">
             ${ew.customSqlSegment}
         </if>

@@ -44,7 +44,7 @@ public class AboutController {
     @ApiOperation("查询关于我页面数据")
     @AccessLog("查询关于我页面数据")
     @GetMapping("/about")
-    public ResponseEntity<Object> about(@RequestParam(value = "dateType",required = false) Integer dateFilterType){
+    public ResponseEntity<Object> about(){
         AboutVO aboutVO = new AboutVO();
         aboutVO.setArticleCount(articleService.countAll());
         aboutVO.setCategoryCount(categoryService.countAll());
@@ -52,7 +52,7 @@ public class AboutController {
         aboutVO.setCategories(categoryService.listArticleCountByCategory());
         aboutVO.setTags(tagService.listArticleCountByTag());
         aboutVO.setPhotos(photoService.listAll());
-        List<ArticleDateVO> articleDates = articleService.countByDate(dateFilterType);
+        List<ArticleDateVO> articleDates = articleService.countByDate();
         for (ArticleDateVO articleDate : articleDates) {
             articleDate.setDate(DateUtil.formatDate(articleDate.getYear(), articleDate.getMonth(), articleDate.getDay()));
             articleDate.setYear(null);

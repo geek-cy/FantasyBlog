@@ -31,12 +31,6 @@
 <div id="app">
     <!--content-->
     <main class="content">
-        <div class="container archive-calendar">
-            <div class="card">
-                <div id="post-calendar" class="card-content"></div>
-            </div>
-        </div>
-
         <div id="cd-timeline" class="container">
             <div class="cd-timeline-block" v-for="(article, index) in articles" :key="article.id">
                 <div class="cd-timeline-img year" data-aos="zoom-in-up" v-show="isShow(article.createTime,'y')">
@@ -48,10 +42,6 @@
                 <div class="cd-timeline-img day" data-aos="zoom-in-up">
                     <span>{{getSpecific(article.createTime,'d')}}</span>
                 </div>
-
-
-
-
                 <article class="cd-timeline-content" data-aos="fade-up">
                     <div class="article col s12 m6">
                         <div class="card">

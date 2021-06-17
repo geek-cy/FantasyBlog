@@ -60,14 +60,14 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param id 当前文章ID
      * @return 上一篇文章预览
      */
-    Article selectPrevPreviewById(Long id);
+    Article selectPrevPreviewById(@Param("id") Long id);
 
     /**
      * 前台获取当前文章的下一篇文章预览
      * @param id 当前文章ID
      * @return 下一篇文章预览
      */
-    Article selectNextPreviewById(Long id);
+    Article selectNextPreviewById(@Param("id") Long id);
 
     /**
      * 前台根据分类ID分页获取分类的所有文章
@@ -90,7 +90,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * @param dateFilterType
      * @return
      */
-    List<ArticleDateVO> countByDate(@Param("dft") Integer dateFilterType);
+    List<ArticleDateVO> countByDate();
 
     /**
      * 查询所有文章浏览量

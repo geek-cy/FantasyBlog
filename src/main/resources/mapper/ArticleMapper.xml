@@ -175,8 +175,8 @@
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        where ta.id = (select max(id) from t_article where id &lt; #{id})
-        and ta.published = 1 and ta.status &lt;&gt;0
+        where ta.id &gt; #{id}
+        and ta.published = 1 and ta.status &lt;&gt; 0 limit 1
     </select>
 
     <select id="selectNextPreviewById" resultMap="previewResultMap">
@@ -185,8 +185,8 @@
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        where ta.id = (select min(id) from t_article where id &gt; #{id})
-        and ta.published = 1 and ta.status &lt;&gt;0
+        where ta.id &lt; #{id}
+        and published = 1 and status &lt;&gt; 0 limit 1
     </select>
 
     <select id="listPreviewPageByCategoryId" resultMap="previewResultMap"
@@ -194,7 +194,7 @@
         select
         <include refid="previewColumn"/>
         from t_article ta
-        left join t_category tc
+        join t_category tc
         on ta.category_id = tc.id
         where tc.id = #{categoryId}
         and ta.published = 1 and ta.status &lt;&gt;0
@@ -208,7 +208,7 @@
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        left join t_article_tag tat
+        join t_article_tag tat
         on ta.id = tat.article_id
         where tat.tag_id = #{tagId}
         and ta.published = 1 and ta.status &lt;&gt;0
@@ -216,32 +216,14 @@
     </select>
 
     <select id="countByDate" resultType="cn.fantasyblog.vo.ArticleDateVO">
-        select year(create_time) 'year'
-        <choose>
-            <when test="dft == 2">
-                , month(create_time) 'month'
-            </when>
-            <when test="dft == 1">
-                , month(create_time) 'month',day(create_time) 'day'
-            </when>
-        </choose>
-        ,count(id) 'articleCount'
+        select year(create_time) 'year', month(create_time) 'month', count(id) 'articleCount'
         from t_article
-        where create_time >= Date_sub(curdate(),INTERVAL 1 YEAR) and published = 1 and status &lt;&gt; 0
-        <choose>
-            <when test="dft == 3">
-                group by year(create_time)
-            </when>
-            <when test="dft ==2">
-                group by year(create_time),month(create_time)
-            </when>
-            <when test="dft == 1">
-                group by year(create_time) ,month(create_time), day(create_time)
-            </when>
-        </choose>
+        where create_time >= Date_sub(curdate(), INTERVAL 1 YEAR) and published = 1 and status &lt;&gt; 0
+        group by year (create_time), month (create_time)
     </select>
 
     <select id="countViews" resultType="Long">
-        select sum(views) from t_article
+        select sum(views)
+        from t_article
     </select>
 </mapper>

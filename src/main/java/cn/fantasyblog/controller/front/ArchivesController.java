@@ -34,9 +34,10 @@ public class ArchivesController {
     @ApiOperation("查询归档页面数据")
     @AccessLog("查询归档页面数据")
     @GetMapping("/archives")
-    public ResponseEntity<Object> archivesData(Integer dateFilterType){
-        List<ArticleDateVO> articleDates = articleService.countByDate(dateFilterType);
+    public ResponseEntity<Object> archivesData(){
+        List<ArticleDateVO> articleDates = articleService.countByDate();
         for (ArticleDateVO articleDate : articleDates) {
+            // 根据年月日生成一个Date
             articleDate.setDate(DateUtil.formatDate(articleDate.getYear(), articleDate.getMonth(), articleDate.getDay()));
             articleDate.setYear(null);
             articleDate.setMonth(null);
