@@ -1,5 +1,6 @@
 package cn.fantasyblog.Quartz;
 
+import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
@@ -16,27 +17,17 @@ import java.util.Date;
  */
 
 @Slf4j
-public class RedisQuartz extends QuartzJobBean {
-
-    @Autowired
-    private LikeService likeService;
-
-    @Autowired
-    private ViewService viewService;
+public class VisitorQuartz extends QuartzJobBean {
 
     @Autowired
     private VisitorService visitorService;
 
     private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+    private Long index = 0L;
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        log.info("RedisQuartz--------- {}",sdf.format(new Date()));
-        // 将 Redis 里的点赞信息同步到数据库
-        likeService.transLikedCount(true);
-        likeService.transLiked();
-        // 将 Redis 里的浏览量同步到数据库
-        viewService.transViewCount(true);
+        log.info("VisitorQuartz--------- {}",sdf.format(new Date()));
         log.info("删除未激活访客");
         visitorService.removeVisitors();
     }

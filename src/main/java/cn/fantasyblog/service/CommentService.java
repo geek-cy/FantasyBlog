@@ -67,5 +67,5 @@ public interface CommentService {
     /**
      * 持久化评论数
      */
-    Integer transCommentCount(boolean flag);
+    void transCommentCount(Long articleId);
 }

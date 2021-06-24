@@ -30,6 +30,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @Description 缓存配置类
@@ -56,9 +57,10 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory  redisConnectionFactory) {
+        Random random = new Random();
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(36000),//默认策略，未配置的key会使用这个
+                this.getRedisCacheConfigurationWithTtl(3600+random.nextInt(10000)),//默认策略，未配置的key会使用随机整数
                 this.getRedisCacheConfigurationMap() //指定key策略
         );
     }
@@ -80,7 +82,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     /**
-     * 创建redis模板
+     * 设置redisTemplate序列化方式
      */
     @Bean("redisTemplate")
     @ConditionalOnMissingBean(name = "redisTemplate")// 一般加在自定义配置里避免多个配置同时注入的风险
@@ -162,14 +164,4 @@ public class RedisConfig extends CachingConfigurerSupport {
             }
         };
     }
-
-    /**
-     * 监听配置
-     * */
-    /*@Bean
-    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
-        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        return container;
-    }*/
 }

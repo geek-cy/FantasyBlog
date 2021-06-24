@@ -104,6 +104,7 @@ public class VisitorServiceImpl implements VisitorService {
     @Override
     public String activation(Long id, String code) {
         Visitor visitor = visitorMapper.selectById(id);
+        if(visitor == null) return "参数错误";
         if (visitor.getStatus().equals(Constant.VISITOR_ENABLE)) {
             return "该账号已激活过";
         } else if (Objects.equals(redisTemplate.opsForValue().get(visitor.getUsername()), code)) {

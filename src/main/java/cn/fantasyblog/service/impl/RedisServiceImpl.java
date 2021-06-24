@@ -1,22 +1,10 @@
 package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.common.Constant;
-import cn.fantasyblog.dto.CommentCount;
-import cn.fantasyblog.dto.LikedCount;
-import cn.fantasyblog.dto.ViewCount;
-import cn.fantasyblog.entity.Comment;
-import cn.fantasyblog.entity.Like;
-import cn.fantasyblog.service.LikeService;
 import cn.fantasyblog.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -30,120 +18,53 @@ public class RedisServiceImpl implements RedisService {
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
-    @Autowired
-    private LikeService likeService;
 
     @Override
     public void saveLiked(Long articleId, Long visitorId) {
-        // 每次点赞都会遍历扫一遍map
-        List<Like> list = getLikedDataFromRedis();
-        likeService.hasLiked(articleId,visitorId);
-        redisTemplate.opsForHash().put(Constant.LIKE_KEY, articleId + Constant.KEY + visitorId, 1);
-        redisTemplate.opsForHash().put(Constant.LIKE_COUNT, articleId, list.size()==0?1:list.size());
-    }
-
-    @Override
-    public void unLiked(Long articleId, Long visitorId) {
-        redisTemplate.opsForHash().put(Constant.LIKE_KEY, articleId + Constant.KEY + visitorId, 0);
-    }
-
-    @Override
-    public void deleteLiked(Long articleId) {
-        redisTemplate.opsForHash().delete(Constant.LIKE_COUNT,articleId);
-    }
-
-    @Override
-    public void deleteLikedMap(Long articleId,Long visitorId) {
-        redisTemplate.opsForHash().delete(Constant.LIKE_KEY,articleId+Constant.KEY+visitorId);
+        redisTemplate.opsForSet().add(Constant.LIKE_COUNT+"::"+articleId,visitorId);
     }
 
     @Override
     public void incrementView(Long articleId) {
-        redisTemplate.opsForHash().increment(Constant.VIEW_COUNT, articleId, 1);
+        redisTemplate.opsForValue().increment(Constant.VIEW_COUNT+"::"+articleId);
     }
 
     @Override
-    public void incrementComment(Long articleId) {
-        redisTemplate.opsForHash().increment(Constant.COMMENT, articleId, 1);
+    public Long getViewCount(Long articleId) {
+        Object o = redisTemplate.opsForValue().get(Constant.VIEW_COUNT + "::" + articleId);
+        if(o == null) return 0L;
+        return Long.valueOf(o.toString());
     }
 
     @Override
-    public void deleteView(Long articleId) {
-        redisTemplate.opsForHash().delete(Constant.VIEW_COUNT,articleId);
+    public void incrementComment(Long articleId, Long visitorId) {
+        redisTemplate.opsForSet().add(Constant.COMMENT_COUNT+"::"+articleId,visitorId);
+    }
+
+    @Override
+    public Long pv() {
+        return redisTemplate.opsForValue().increment("blog::pv"/*+ date.format(new Date())*/);
+    }
+
+    @Override
+    public Long uv(String ip) {
+        redisTemplate.opsForHyperLogLog().add("blog::uv", ip);
+        return redisTemplate.opsForHyperLogLog().size("blog::uv");
     }
 
     @Override
     public void deleteComment(Long articleId) {
-        redisTemplate.opsForHash().delete(Constant.COMMENT,articleId);
-    }
-
-    /**
-     * 从redis中获取赞数
-     */
-    @Override
-    public List<LikedCount> getLikedCountFromRedis() {
-        Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.LIKE_COUNT, ScanOptions.NONE);
-        List<LikedCount> list = new ArrayList<>();
-        while (cursor.hasNext()) {
-            Map.Entry<Object, Object> map = cursor.next();
-            // 注意这里key实际上是String类型
-            Long key = Long.parseLong((String) map.getKey());
-            // 将值保存到LikeCount中
-            Integer like = (Integer) map.getValue();
-            LikedCount dto = new LikedCount(key, like);
-            list.add(dto);
-        }
-        return list;
+        redisTemplate.opsForSet().remove(Constant.COMMENT_COUNT+"::"+articleId);
     }
 
     @Override
-    public List<Like> getLikedDataFromRedis() {
-        Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.LIKE_KEY, ScanOptions.NONE);
-        List<Like> list = new ArrayList<>();
-        while (cursor.hasNext()) {
-            Map.Entry<Object, Object> entry = cursor.next();
-            String key = (String) entry.getKey();
-            // 分离出 articleId，visitorId
-            String[] split = key.split(Constant.KEY);
-            Long articleId = Long.parseLong(split[0]);
-            Long visitorId = Long.parseLong(split[1]);
-            Integer value = (Integer) entry.getValue();
-            // 组装成 UserLike 对象
-            Like userLike = new Like(articleId, visitorId, value);
-            list.add(userLike);
-        }
-        return list;
+    public Long getCommentCount(Long articleId) {
+        return redisTemplate.opsForSet().size(Constant.COMMENT_COUNT+"::"+articleId);
     }
 
     @Override
-    public void deleteMenu() {
-        redisTemplate.delete(Constant.MENU);
-    }
-
-    @Override
-    public List<ViewCount> getViewCountFromRedis() {
-        Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.VIEW_COUNT, ScanOptions.NONE);
-        List<ViewCount> list = new ArrayList<>();
-        while (cursor.hasNext()) {
-            Map.Entry<Object, Object> map = cursor.next();
-            Long key = Long.parseLong((String) map.getKey());
-            ViewCount dto = new ViewCount(key, (Integer) map.getValue());
-            list.add(dto);
-        }
-        return list;
-    }
-
-    @Override
-    public List<CommentCount> getCommentCountFromRedis() {
-        Cursor<Map.Entry<Object, Object>> cursor = redisTemplate.opsForHash().scan(Constant.COMMENT, ScanOptions.NONE);
-        List<CommentCount> list = new ArrayList<>();
-        while (cursor.hasNext()) {
-            Map.Entry<Object, Object> map = cursor.next();
-            Long key = Long.parseLong((String) map.getKey());
-            CommentCount dto = new CommentCount(key, (Integer) map.getValue());
-            list.add(dto);
-        }
-        return list;
+    public Long getLikedCount(Long articleId) {
+        return redisTemplate.opsForSet().size(Constant.LIKE_COUNT+"::"+articleId);
     }
 
 }

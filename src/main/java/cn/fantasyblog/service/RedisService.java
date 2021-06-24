@@ -1,24 +1,16 @@
 package cn.fantasyblog.service;
 
-import cn.fantasyblog.dto.CommentCount;
-import cn.fantasyblog.entity.Comment;
-import cn.fantasyblog.entity.Like;
-import cn.fantasyblog.dto.LikedCount;
-import cn.fantasyblog.dto.ViewCount;
-
-import java.util.List;
-
 public interface RedisService {
 
     /**
-     * 点赞状态为1且点赞数+1
+     * 点赞+1
      */
     void saveLiked(Long articleId,Long visitorId);
 
     /**
-     * 点赞状态为0
+     * 获得点赞量
      */
-    void unLiked(Long articleId,Long visitorId);
+    Long getLikedCount(Long articleId);
 
     /**
      * 文章浏览量+1
@@ -26,19 +18,9 @@ public interface RedisService {
     void incrementView(Long articleId);
 
     /**
-     * 删除点赞量
+     * 获得浏览量
      */
-    void deleteLiked(Long articleId);
-
-    /**
-     * 删除点赞访客键
-     */
-    void deleteLikedMap(Long articleId,Long visitorId);
-
-    /**
-     * 删除浏览量
-     */
-    void deleteView(Long articleId);
+    Long getViewCount(Long id);
 
     /**
      * 删除评论量
@@ -46,34 +28,25 @@ public interface RedisService {
     void deleteComment(Long articleId);
 
     /**
-     * 获得点赞量
-     */
-    List<LikedCount> getLikedCountFromRedis();
-
-    /**
-     * 获得浏览量
-     */
-    List<ViewCount> getViewCountFromRedis();
-
-    /**
      * 获得评论量
+     * @return
      */
-    List<CommentCount> getCommentCountFromRedis();
-
-    /**
-     * 获得赞对象
-     */
-    List<Like> getLikedDataFromRedis();
-
-    /**
-     * 删除菜单缓存
-     */
-    void deleteMenu();
+    Long getCommentCount(Long articleId);
 
     /**
      * 评论量+1
      */
-    void incrementComment(Long articleId);
+    void incrementComment(Long articleId, Long visitorId);
+
+    /**
+     * 统计PV
+     */
+    Long pv();
+
+    /**
+     * 统计UV
+     */
+    Long uv(String ip);
 
 
 }

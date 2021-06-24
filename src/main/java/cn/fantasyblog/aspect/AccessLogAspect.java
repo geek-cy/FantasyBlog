@@ -21,7 +21,7 @@ import java.util.Date;
  * @Author Cy
  * @Date 2021-03-13 17:32
  */
-@Aspect //切面声明
+@Aspect //定义切面从而定义切入点和通知
 @Component
 @Slf4j
 public class AccessLogAspect {
@@ -66,10 +66,10 @@ public class AccessLogAspect {
     }
 
     /**
-     * 在切点之前
+     * 前置通知
      * @param joinPoint
      */
-    @Before("AccessLog()")
+    @Before("AccessLog()")// execution(public ...)
     public void logBefore(JoinPoint joinPoint){
         // 获取当前请求对象
         request = RequestHolderUtil.getHttpServletRequest();
@@ -132,7 +132,7 @@ public class AccessLogAspect {
     }
 
     /**
-     * 在切点之后
+     * final通知
      */
     @After("AccessLog()")
     public void logAfter(){

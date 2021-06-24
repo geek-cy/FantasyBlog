@@ -285,8 +285,8 @@
             Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
-            <a> 所有文章访问量 <a><span>{{count}}</span> </a> 次 &nbsp;&nbsp;&nbsp;</a>
-            <a> 注册的访客数 <a><span>{{visitor}}</span> </a> 人 </a>
+            <a> &nbsp; &nbsp; PV: <a><span>{{pv}}</span></a></a>
+            <a>  &nbsp;&nbsp; &nbsp;UV:<a><span>{{uv}}</span></a></a>
             <br/>
             <!--网站运行时间-->
             <span id="sitetime">载入运行时间...</span>
@@ -396,8 +396,8 @@
         new Vue({
             el: '#recode',
             data: {
-                count: '',
-                visitor: '',
+                pv: '',
+                uv: '',
             },
             methods: {
                 load: function () {
@@ -408,8 +408,8 @@
                             'X-Requested-With': 'XMLHttpRequest'
                         },
                     }).then((response) => {
-                        this.count = response.data.count;
-                        this.visitor = response.data.visitor;
+                        this.pv = response.data.pv;
+                        this.uv = response.data.uv;
                     })
                 },
             },

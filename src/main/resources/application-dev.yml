@@ -33,8 +33,8 @@ spring:
 
   redis:
     database: 0  #数据库索引
-    host: 127.0.0.1
-    port: 6379
+    host: 121.41.164.231
+    port: 6380
     password:
     timeout: 5000   #连接超时时间
 
@@ -124,8 +124,7 @@ elasticsearch:
 file:
   path: F:\fantasyblog\
   avatar: F:\fantasyblog\avatar\
-  maxSize: 200  # 文件大小 /M
-  avatarMaxSize: 5
+  maxSize: 200
 
 logging:
   level:

@@ -1,7 +1,7 @@
 package cn.fantasyblog.config;
 
 import cn.fantasyblog.Quartz.ElasticQuartz;
-import cn.fantasyblog.Quartz.RedisQuartz;
+import cn.fantasyblog.Quartz.VisitorQuartz;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +34,9 @@ public class QuartzConfig {
     @Bean
     public JobDetailFactoryBean simpleDetail(){
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
-        factoryBean.setJobClass(RedisQuartz.class);
-        factoryBean.setName("redis");
-        factoryBean.setGroup("redisGroup");
+        factoryBean.setJobClass(VisitorQuartz.class);
+        factoryBean.setName("visitor");
+        factoryBean.setGroup("visitorGroup");
         factoryBean.setDurability(true);// 是否持久保存
         factoryBean.setRequestsRecovery(true);// 是否可恢复
         return factoryBean;
@@ -73,7 +73,6 @@ public class QuartzConfig {
         factoryBean.setName("cron");
         factoryBean.setGroup("cronGroup");
         factoryBean.setCronExpression("0 0 0 */1 * ?");
-//        factoryBean.setTimeZone();
         factoryBean.setJobDataMap(new JobDataMap());// 存储状态
         return factoryBean;
     }

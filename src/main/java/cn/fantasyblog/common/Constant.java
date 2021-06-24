@@ -20,6 +20,7 @@ public interface Constant {
 
     Integer MAX_RECOMMEND_ARTICLES = 4;
 
+    String bloomArticleId = "bloom::ArticleId";
     // 分页起始数
     String PAGE = "1";
 
@@ -46,19 +47,19 @@ public interface Constant {
     String COMMENT = "comment";
 
     /**
-     * 点赞键
-     */
-    String LIKE_KEY = "like_map";
-
-    /**
      * 点赞数
      */
     String LIKE_COUNT = "like_count";
 
     /**
-     * 浏览数
+     * 浏览量
      */
     String VIEW_COUNT = "view_count";
+
+    /**
+     * 评论量
+     */
+    String COMMENT_COUNT = "comment_count";
 
     /**
      * redis键符号

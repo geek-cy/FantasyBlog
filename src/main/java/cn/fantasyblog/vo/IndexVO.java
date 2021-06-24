@@ -61,18 +61,6 @@ public class IndexVO implements Serializable {
     @ApiModelProperty("后台流量日期统计")
     private List<ViewDateVO> backViews;
 
-    @ApiModelProperty("距离上次访问主页新增浏览量")
-    private Long increasedViews;
-
-    @ApiModelProperty("距离上次访问主页新增文章数量")
-    private Long increasedArticles;
-
-    @ApiModelProperty("距离上次访问主页新增留言数量")
-    private Long increasedMessages;
-
-    @ApiModelProperty("距离上次访问主页新增评论数量")
-    private Long increasedComments;
-
     @ApiModelProperty("公告列表")
     private List<Notice> notices;
 }

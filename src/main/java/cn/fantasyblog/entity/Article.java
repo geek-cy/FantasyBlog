@@ -53,13 +53,13 @@ public class Article implements Serializable {
     private Integer type;
 
     @ApiModelProperty("浏览量")
-    private Integer views;
+    private Long views;
 
     @ApiModelProperty("点赞量")
-    private Integer likes;
+    private Long likes;
 
     @ApiModelProperty("评论量")
-    private Integer comments;
+    private Long comments;
 
     @ApiModelProperty("开启赞赏")
     private Boolean appreciable;

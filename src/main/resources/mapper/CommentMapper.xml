@@ -49,14 +49,14 @@
     <select id="listRootPageByArticleId" resultMap="previewResultMap">
         select
         <include refid="previewColumn"/>
-        from t_comment where article_id = #{articleId} and pid = 0 and status &lt;&gt; 0
+        from t_comment where article_id = #{articleId} and pid = 0 and status = 1
         order by create_time desc
     </select>
 
     <select id="listByArticleId" resultMap="previewResultMap" parameterType="com.baomidou.mybatisplus.extension.plugins.pagination.Page">
         select
         <include refid="previewColumn"/>
-        from t_comment where article_id = #{articleId} and status &lt;&gt; 0
+        from t_comment where article_id = #{articleId} and status = 1
         order by create_time desc
     </select>
 

@@ -51,6 +51,9 @@ public class AdminRouteController {
     @Autowired
     private MenuService menuService;
 
+    @Autowired
+    private LocalStorageService localStorageService;
+
     //ModelAndView类用来存储处理完后的结果数据，以及显示该数据的视图
     //（1）封装后端数据。
     //（2）设置view的url，即跳转到前端的url。
@@ -63,7 +66,6 @@ public class AdminRouteController {
         return modelAndView;
     }
     @ApiOperation("更新文章页面")
-    @OperationLog("更新文章页面")
     @PreAuthorize("hasAuthority('blog:article:edit')")
     @GetMapping("/article/{id}")
     public String editArticle(@PathVariable("id") Long id, Model model){
@@ -73,7 +75,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新分类页面")
-    @OperationLog("更新分类页面")
     @PreAuthorize("hasAuthority('blog:category:edit')")
     @GetMapping("/category/{id}")
     public String editCategory(@PathVariable("id")Long id, Model model){
@@ -82,7 +83,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新标签页面")
-    @OperationLog("更新标签页面")
     @PreAuthorize("hasAuthority('blog:tag:edit')")
     @GetMapping("/tag/{id}")
     public String editTag(@PathVariable("id")Long id,Model model){
@@ -91,7 +91,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新友链页面")
-    @OperationLog("更新友链页面")
     @PreAuthorize("hasAuthority('blog:link:edit')")
     @GetMapping("/link/{id}")
     public String editLink(@PathVariable("id")Long id,Model model){
@@ -100,7 +99,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新相册页面")
-    @OperationLog("更新相册页面")
     @PreAuthorize("hasAuthority('blog:photo:edit')")
     @GetMapping("/photo/{id}")
     public String editPhoto(@PathVariable("id")Long id,Model model){
@@ -109,7 +107,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("回复留言页面")
-    @OperationLog("回复留言页面")
     @PreAuthorize("hasAuthority('blog:message:edit')")
     @GetMapping("/message/{pid}")
     public String replyMessage(@PathVariable("pid")Long pid,Model model){
@@ -118,7 +115,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("回复评论页面")
-    @OperationLog("回复评论页面")
     @PreAuthorize("hasAuthority('blog:comment:reply')")
     @GetMapping("/comment/add")
     public String replyComment(@RequestParam("pid") Long pid,
@@ -130,7 +126,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新公告页面")
-    @OperationLog("更新公告页面")
     @PreAuthorize("hasAuthority('sys:notice:edit')")
     @GetMapping("/notice/{id}")
     public String editNotice(@PathVariable("id") Long id,Model model){
@@ -139,7 +134,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新菜单页面")
-    @OperationLog("更新菜单页面")
     @PreAuthorize("hasAuthority('sys:menu:edit')")
     @GetMapping("/menu/{id}")
     public String editMenu(@PathVariable("id")Long id,Model model){
@@ -148,7 +142,6 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新用户页面")
-    @OperationLog("更新用户页面")
     @PreAuthorize("hasAuthority('sys:user:edit')")
     @GetMapping("/user/{id}")
     public String editUser(@PathVariable("id")Long id,Model model){
@@ -157,12 +150,19 @@ public class AdminRouteController {
     }
 
     @ApiOperation("更新角色页面")
-    @OperationLog("更新角色页面")
     @PreAuthorize("hasAuthority('sys:role:edit')")
     @GetMapping("/role/{id}")
     public String editRole(@PathVariable("id")Long id,Model model){
         Role role = roleService.getById(id);
         model.addAttribute("role",role);
         return "admin/role/role-edit";
+    }
+
+    @ApiOperation("更新本地存储文件")
+    @PreAuthorize("hasAuthority('sys:localstorage:edit')")
+    @GetMapping("/localStorage/{id}")
+    public String editFile(@PathVariable("id")Long id, Model model){
+        model.addAttribute("localStorage", localStorageService.getById(id));
+        return "admin/localstorage/localstorage-edit";
     }
 }

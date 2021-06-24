@@ -1,7 +1,14 @@
 package cn.fantasyblog.Initialize;
 
+import cn.fantasyblog.common.Constant;
+import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.filter.SensitiveFilter;
+import cn.fantasyblog.service.ArticleService;
 import cn.fantasyblog.service.ElasticSearchService;
+import cn.fantasyblog.service.RedisService;
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
+import io.rebloom.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,9 +28,19 @@ public class InitializationRunner implements ApplicationRunner {
     @Autowired
     private SensitiveFilter sensitiveFilter;
 
+    @Autowired
+    private ArticleService articleService;
+
+    Client client = new Client("121.41.164.231", 6380);
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         elasticSearchService.sync();
         sensitiveFilter.init();
+        long l = articleService.getMaxId();
+        for(long i = 0;i<=l;i++){
+            client.add(Constant.bloomArticleId, String.valueOf(i));
+        }
+        articleService.sync();
     }
 }

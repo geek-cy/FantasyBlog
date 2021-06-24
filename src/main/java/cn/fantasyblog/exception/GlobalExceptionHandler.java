@@ -4,6 +4,7 @@ import cn.fantasyblog.common.JsonResult;
 import cn.fantasyblog.utils.AjaxUtil;
 import cn.fantasyblog.utils.RequestHolderUtil;
 import cn.fantasyblog.utils.ThrowableUtil;
+import cn.hutool.core.io.resource.NoResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -37,7 +38,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 防止没有权限的请求绕过前端认证
     @ExceptionHandler(AccessDeniedException.class)
-    public Object accessDeniedException(HttpServletRequest request,AccessDeniedException e){
+    public Object accessDeniedException(HttpServletRequest request){
         if(AjaxUtil.isAjaxRequest(request)){
             return buildResponseEntity(ApiError.error("您没有权限执行该操作"));
         }
@@ -45,6 +46,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ModelAndView("error/403");
     }
 
+    @ExceptionHandler(value = NoResourceException.class)
+    public Object notFoundException(HttpServletRequest request){
+        return new ModelAndView("error/404");
+    }
     /**
      * 处理自定义异常
      */

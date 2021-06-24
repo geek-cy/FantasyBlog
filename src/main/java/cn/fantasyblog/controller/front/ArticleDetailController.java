@@ -36,18 +36,6 @@ public class ArticleDetailController {
     @Autowired
     private RedisService redisService;
 
-    @Autowired
-    private LikeService likeService;
-
-    @Autowired
-    private ViewService viewService;
-
- /*   @Autowired
-    private EventProducer eventProducer;*/
-
-    @Autowired
-    private CommentService commentService;
-
     @ApiOperation("文章详情页面")
     @AccessLog("文章详情页面")
     @GetMapping("/article/{id}")
@@ -56,10 +44,10 @@ public class ArticleDetailController {
         Article detail = articleService.getDetailById(id);
         Article prev = articleService.getPrevPreviewById(id);
         Article next = articleService.getNextPreviewById(id);
+        Long likedCount = redisService.getLikedCount(id);
+        Long viewCount = redisService.getViewCount(id);
+        Long commentCount = redisService.getCommentCount(id);
         model.addAttribute("article", detail);
-        Integer likedCount = detail.getLikes() + likeService.transLikedCount(false);
-        Integer viewCount = detail.getViews() + viewService.transViewCount(false);
-        Integer commentCount = detail.getComments() + commentService.transCommentCount(false);
         model.addAttribute("likes", likedCount);
         model.addAttribute("views", viewCount);
         model.addAttribute("comments",commentCount);

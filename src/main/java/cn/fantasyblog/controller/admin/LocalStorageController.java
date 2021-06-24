@@ -67,7 +67,7 @@ public class LocalStorageController {
     @PreAuthorize("hasAuthority('sys:localstorage:add')")
     @OperationLog("上传本地文件")
     @PostMapping
-    public JsonResult save(@Validated @RequestParam("file")MultipartFile[] file){
+    public JsonResult save(@RequestParam("file")MultipartFile[] file){
         localStorageService.save(file);
         return JsonResult.ok();
     }

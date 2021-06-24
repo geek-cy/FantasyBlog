@@ -110,6 +110,7 @@ public class LocalStorageServiceImpl implements LocalStorageService {
     }
 
     @Override
+    @CacheEvict(allEntries = true)
     public void update(LocalStorage localStorage) {
         localStorageMapper.updateById(localStorage);
     }

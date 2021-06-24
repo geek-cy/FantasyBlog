@@ -96,7 +96,6 @@ public interface ArticleService {
 
     /**
      * 查询记录总数
-     * 面板数据和关于我会用到
      * @return 记录总数
      */
     long countAll();
@@ -142,7 +141,13 @@ public interface ArticleService {
     List<Article> listNewest();
 
     /**
-     * 所有文章浏览量
+     * 同步文章访问量
      */
-    Long countViewAll();
+    void sync();
+
+    /**
+     * 获取最新文章id
+     */
+    Long getMaxId();
+
 }

@@ -13,9 +13,12 @@ import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.vo.ArticleDateVO;
 import cn.fantasyblog.vo.AuditVO;
+import cn.hutool.core.io.resource.NoResourceException;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.fantasyblog.query.ArticleQuery;
+import io.rebloom.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -49,6 +52,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ElasticSearchService elasticSearchService;
 
+    Client client = new Client("121.41.164.231", 6380);
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(allEntries = true)
@@ -72,12 +77,19 @@ public class ArticleServiceImpl implements ArticleService {
         articleTagMapper.insertBatch(article.getId(), tagIdList);
         // 添加到ElasticSearch中
         elasticSearchService.save(article);
+        // 添加到布隆过滤器中
+        client.add(Constant.bloomArticleId, String.valueOf(article.getId()));
     }
 
     @Override
-    @Cacheable
     public Article getById(Long id) {
+//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectById(id);
+    }
+
+    @Override
+    public Long getMaxId(){
+        return articleMapper.maxId();
     }
 
     @Override
@@ -152,6 +164,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Article getDetailById(Long id) {
+        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectDetailById(id);
     }
 
@@ -200,9 +213,25 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    @Cacheable
-    public Long countViewAll() {
-        return articleMapper.countViews();
+    public void sync() {
+        long countAll =countAll();
+        for(long i = 1;i <= countAll;i++){
+            Long likedCount = redisService.getLikedCount(i);
+            Long commentCount = redisService.getCommentCount(i);
+            Long viewCount = redisService.getViewCount(i);
+            Article article = getById(i);
+            if(article == null) return;
+            if(!article.getLikes().equals(likedCount)){
+                article.setLikes(likedCount);
+            }
+            if(!article.getComments().equals(commentCount)){
+                article.setComments(commentCount);
+            }
+            if(!article.getViews().equals(viewCount)){
+                article.setViews(viewCount);
+            }
+            saveOrUpdate(article);
+        }
     }
 
     @Override
@@ -236,4 +265,5 @@ public class ArticleServiceImpl implements ArticleService {
         }
         elasticSearchService.deleteAll(articleDocuments);
     }
+
 }

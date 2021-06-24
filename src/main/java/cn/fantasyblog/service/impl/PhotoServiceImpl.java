@@ -94,7 +94,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Cacheable
     public List<Photo> listAll() {
         QueryWrapper<Photo> wrapper = new QueryWrapper<>();
-        wrapper.select(Photo.Table.URL,Photo.Table.DESCRIPTION).orderByAsc(Photo.Table.SORT).eq(Photo.Table.DISPLAY, Constant.DISPLAY);
+        wrapper.select(Photo.Table.URL).orderByAsc(Photo.Table.SORT).eq(Photo.Table.DISPLAY, Constant.DISPLAY);
         return photoMapper.selectList(wrapper);
     }
 }

@@ -8,6 +8,7 @@ import cn.fantasyblog.common.TableResult;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.query.ArticleQuery;
 import cn.fantasyblog.service.ArticleService;
+import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.utils.UserInfoUtil;
 import cn.fantasyblog.vo.AuditVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,9 +44,9 @@ public class ArticleController {
     @OperationLog("新增文章")
     @PostMapping
     public JsonResult save(@Validated @RequestBody Article article) {
-        article.setViews(0)
-                .setLikes(0)
-                .setComments(0)
+        article.setViews(0L)
+                .setLikes(0L)
+                .setComments(0L)
                 .setCreateTime(new Date())
                 .setUpdateTime(article.getCreateTime())
                 .setAuthorId(UserInfoUtil.getUserId())
@@ -84,6 +85,7 @@ public class ArticleController {
         Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
         articleService.audit(auditVO);
+
         return JsonResult.ok();
     }
 
@@ -104,4 +106,6 @@ public class ArticleController {
         articleService.removeList(idList);
         return JsonResult.ok();
     }
+
+
 }

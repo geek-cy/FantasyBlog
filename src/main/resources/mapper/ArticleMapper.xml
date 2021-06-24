@@ -170,13 +170,14 @@
     </select>
 
     <select id="selectPrevPreviewById" resultMap="previewResultMap">
+
         select
         <include refid="previewColumn"/>
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        where ta.id &gt; #{id}
-        and ta.published = 1 and ta.status &lt;&gt; 0 limit 1
+        where ta.id = (select max(id) from t_article where id &lt; #{id})
+        and ta.published = 1 and ta.status &lt;&gt; 0
     </select>
 
     <select id="selectNextPreviewById" resultMap="previewResultMap">
@@ -197,7 +198,7 @@
         join t_category tc
         on ta.category_id = tc.id
         where tc.id = #{categoryId}
-        and ta.published = 1 and ta.status &lt;&gt;0
+        and ta.published = 1 and ta.status &lt;&gt; 0
         order by ta.sort desc
     </select>
 
@@ -225,5 +226,9 @@
     <select id="countViews" resultType="Long">
         select sum(views)
         from t_article
+    </select>
+
+    <select id="maxId" resultType="Long">
+        select max(id) from t_article
     </select>
 </mapper>

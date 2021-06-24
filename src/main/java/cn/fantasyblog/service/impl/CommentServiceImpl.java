@@ -6,8 +6,6 @@ import cn.fantasyblog.dao.ArticleMapper;
 import cn.fantasyblog.dao.CommentMapper;
 import cn.fantasyblog.dao.UserMapper;
 import cn.fantasyblog.dao.VisitorMapper;
-import cn.fantasyblog.dto.CommentCount;
-import cn.fantasyblog.dto.ViewCount;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.entity.Comment;
 import cn.fantasyblog.entity.User;
@@ -76,29 +74,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
-        // 先持久化
-        transCommentCount(true);
-        decrease(id);
+        redisService.deleteComment(id);
         commentMapper.deleteById(id);
-    }
-
-    /**
-     * 根据评论id查询评论类里的作者id
-     * 根据评论里的作者id查询文章评论量和文章id
-     * 评论量-1
-     *
-     * @param id
-     */
-    public void decrease(Long id) {
-        transCommentCount(true);
-        QueryWrapper<Comment> commentWrapper = new QueryWrapper<>();
-        commentWrapper.select(Comment.Table.ARTICLE_ID).eq(Comment.Table.ID, id);
-        Comment comment = commentMapper.selectOne(commentWrapper);
-        QueryWrapper<Article> articleWrapper = new QueryWrapper<>();
-        articleWrapper.select(Article.Table.ID, Article.Table.COMMENTS).eq(Article.Table.ID, comment.getArticleId());
-        Article article = articleMapper.selectOne(articleWrapper);
-        article.setComments(article.getComments() - 1);
-        articleMapper.updateById(article);
     }
 
     @Override
@@ -106,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         for (Long id : idList) {
-            decrease(id);
+            redisService.deleteComment(id);
         }
         commentMapper.deleteBatchIds(idList);
     }
@@ -119,7 +96,7 @@ public class CommentServiceImpl implements CommentService {
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
         wrapper.select(Article.Table.ID, Article.Table.COMMENTS, Article.Table.AUTHOR_ID).eq(Article.Table.ID, comment.getArticleId());
         Article article = articleMapper.selectOne(wrapper);
-        redisService.incrementComment(comment.getArticleId());
+        redisService.incrementComment(comment.getArticleId(),comment.getVisitorId());
         comment.setUserId(article.getAuthorId());
         comment.setContent(sensitiveFilter.filter(comment.getContent()));
         commentMapper.insert(comment);
@@ -196,19 +173,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Integer transCommentCount(boolean flag) {
-        List<CommentCount> list = redisService.getCommentCountFromRedis();
-        for (CommentCount dto : list) {
-            Article article = articleMapper.selectById(dto.getKey());
-            if (article != null) {
-                Integer commentNum = dto.getCount();
-                if (!flag) return commentNum;
-                article.setComments(article.getViews() + commentNum);
-                // 更新浏览数量
-                articleMapper.updateById(article);
-                redisService.deleteComment(article.getId());
-            }
-        }
-        return 0;
+    public void transCommentCount(Long articleId) {
+        Long commentCount = redisService.getCommentCount(articleId);
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        wrapper.select(Article.Table.COMMENTS).eq(Article.Table.ID,articleId);
+        Article article = articleMapper.selectOne(wrapper);
+        article.setComments(commentCount);
+        articleMapper.updateById(article);
     }
 }

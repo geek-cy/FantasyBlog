@@ -96,4 +96,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 查询所有文章浏览量
      */
     Long countViews();
+
+    /**
+     * 获取文章id最大值
+     */
+    Long maxId();
 }

@@ -1,7 +1,6 @@
 package cn.fantasyblog.controller.admin;
 
 import cn.fantasyblog.anntation.AccessLog;
-import cn.fantasyblog.entity.User;
 import cn.fantasyblog.service.*;
 import cn.fantasyblog.utils.UserInfoUtil;
 import cn.fantasyblog.vo.IndexVO;
@@ -15,8 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -70,24 +67,6 @@ public class IndexController {
      */
     public ResponseEntity<Object> init(HttpSession session, HttpServletRequest request) {
         Long userId = UserInfoUtil.getUserId();
-        /*Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("userId")) {
-                // 接收上一次的cookie
-                userId = Long.valueOf(cookie.getValue());
-                break;
-            }
-        }*/
-        // 第一次登录
-        /*if (userId == null) {
-            Object o = session.getAttribute("user");
-            if (o != null) {
-                User user = (User) o;
-                userId = user.getId();
-            }
-            // 重置菜单缓存
-            redisService.deleteMenu();
-        }*/
         if (userId != null) {
             InitInfoVO initInfoVO = menuService.menu(userId);
             return new ResponseEntity<>(initInfoVO, HttpStatus.OK);

@@ -9,10 +9,14 @@ import cn.fantasyblog.entity.Visitor;
 import cn.fantasyblog.filter.SensitiveFilter;
 import cn.fantasyblog.service.ArticleService;
 import cn.fantasyblog.service.MailService;
+import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.service.VisitorService;
+import com.google.common.hash.BloomFilter;
+import io.rebloom.client.Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.SpringVersion;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -23,12 +27,14 @@ import java.util.List;
 class FantasyBlogApplicationTests {
 
     @Autowired
-    private ArticleMapper articleMapper;
+    private RedisService redisService;
+
+    Client client = new Client("121.41.164.231", 6380);
 
     @Test
     void contextLoads() {
-        Article article = articleMapper.selectPrevPreviewById(10L);
-        System.out.println(article);
+        client.addMulti("article", String.valueOf(1),String.valueOf(2),String.valueOf(3));
+        System.out.println(client.exists("article", String.valueOf(1)));
     }
 
 }
