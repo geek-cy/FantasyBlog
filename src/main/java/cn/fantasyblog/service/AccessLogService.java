@@ -23,7 +23,7 @@ public interface AccessLogService {
      * @param logQuery
      * @return 日志列表
      */
-    Page<AccessLog> listByPage(Integer current, Integer size, LogQuery logQuery);
+    List<AccessLog> listByPage(Integer current, Integer size, LogQuery logQuery);
 
     /**
      * 根据ID删除日志

@@ -22,6 +22,7 @@ import io.rebloom.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,15 +53,18 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ElasticSearchService elasticSearchService;
 
-    Client client = new Client("121.41.164.231", 6380);
+//    Client client = new Client("127.0.0.1", 6379);
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(allEntries = true)
+    @CachePut
     public void saveOrUpdate(Article article) {
         if (article.getId() == null) {
             // 新增
             articleMapper.insert(article);
+            // 添加到布隆过滤器中
+//            client.add(Constant.bloomArticleId, String.valueOf(article.getId()));
         } else {
             // 更新
             // 更新文章信息
@@ -70,15 +74,15 @@ public class ArticleServiceImpl implements ArticleService {
             articleTagWrapper.eq(ArticleTag.Table.ARTICLE_ID, article.getId());
             articleTagMapper.delete(articleTagWrapper);
             // 删除ElasticSearch索引
+            if(elasticSearchService != null)
             elasticSearchService.deleteById(article.getId());
         }
         // 添加新标签
         List<Long> tagIdList = article.getTagList().stream().map(Tag::getId).collect(Collectors.toList());
         articleTagMapper.insertBatch(article.getId(), tagIdList);
         // 添加到ElasticSearch中
-        elasticSearchService.save(article);
-        // 添加到布隆过滤器中
-        client.add(Constant.bloomArticleId, String.valueOf(article.getId()));
+        if(elasticSearchService != null)
+            elasticSearchService.save(article);
     }
 
     @Override
@@ -132,7 +136,8 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(auditVO.getId());
         article.setStatus(auditVO.getStatus());
         articleMapper.updateById(article);
-        elasticSearchService.save(article);
+        if(elasticSearchService != null)
+            elasticSearchService.save(article);
     }
 
     @Override
@@ -164,7 +169,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Article getDetailById(Long id) {
-        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
+//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectDetailById(id);
     }
 
@@ -250,7 +255,8 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         articleMapper.deleteById(id);
-        elasticSearchService.deleteById(id);
+        if(elasticSearchService != null)
+            elasticSearchService.deleteById(id);
     }
 
     @Override
@@ -263,7 +269,8 @@ public class ArticleServiceImpl implements ArticleService {
             articleDocument.setId(id);
             articleDocuments.add(articleDocument);
         }
-        elasticSearchService.deleteAll(articleDocuments);
+        if(elasticSearchService != null)
+            elasticSearchService.deleteAll(articleDocuments);
     }
 
 }

@@ -44,11 +44,9 @@ public class AccessLogServiceImpl implements AccessLogService {
 
     @Override
     @Cacheable
-    public Page<AccessLog> listByPage(Integer current, Integer size, LogQuery logQuery) {
-        Page<AccessLog> page = new Page<>(current, size);
+    public List<AccessLog> listByPage(Integer current, Integer size, LogQuery logQuery) {
         // 实体对象封装操作类
         QueryWrapper<AccessLog> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc(AccessLog.Table.CREATE_TIME);
         if (!StringUtils.isEmpty(logQuery.getRequestIp())) {
             wrapper.like(AccessLog.Table.REQUEST_IP, logQuery.getRequestIp());
         }
@@ -75,7 +73,7 @@ public class AccessLogServiceImpl implements AccessLogService {
                 wrapper.gt(AccessLog.Table.TIME, Constant.HIGH_REQUEST_TIME);
             }
         }
-        return accessLogMapper.selectPage(page, wrapper);
+        return accessLogMapper.listTableByPage(current,size,wrapper);
     }
 
     @Override

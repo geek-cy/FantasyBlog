@@ -2,8 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fantasyblog.dao.AccessLogMapper">
     <select id="countByLast7Days" resultType="cn.fantasyblog.vo.ViewDateVO">
-        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') date,count(*) viewCount
+        SELECT DATE_FORMAT(create_time, '%Y-%m-%d') date, count(*) viewCount
         FROM sys_access_log
-        WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date (create_time) group BY date;
+        WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(create_time)
+        group BY date;
+    </select>
+
+    <select id="listTableByPage" resultType="accessLog">
+        SELECT id,request_ip,address,description,status,time,browser,create_time
+        FROM sys_access_log
+        INNER JOIN (SELECT s.id FROM sys_access_log s
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        ORDER BY create_time desc limit #{current} , #{pageSize}
+        ) AS tmp USING (id)
     </select>
 </mapper>

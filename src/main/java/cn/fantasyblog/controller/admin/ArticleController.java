@@ -85,7 +85,7 @@ public class ArticleController {
         Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
         articleService.audit(auditVO);
-
+        articleService.sync();
         return JsonResult.ok();
     }
 

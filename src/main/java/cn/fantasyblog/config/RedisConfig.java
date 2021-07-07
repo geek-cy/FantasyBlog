@@ -3,7 +3,6 @@ package cn.fantasyblog.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
 import cn.fantasyblog.serialize.FastJsonRedisSerializer;
-import cn.fantasyblog.serialize.StringRedisSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -24,8 +23,8 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -51,9 +50,7 @@ import java.util.Random;
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**
-     * 设置 redis 数据默认过期时间
-     * key集中失效容易引起缓存雪崩因此需要多设置几个
-     * 设置@cacheable 序列化方式
+     * Spring提供的缓存管理器，便于管理程序中的多个cache
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory  redisConnectionFactory) {
@@ -90,13 +87,11 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         // 配置连接工厂
         template.setConnectionFactory(redisConnectionFactory);
-        // value值的序列化采用fastJsonRedisSerializer
-        template.setValueSerializer(new FastJsonRedisSerializer<>(Object.class));
-        template.setHashValueSerializer(new FastJsonRedisSerializer<>(Object.class));
         // 全局开启AutoType，这里方便开发，使用全局的方式(白名单检查)
         ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+        // value值的序列化采用fastJsonRedisSerializer
+        template.setValueSerializer(new FastJsonRedisSerializer<>(Object.class));
         template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
         // 初始化template
         template.afterPropertiesSet();
         return template;

@@ -31,13 +31,13 @@ public class AccessLogController {
 
     @ApiOperation("查询访问日志")
     @PreAuthorize("hasAuthority('sys:accesslog:query')")
-    @AccessLog("查询访问日志")
+//    @AccessLog("查询访问日志")
     @GetMapping
     public TableResult listByPage(@RequestParam(value = "page",defaultValue = Constant.PAGE) Integer page,
                                   @RequestParam(value = "limit",defaultValue = Constant.PAGE_LIMIT)Integer limit,
                                   LogQuery logQuery){
-        Page<cn.fantasyblog.entity.AccessLog> pageInfo = accessLogService.listByPage(page, limit, logQuery);
-        return TableResult.tableOk(pageInfo.getRecords(),pageInfo.getTotal());
+        List<cn.fantasyblog.entity.AccessLog> accessLogs = accessLogService.listByPage((page - 1) * limit, limit, logQuery);
+        return TableResult.tableOk(accessLogs, accessLogService.countAll());
     }
 
     @ApiOperation("删除访问日志")

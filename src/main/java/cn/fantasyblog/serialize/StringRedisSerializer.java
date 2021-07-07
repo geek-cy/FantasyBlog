@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.serialize;
 
 import cn.fantasyblog.utils.StringUtils;
@@ -9,11 +10,13 @@ import org.springframework.data.redis.serializer.SerializationException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+*/
 /**
  * @Description 重写StringRedisSerializer序列化,否则会报类型转换错误
  * @Author Cy
  * @Date 2021-05-03 15:18
- */
+ *//*
+
 public class StringRedisSerializer implements RedisSerializer<Object> {
 
     // 处理字节序列和字符序列（字符串）的转换关系
@@ -43,3 +46,4 @@ public class StringRedisSerializer implements RedisSerializer<Object> {
         return (bytes == null ? null : new String(bytes, charset));
     }
 }
+*/

@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.3.RELEASE</version>
+        <version>2.2.6.RELEASE</version>
     </parent>
     <properties>
         <java.version>1.8</java.version>
@@ -174,12 +174,11 @@
         </dependency>
     </dependencies>
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-&lt;!&ndash;                <version>2.3.8.RELEASE</version>&ndash;&gt;
                 <configuration>
                     <mainClass>cn.fantasyblog.FantasyBlogApplication</mainClass>
                     <layout>ZIP</layout>
@@ -187,7 +186,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>repackage</goal>&lt;!&ndash;可以把依赖的包都打包到生成的Jar包中&ndash;&gt;
+                            <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
                         </goals>
                     </execution>
                 </executions>
@@ -202,6 +201,6 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 
 </project>

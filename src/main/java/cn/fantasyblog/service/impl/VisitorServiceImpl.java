@@ -78,7 +78,6 @@ public class VisitorServiceImpl implements VisitorService {
             throw new BadRequestException("昵称已存在");
         }
 
-        // 先添加才有id,自带keyProperty="id",返回得到主键
         visitorMapper.insert(visitor);
 
         String code = MD5Util.code(visitor.getPassword());

@@ -1,6 +1,7 @@
 package cn.fantasyblog.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description
@@ -60,6 +62,10 @@ public class AccessLog implements Serializable {
 
     @ApiModelProperty("请求结果")
     private int status;
+
+    @ApiModelProperty("子查询id列表")
+    @TableField(exist = false)
+    private List<Integer> idList;
 
     public AccessLog(String logType, Long time) {
         this.logType = logType;

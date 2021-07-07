@@ -31,7 +31,7 @@ public class InitializationRunner implements ApplicationRunner {
     @Autowired
     private ArticleService articleService;
 
-    Client client = new Client("121.41.164.231", 6380);
+//    Client client = new Client("127.0.0.1", 6379);
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -39,8 +39,9 @@ public class InitializationRunner implements ApplicationRunner {
         sensitiveFilter.init();
         long l = articleService.getMaxId();
         for(long i = 0;i<=l;i++){
-            client.add(Constant.bloomArticleId, String.valueOf(i));
+//            client.add(Constant.bloomArticleId, String.valueOf(i));
         }
-        articleService.sync();
+        // 部署时报空指针，原因暂未知
+//        articleService.sync();
     }
 }

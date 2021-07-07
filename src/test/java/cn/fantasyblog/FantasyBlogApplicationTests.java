@@ -29,7 +29,7 @@ class FantasyBlogApplicationTests {
     @Autowired
     private RedisService redisService;
 
-    Client client = new Client("121.41.164.231", 6380);
+    Client client = new Client("127.0.0.1", 6379);
 
     @Test
     void contextLoads() {
