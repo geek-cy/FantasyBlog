@@ -48,5 +48,10 @@ public interface RedisService {
      */
     Long uv(String ip);
 
+    /**
+     * 删除评论、点赞、访问键
+     */
+    void removeKey();
+
 
 }

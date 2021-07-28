@@ -21,6 +21,9 @@ public interface AccessLogMapper extends BaseMapper<AccessLog> {
      */
     List<ViewDateVO> countByLast7Days();
 
+    /**
+     * 延迟关联分页查询
+     */
     List<AccessLog> listTableByPage(@Param("current") Integer current,@Param("pageSize") Integer pageSize,@Param("ew") QueryWrapper<AccessLog> queryWrapper);
 
 

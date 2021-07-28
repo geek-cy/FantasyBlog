@@ -29,7 +29,7 @@ public interface OperationLogService {
     /**
      * 后台查询操作日志
      */
-    Page<OperationLog> listTableByPage(Integer current, Integer size, LogQuery logQuery);
+    List<OperationLog> listTableByPage(Integer current, Integer size, LogQuery logQuery);
 
     /**
      * 删除操作日志

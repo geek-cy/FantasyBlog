@@ -53,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ElasticSearchService elasticSearchService;
 
-//    Client client = new Client("127.0.0.1", 6379);
+    Client client = new Client("127.0.0.1", 6379);
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -64,7 +64,7 @@ public class ArticleServiceImpl implements ArticleService {
             // 新增
             articleMapper.insert(article);
             // 添加到布隆过滤器中
-//            client.add(Constant.bloomArticleId, String.valueOf(article.getId()));
+            client.add(Constant.bloomArticleId, String.valueOf(article.getId()));
         } else {
             // 更新
             // 更新文章信息
@@ -87,7 +87,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getById(Long id) {
-//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
+        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectById(id);
     }
 
@@ -169,7 +169,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Article getDetailById(Long id) {
-//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
+        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectDetailById(id);
     }
 
@@ -235,7 +235,8 @@ public class ArticleServiceImpl implements ArticleService {
             if(!article.getViews().equals(viewCount)){
                 article.setViews(viewCount);
             }
-            saveOrUpdate(article);
+//            saveOrUpdate(article);
+            articleMapper.updateById(article);
         }
     }
 

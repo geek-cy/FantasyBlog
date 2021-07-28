@@ -7,4 +7,15 @@
         FROM sys_operation_log
         WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date (create_time) group BY date;
     </select>
+
+    <select id="listTableByPage" resultType="operationLog">
+        SELECT id,request_ip,address,description,status,time,browser,create_time
+        FROM sys_operation_log
+        INNER JOIN (SELECT s.id FROM sys_operation_log s
+        <if test="ew != null and ew.emptyOfWhere == false">
+            ${ew.customSqlSegment}
+        </if>
+        ORDER BY create_time desc limit #{current} , #{pageSize}
+        ) AS tmp USING (id)
+    </select>
 </mapper>

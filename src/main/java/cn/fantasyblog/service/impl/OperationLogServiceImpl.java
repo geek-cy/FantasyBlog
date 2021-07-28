@@ -61,8 +61,7 @@ public class OperationLogServiceImpl implements OperationLogService {
 
     @Override
     @Cacheable
-    public Page<OperationLog> listTableByPage(Integer current, Integer size, LogQuery logQuery) {
-        Page<OperationLog> page = new Page<>(current, size);
+    public List<OperationLog> listTableByPage(Integer current, Integer size, LogQuery logQuery) {
         QueryWrapper<OperationLog> wrapper = new QueryWrapper<>();
         wrapper.orderByDesc(OperationLog.Table.CREATE_TIME);
         if (!StringUtils.isEmpty(logQuery.getAddress())) {
@@ -91,7 +90,8 @@ public class OperationLogServiceImpl implements OperationLogService {
                 wrapper.gt(OperationLog.Table.TIME,Constant.HIGH_REQUEST_TIME);
             }
         }
-            return operationLogMapper.selectPage(page, wrapper);
+        return operationLogMapper.listTableByPage(current,size,wrapper);
+
     }
 
     @Override

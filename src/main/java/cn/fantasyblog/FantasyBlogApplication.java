@@ -9,8 +9,6 @@ import java.util.Arrays;
 public class FantasyBlogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FantasyBlogApplication.class, args);
-        int[][] points = new int[2][2];
-    }
+        SpringApplication.run(FantasyBlogApplication.class, args); }
 
 }

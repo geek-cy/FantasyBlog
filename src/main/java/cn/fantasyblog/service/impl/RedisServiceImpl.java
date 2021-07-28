@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 
 /**
  * @Description
@@ -65,6 +67,16 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public Long getLikedCount(Long articleId) {
         return redisTemplate.opsForSet().size(Constant.LIKE_COUNT+"::"+articleId);
+    }
+
+    @Override
+    public void removeKey(){
+        Set<Object> keys1 = redisTemplate.keys(Constant.LIKE_COUNT + "*");
+        Set<Object> keys2 = redisTemplate.keys(Constant.COMMENT_COUNT + "*");
+        Set<Object> keys3 = redisTemplate.keys(Constant.VIEW_COUNT + "*");
+        if(keys1 != null ) redisTemplate.delete(keys1);
+        if(keys2 != null ) redisTemplate.delete(keys2);
+        if(keys3 != null ) redisTemplate.delete(keys3);
     }
 
 }

@@ -36,8 +36,8 @@ public class OperationLogController {
     public TableResult listTableByPage(@RequestParam(value = "page",defaultValue = Constant.PAGE)Integer page,
                                        @RequestParam(value = "limit",defaultValue = Constant.PAGE_LIMIT)Integer limit,
                                        LogQuery logQuery){
-        Page<OperationLog> pageInfo = operationLogService.listTableByPage(page, limit, logQuery);
-        return TableResult.tableOk(pageInfo.getRecords(),pageInfo.getTotal());
+        List<cn.fantasyblog.entity.OperationLog> accessLogs = operationLogService.listTableByPage((page - 1) * limit, limit, logQuery);
+        return TableResult.tableOk(accessLogs, operationLogService.countAll());
     }
 
     @ApiOperation("删除操作日志")

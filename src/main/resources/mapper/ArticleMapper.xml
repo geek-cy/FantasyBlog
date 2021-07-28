@@ -186,8 +186,8 @@
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        where ta.id &lt; #{id}
-        and published = 1 and status &lt;&gt; 0 limit 1
+        where ta.id = (select max(id) from t_article where id > #{id})
+        and ta.published = 1 and ta.status &lt;&gt; 0
     </select>
 
     <select id="listPreviewPageByCategoryId" resultMap="previewResultMap"
