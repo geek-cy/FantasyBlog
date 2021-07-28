@@ -186,7 +186,7 @@
         from t_article ta
         left join t_category tc
         on ta.category_id = tc.id
-        where ta.id = (select max(id) from t_article where id > #{id})
+        where ta.id = (select min(id) from t_article where id &gt; #{id})
         and ta.published = 1 and ta.status &lt;&gt; 0
     </select>
 
