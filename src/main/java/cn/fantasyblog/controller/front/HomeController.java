@@ -2,11 +2,8 @@ package cn.fantasyblog.controller.front;
 
 import cn.fantasyblog.anntation.AccessLog;
 import cn.fantasyblog.common.Constant;
-import cn.fantasyblog.dto.ArticleDocument;
 import cn.fantasyblog.entity.Article;
-import cn.fantasyblog.exception.BadRequestException;
 import cn.fantasyblog.service.ArticleService;
-import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.vo.HomeVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -33,8 +30,8 @@ public class HomeController {
     @Autowired
     ArticleService articleService;
 
-    @Autowired
-    ElasticSearchService elasticSearchService;
+/*    @Autowired
+    ElasticSearchService elasticSearchService;*/
 
     @ApiOperation("查询首页数据")
     @AccessLog("访问首页")
@@ -57,7 +54,7 @@ public class HomeController {
         return new ResponseEntity<>(pageInfo, HttpStatus.OK);
     }
 
-    @ApiOperation("搜索文章")
+    /*@ApiOperation("搜索文章")
     @GetMapping("/articles/search")
     public ResponseEntity<Object> search(@RequestParam(value = "keyword")String keyword){
         List<ArticleDocument> articleDocuments;
@@ -68,6 +65,6 @@ public class HomeController {
             throw new BadRequestException("搜索失败");
         }
         return new ResponseEntity<>(articleDocuments,HttpStatus.OK);
-    }
+    }*/
 
 }

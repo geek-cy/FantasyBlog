@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.utils;
 
 import org.elasticsearch.common.text.Text;
@@ -6,11 +7,13 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 
 import java.util.Map;
 
+*/
 /**
  * @Description
  * @Author Cy
  * @Date 2021-05-09 22:33
- */
+ *//*
+
 public class HighLightUtil {
     public static void parseField(SearchHit hit,String field,Map<String, Object> map){
         // 高亮结果
@@ -29,3 +32,4 @@ public class HighLightUtil {
         }
     }
 }
+*/

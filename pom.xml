@@ -158,10 +158,10 @@
             <version>3.17</version>
         </dependency>
         <!--elasticsearch-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
+        </dependency>-->
         <!--邮箱-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

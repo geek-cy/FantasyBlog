@@ -36,7 +36,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
-    timeout: 10000   #连接超时时间
+    timeout: 0   #连接超时时间
 
   thymeleaf:
     cache: false
@@ -117,9 +117,9 @@ server:
   address: 127.0.0.1
   port: 8000
 
-elasticsearch:
-  host: 127.0.0.1
-  port: 9200
+#elasticsearch:
+#  host: 127.0.0.1
+#  port: 9200
 
 file:
   path: F:\fantasyblog\

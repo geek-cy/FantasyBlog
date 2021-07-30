@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.Quartz;
 
 import cn.fantasyblog.service.ElasticSearchService;
@@ -10,11 +11,13 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+*/
 /**
  * @Description
  * @Author Cy
  * @Date 2021/5/23 22:06
- */
+ *//*
+
 @Slf4j
 public class ElasticQuartz extends QuartzJobBean {
 
@@ -29,3 +32,4 @@ public class ElasticQuartz extends QuartzJobBean {
         elasticSearchService.sync();
     }
 }
+*/

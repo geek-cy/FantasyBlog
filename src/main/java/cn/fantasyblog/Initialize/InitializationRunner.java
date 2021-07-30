@@ -1,10 +1,8 @@
 package cn.fantasyblog.Initialize;
 
 import cn.fantasyblog.common.Constant;
-import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.filter.SensitiveFilter;
 import cn.fantasyblog.service.ArticleService;
-import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.service.RedisService;
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
@@ -22,8 +20,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class InitializationRunner implements ApplicationRunner {
 
-    @Autowired
-    private ElasticSearchService elasticSearchService;
+    /*@Autowired
+    private ElasticSearchService elasticSearchService;*/
 
     @Autowired
     private SensitiveFilter sensitiveFilter;
@@ -38,7 +36,7 @@ public class InitializationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        elasticSearchService.sync();
+//        elasticSearchService.sync();
         sensitiveFilter.init();
         long l = articleService.getMaxId();
         for(long i = 0;i<=l;i++){
@@ -46,6 +44,6 @@ public class InitializationRunner implements ApplicationRunner {
         }
         // 部署时报空指针，原因暂未知
         articleService.sync();
-//        redisService.removeKey();
+        redisService.removeKey();
     }
 }

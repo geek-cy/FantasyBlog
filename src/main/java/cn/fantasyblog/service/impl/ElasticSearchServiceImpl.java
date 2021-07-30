@@ -1,3 +1,4 @@
+/*
 package cn.fantasyblog.service.impl;
 
 import cn.fantasyblog.common.Constant;
@@ -25,11 +26,13 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+*/
 /**
  * @Description es工具类
  * @Author Cy
  * @Date 2021-05-09 20:17
- */
+ *//*
+
 @Service
 public class ElasticSearchServiceImpl implements ElasticSearchService {
 
@@ -118,9 +121,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return articleDocuments;
     }
 
-    /**
+    */
+/**
      * 将Article拷贝给ArticleDocument
-     */
+     *//*
+
     private ArticleDocument copy(Article article){
         ArticleDocument articleDocument = new ArticleDocument();
         articleDocument.setId(article.getId());
@@ -132,3 +137,4 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return articleDocument;
     }
 }
+*/

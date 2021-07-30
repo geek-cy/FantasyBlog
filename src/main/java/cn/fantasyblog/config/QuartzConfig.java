@@ -1,6 +1,5 @@
 package cn.fantasyblog.config;
 
-import cn.fantasyblog.Quartz.ElasticQuartz;
 import cn.fantasyblog.Quartz.VisitorQuartz;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +54,7 @@ public class QuartzConfig {
         return factoryBean;
     }
 
-    @Bean
+    /*@Bean
     public JobDetailFactoryBean cronDetail(){
         JobDetailFactoryBean factoryBean = new JobDetailFactoryBean();
         factoryBean.setJobClass(ElasticQuartz.class);
@@ -64,7 +63,7 @@ public class QuartzConfig {
         factoryBean.setDurability(true);// 是否持久保存
         factoryBean.setRequestsRecovery(true);// 是否可恢复
         return factoryBean;
-    }
+    }*/
 
     @Bean
     public CronTriggerFactoryBean cronTrigger(JobDetail cronDetail){

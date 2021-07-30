@@ -4,17 +4,14 @@ import cn.fantasyblog.common.Constant;
 import cn.fantasyblog.common.TableConstant;
 import cn.fantasyblog.dao.ArticleMapper;
 import cn.fantasyblog.dao.ArticleTagMapper;
-import cn.fantasyblog.dto.ArticleDocument;
 import cn.fantasyblog.entity.Article;
 import cn.fantasyblog.entity.ArticleTag;
 import cn.fantasyblog.entity.Tag;
 import cn.fantasyblog.service.ArticleService;
-import cn.fantasyblog.service.ElasticSearchService;
 import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.vo.ArticleDateVO;
 import cn.fantasyblog.vo.AuditVO;
 import cn.hutool.core.io.resource.NoResourceException;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.fantasyblog.query.ArticleQuery;
@@ -50,8 +47,8 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private RedisService redisService;
 
-    @Autowired
-    private ElasticSearchService elasticSearchService;
+    /*@Autowired
+    private ElasticSearchService elasticSearchService;*/
 
     Client client = new Client("127.0.0.1", 6379);
 
@@ -74,15 +71,15 @@ public class ArticleServiceImpl implements ArticleService {
             articleTagWrapper.eq(ArticleTag.Table.ARTICLE_ID, article.getId());
             articleTagMapper.delete(articleTagWrapper);
             // 删除ElasticSearch索引
-            if(elasticSearchService != null)
-            elasticSearchService.deleteById(article.getId());
+            /*if(elasticSearchService != null)
+            elasticSearchService.deleteById(article.getId());*/
         }
         // 添加新标签
         List<Long> tagIdList = article.getTagList().stream().map(Tag::getId).collect(Collectors.toList());
         articleTagMapper.insertBatch(article.getId(), tagIdList);
         // 添加到ElasticSearch中
-        if(elasticSearchService != null)
-            elasticSearchService.save(article);
+        /*if(elasticSearchService != null)
+            elasticSearchService.save(article);*/
     }
 
     @Override
@@ -136,8 +133,8 @@ public class ArticleServiceImpl implements ArticleService {
         article.setId(auditVO.getId());
         article.setStatus(auditVO.getStatus());
         articleMapper.updateById(article);
-        if(elasticSearchService != null)
-            elasticSearchService.save(article);
+        /*if(elasticSearchService != null)
+            elasticSearchService.save(article);*/
     }
 
     @Override
@@ -235,7 +232,7 @@ public class ArticleServiceImpl implements ArticleService {
             if(!article.getViews().equals(viewCount)){
                 article.setViews(viewCount);
             }
-//            saveOrUpdate(article);
+            saveOrUpdate(article);
             articleMapper.updateById(article);
         }
     }
@@ -256,22 +253,22 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         articleMapper.deleteById(id);
-        if(elasticSearchService != null)
-            elasticSearchService.deleteById(id);
+        /*if(elasticSearchService != null)
+            elasticSearchService.deleteById(id);*/
     }
 
     @Override
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         articleMapper.deleteBatchIds(idList);
-        ArrayList<ArticleDocument> articleDocuments = new ArrayList<>();
+        /*ArrayList<ArticleDocument> articleDocuments = new ArrayList<>();
         for (Long id : idList) {
             ArticleDocument articleDocument = new ArticleDocument();
             articleDocument.setId(id);
             articleDocuments.add(articleDocument);
         }
         if(elasticSearchService != null)
-            elasticSearchService.deleteAll(articleDocuments);
+            elasticSearchService.deleteAll(articleDocuments);*/
     }
 
 }

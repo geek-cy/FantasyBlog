@@ -1,6 +1,5 @@
 package cn.fantasyblog.exception;
 
-import cn.fantasyblog.common.JsonResult;
 import cn.fantasyblog.utils.AjaxUtil;
 import cn.fantasyblog.utils.RequestHolderUtil;
 import cn.fantasyblog.utils.ThrowableUtil;
