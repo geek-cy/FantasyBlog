@@ -37,7 +37,7 @@ public class ArticleDetailController {
     private RedisService redisService;
 
     @ApiOperation("文章详情页面")
-    @AccessLog("文章详情页面")
+//    @AccessLog("文章详情页面")
     @GetMapping("/article/{id}")
     public String articleDetail(@PathVariable("id") Long id, Model model) {
         redisService.incrementView(id);

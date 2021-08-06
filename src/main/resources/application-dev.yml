@@ -36,7 +36,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
-    timeout: 0   #连接超时时间
+    timeout: 100   #连接超时时间
 
   thymeleaf:
     cache: false
@@ -108,7 +108,7 @@ spring:
 
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 输出日志
     map-underscore-to-camel-case: true  # 开启驼峰映射
     aggressive-lazy-loading: false # 懒加载
   type-aliases-package: cn.fantasyblog.entity  # 直接使用类名
@@ -128,5 +128,5 @@ file:
 
 logging:
   level:
-    cn.fantasyblog: DEBUG
+    cn.fantasyblog: ERROR
 

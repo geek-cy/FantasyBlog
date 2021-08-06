@@ -44,71 +44,73 @@
                     <textarea name="content" style="display:none;"></textarea>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">文章标签</label>
-                <div class="layui-input-block">
-                    <div id="tag-select" lay-verify="verTag"></div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">文章类型</label>
-                    <div class="layui-input-inline">
-                        <select name="type" lay-verify="">
-                            <option value="1" selected>原创</option>
-                            <option value="2">转载</option>
-                            <option value="3">翻译</option>
-                        </select>
+            <div id="hiddenCy">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">文章标签</label>
+                    <div class="layui-input-block">
+                        <div id="tag-select" lay-verify="verTag"></div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">文章分类</label>
-                    <div class="layui-input-inline">
-                        <select name="categoryId" lay-verify="verCategory" lay-search id="category-select">
-                            <option value="0">请选择一个分类</option>
-                        </select>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">文章类型</label>
+                        <div class="layui-input-inline">
+                            <select name="type" lay-verify="">
+                                <option value="1" selected>原创</option>
+                                <option value="2">转载</option>
+                                <option value="3">翻译</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">开启赞赏</label>
-                        <div class="layui-input-inline pane">
-                            <input type="checkbox" name="appreciable" lay-skin="switch" lay-text="是|否" checked
-                                   value="true">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">文章分类</label>
+                        <div class="layui-input-inline">
+                            <select name="categoryId" lay-verify="verCategory" lay-search id="category-select">
+                                <option value="0">请选择一个分类</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">开启赞赏</label>
+                            <div class="layui-input-inline pane">
+                                <input type="checkbox" name="appreciable" lay-skin="switch" lay-text="是|否" checked
+                                       value="true">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">开启评论</label>
+                            <div class="layui-input-inline pane">
+                                <input type="checkbox" name="commentable" lay-skin="switch" lay-text="是|否" checked
+                                       value="true">
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">开启评论</label>
-                        <div class="layui-input-inline pane">
-                            <input type="checkbox" name="commentable" lay-skin="switch" lay-text="是|否" checked
-                                   value="true">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">是否置顶</label>
-                    <div class="layui-input-inline pane">
-                        <input type="checkbox" name="top" lay-skin="switch" lay-text="是|否" value="true"
-                               lay-filter="top">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否置顶</label>
+                        <div class="layui-input-inline pane">
+                            <input type="checkbox" name="top" lay-skin="switch" lay-text="是|否" value="true"
+                                   lay-filter="top">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">是否推荐</label>
-                    <div class="layui-input-inline pane">
-                        <input type="checkbox" name="recommend" lay-skin="switch" lay-text="是|否" value="true"
-                               lay-filter="recommend">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">是否推荐</label>
+                        <div class="layui-input-inline pane">
+                            <input type="checkbox" name="recommend" lay-skin="switch" lay-text="是|否" value="true"
+                                   lay-filter="recommend">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-inline">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">文章排序</label>
-                        <div class="layui-input-inline rate-pane">
-                            <div id="rateSort"></div>
+                    <div class="layui-inline">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">文章排序</label>
+                            <div class="layui-input-inline rate-pane">
+                                <div id="rateSort"></div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,8 @@ import cn.hutool.core.io.resource.NoResourceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.dao.QueryTimeoutException;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +58,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ApiError> badRequestException(BadRequestException e){
         log.error(ThrowableUtil.getStackTrace(e));
         return buildResponseEntity(ApiError.error(e.getStatus(),e.getMessage()));
+    }
+
+    @ExceptionHandler(value = RedisConnectionFailureException.class)
+    public void redisException(RedisConnectionFailureException e){
+        System.out.println("--------------------------------");
+        e.getMessage();
     }
 
     /**

@@ -1,3 +1,15 @@
+/*
+ * Editor.md
+ *
+ * @file        editormd.js 
+ * @version     v1.5.0 
+ * @description Open source online markdown editor.
+ * @license     MIT License
+ * @author      Pandao
+ * {@link       https://github.com/pandao/editor.md}
+ * @updateTime  2015-06-09
+ */
+
 ;(function(factory) {
     "use strict";
     
@@ -353,7 +365,7 @@
             
             var _this            = this;
             var classPrefix      = this.classPrefix  = editormd.classPrefix; 
-            var settings         = this.settings     = $.extend(true, editormd.defaults, options);
+            var settings         = this.settings     = $.extend(true, {}, editormd.defaults, options);
             
             id                   = (typeof id === "object") ? settings.id : id;
             
@@ -1953,14 +1965,15 @@
         
         save : function() {
             
-            if (timer === null)
+            var _this            = this;
+            var state            = this.state;
+            var settings         = this.settings;
+
+            if (timer === null && !(!settings.watch && state.preview))
             {
                 return this;
             }
             
-            var _this            = this;
-            var state            = this.state;
-            var settings         = this.settings;
             var cm               = this.cm;            
             var cmValue          = cm.getValue();
             var previewContainer = this.previewContainer;
@@ -2281,6 +2294,7 @@
          */
         
         clear : function() {
+            console.log("333")
             this.cm.setValue("");
             
             return this;
@@ -2588,7 +2602,7 @@
          */
         
         fullscreen : function() {
-            
+            console.log("123")
             var _this            = this;
             var state            = this.state;
             var editor           = this.editor;
@@ -3170,20 +3184,17 @@
         }
     };
     
-    var isMac = navigator.platform.toUpperCase().indexOf('MAC')>=0;
-    var key = isMac ? "Cmd" : "Ctrl";
-    
     editormd.keyMaps = {
-        [key + "-1"]       : "h1",
-        [key + "-2"]       : "h2",
-        [key + "-3"]       : "h3",
-        [key + "-4"]       : "h4",
-        [key + "-5"]       : "h5",
-        [key + "-6"]       : "h6",
-        [key + "-B"]       : "bold",  // if this is string ==  editormd.toolbarHandlers.xxxx
-        [key + "-D"]       : "datetime",
+        "Ctrl-1"       : "h1",
+        "Ctrl-2"       : "h2",
+        "Ctrl-3"       : "h3",
+        "Ctrl-4"       : "h4",
+        "Ctrl-5"       : "h5",
+        "Ctrl-6"       : "h6",
+        "Ctrl-B"       : "bold",  // if this is string ==  editormd.toolbarHandlers.xxxx
+        "Ctrl-D"       : "datetime",
         
-        [key + "Ctrl-E"]       : function() { // emoji
+        "Ctrl-E"       : function() { // emoji
             var cm        = this.cm;
             var cursor    = cm.getCursor();
             var selection = cm.getSelection();
@@ -3200,10 +3211,10 @@
                 cm.setCursor(cursor.line, cursor.ch + 1);
             }
         },
-        [key + "-Alt-G"]   : "goto-line",
-        [key + "-H"]       : "hr",
-        [key + "-I"]       : "italic",
-        [key + "-K"]       : "code",
+        "Ctrl-Alt-G"   : "goto-line",
+        "Ctrl-H"       : "hr",
+        "Ctrl-I"       : "italic",
+        "Ctrl-K"       : "code",
         
         "Ctrl-L"        : function() {
             var cm        = this.cm;
@@ -3218,7 +3229,7 @@
                 cm.setCursor(cursor.line, cursor.ch + 1);
             }
         },
-        [key + "-U"]         : "list-ul",
+        "Ctrl-U"         : "list-ul",
         
         "Shift-Ctrl-A"   : function() {
             var cm        = this.cm;
@@ -3238,10 +3249,10 @@
             }
         },
         
-        ["Shift" + key + "-C"]     : "code",
-        ["Shift" + key + "Q"]     : "quote",
-        ["Shift" + key + "S"]     : "del",
-        ["Shift" + key + "K"]     : "tex",  // KaTeX
+        "Shift-Ctrl-C"     : "code",
+        "Shift-Ctrl-Q"     : "quote",
+        "Shift-Ctrl-S"     : "del",
+        "Shift-Ctrl-K"     : "tex",  // KaTeX
         
         "Shift-Alt-C"      : function() {
             var cm        = this.cm;
@@ -3255,16 +3266,16 @@
             } 
         },
         
-        ["Shift-" + key + "-Alt-C"]      : "code-block",
-        ["Shift-" + key + "-H"]          : "html-entities",
-        "Shift-Alt-H"                    : "help",
-        ["Shift-" + key + "-E"]          : "emoji",
-        ["Shift-" + key + "-U"]          : "uppercase",
-        "Shift-Alt-U"                    : "ucwords",
-        ["Shift-" + key + "-Alt-U"]      : "ucfirst",
-        "Shift-Alt-L"                    : "lowercase",
+        "Shift-Ctrl-Alt-C" : "code-block",
+        "Shift-Ctrl-H"     : "html-entities",
+        "Shift-Alt-H"      : "help",
+        "Shift-Ctrl-E"     : "emoji",
+        "Shift-Ctrl-U"     : "uppercase",
+        "Shift-Alt-U"      : "ucwords",
+        "Shift-Ctrl-Alt-U" : "ucfirst",
+        "Shift-Alt-L"      : "lowercase",
         
-        ["Shift-" + key + "-I"]          : function() {
+        "Shift-Ctrl-I"     : function() {
             var cm        = this.cm;
             var cursor    = cm.getCursor();
             var selection = cm.getSelection();
@@ -3278,15 +3289,15 @@
             }
         },
         
-        ["Shift-" + key + "-Alt-I"]     : "image",
-        ["Shift-" + key + "-L"]         : "link",
-        ["Shift-" + key + "-O"]         : "list-ol",
-        ["Shift-" + key + "-P"]         : "preformatted-text",
-        ["Shift-" + key + "-T"]         : "table",
-        "Shift-Alt-P"                   : "pagebreak",
-        "F9"                            : "watch",
-        "F10"                           : "preview",
-        "F11"                           : "fullscreen",
+        "Shift-Ctrl-Alt-I" : "image",
+        "Shift-Ctrl-L"     : "link",
+        "Shift-Ctrl-O"     : "list-ol",
+        "Shift-Ctrl-P"     : "preformatted-text",
+        "Shift-Ctrl-T"     : "table",
+        "Shift-Alt-P"      : "pagebreak",
+        "F9"               : "watch",
+        "F10"              : "preview",
+        "F11"              : "fullscreen",
     };
     
     /**
@@ -3346,7 +3357,7 @@
         email         : /(\w+)@(\w+)\.(\w+)\.?(\w+)?/g,
         emailLink     : /(mailto:)?([\w\.\_]+)@(\w+)\.(\w+)\.?(\w+)?/g,
         emoji         : /:([\w\+-]+):/g,
-        emojiDatetime : /(\d{1,2}:\d{1,2}:\d{1,2})/g,
+        emojiDatetime : /(\d{2}:\d{2}:\d{2})/g,
         twemoji       : /:(tw-([\w]+)-?(\w+)?):/g,
         fontAwesome   : /:(fa-([\w]+)(-(\w+)){0,}):/g,
         editormdLogo  : /:(editormd-logo-?(\w+)?):/g,
@@ -3355,7 +3366,7 @@
 
     // Emoji graphics files url path
     editormd.emoji     = {
-        path  : "http://www.emoji-cheat-sheet.com/graphics/emojis/",
+        path  : "https://www.webpagefx.com/tools/emoji-cheat-sheet/graphics/emojis/",
         ext   : ".png"
     };
 

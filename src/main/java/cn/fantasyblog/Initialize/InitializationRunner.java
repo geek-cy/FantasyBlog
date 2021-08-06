@@ -42,7 +42,6 @@ public class InitializationRunner implements ApplicationRunner {
         for(long i = 0;i<=l;i++){
             client.add(Constant.bloomArticleId, String.valueOf(i));
         }
-        // 部署时报空指针，原因暂未知
         articleService.sync();
         redisService.removeKey();
     }

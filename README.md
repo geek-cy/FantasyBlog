@@ -19,7 +19,7 @@
 - CSS框架：Materialize（前台）、Layui（后台）
 - JS框架：Vue（前台）
 - HTTP客户端：Axios
-- 主要插件：Echarts（数据图表）、SweetAlert2（页面弹出层）、Editormd（Markdown编辑器）、Jqcloud（标签云）、moment（日期处理类库）、zyupload（文件上传）、Lazyload(图片懒加载)、aos（页面滚动动画）等等
+    - 主要插件：Echarts（数据图表）、SweetAlert2（页面弹出层）、Editormd（Markdown编辑器）、Jqcloud（标签云）、moment（日期处理类库）、zyupload（文件上传）、Lazyload(图片懒加载)、aos（页面滚动动画）等等
 
 ##### 后端主要技术栈
 

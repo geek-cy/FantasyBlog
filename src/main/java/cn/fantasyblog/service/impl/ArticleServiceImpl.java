@@ -11,7 +11,6 @@ import cn.fantasyblog.service.ArticleService;
 import cn.fantasyblog.service.RedisService;
 import cn.fantasyblog.vo.ArticleDateVO;
 import cn.fantasyblog.vo.AuditVO;
-import cn.hutool.core.io.resource.NoResourceException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.fantasyblog.query.ArticleQuery;
@@ -24,8 +23,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,7 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article getById(Long id) {
-        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
+//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectById(id);
     }
 
@@ -166,7 +163,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Cacheable
     public Article getDetailById(Long id) {
-        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
+//        if(!client.exists(Constant.bloomArticleId,String.valueOf(id))) throw new NoResourceException("id不存在");
         return articleMapper.selectDetailById(id);
     }
 
