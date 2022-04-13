@@ -36,4 +36,12 @@
         </if>
         group by tt.id
     </select>
+
+    <update id="updateID">
+        set
+        @i = 0;
+        update t_tag
+        set id =(@i:=@i+1);
+        alter table t_tag auto_increment=0;
+    </update>
 </mapper>

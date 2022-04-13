@@ -45,5 +45,8 @@ public interface CommentMapper extends BaseMapper<Comment> {
      */
     List<Comment> listNewest(@Param("limit")Integer limit);
 
-
+    /**
+     * 更新评论顺序
+     */
+    void updateID();
 }

@@ -53,4 +53,12 @@
             and t.status &lt;&gt; 0
         order by t.create_time desc
     </select>
+
+    <update id="updateID">
+        set
+        @i = 0;
+        update t_message
+        set id =(@i:=@i+1);
+        alter table t_message auto_increment=0;
+    </update>
 </mapper>

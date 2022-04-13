@@ -60,6 +60,7 @@ public class LinkServiceImpl implements LinkService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         linkMapper.deleteById(id);
+        linkMapper.updateID();
     }
 
     @Override
@@ -67,6 +68,7 @@ public class LinkServiceImpl implements LinkService {
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         linkMapper.deleteBatchIds(idList);
+        linkMapper.updateID();
     }
 
     @Override

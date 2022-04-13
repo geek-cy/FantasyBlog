@@ -12,4 +12,9 @@ import org.springframework.stereotype.Repository;
 public interface PhotoMapper extends BaseMapper<Photo> {
 
     Page<Photo> listTableBYPage(IPage<Photo> page, @Param("ew")QueryWrapper<Photo> queryWrapper);
+
+    /**
+     * 更新图片顺序
+     */
+    void updateID();
 }

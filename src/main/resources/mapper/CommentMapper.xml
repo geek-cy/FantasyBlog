@@ -66,4 +66,12 @@
         order by create_time desc
         limit #{limit}
     </select>
+
+    <update id="updateID">
+        set
+        @i = 0;
+        update t_comment
+        set id =(@i:=@i+1);
+        alter table t_comment auto_increment=0;
+    </update>
 </mapper>

@@ -76,6 +76,7 @@ public class CommentServiceImpl implements CommentService {
     public void remove(Long id) {
         redisService.deleteComment(id);
         commentMapper.deleteById(id);
+        commentMapper.updateID();
     }
 
     @Override
@@ -86,6 +87,7 @@ public class CommentServiceImpl implements CommentService {
             redisService.deleteComment(id);
         }
         commentMapper.deleteBatchIds(idList);
+        commentMapper.updateID();
     }
 
     @Override

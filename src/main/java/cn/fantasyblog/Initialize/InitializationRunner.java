@@ -32,16 +32,15 @@ public class InitializationRunner implements ApplicationRunner {
     @Autowired
     private RedisService redisService;
 
-    Client client = new Client("127.0.0.1", 6379);
-
+//    Client client = new Client("127.0.0.1", 6379);
     @Override
     public void run(ApplicationArguments args) throws Exception {
 //        elasticSearchService.sync();
         sensitiveFilter.init();
         long l = articleService.getMaxId();
-        for(long i = 0;i<=l;i++){
+        /*for(long i = 0;i<=l;i++){
             client.add(Constant.bloomArticleId, String.valueOf(i));
-        }
+        }*/
         articleService.sync();
         redisService.removeKey();
     }

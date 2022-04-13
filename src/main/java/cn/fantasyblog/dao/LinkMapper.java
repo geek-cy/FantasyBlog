@@ -19,4 +19,8 @@ public interface LinkMapper extends BaseMapper<Link> {
      */
     Page<Link> listTableByPage(IPage<Link> page, @Param("ew")QueryWrapper<Link> wrapper);
 
+    /**
+     * 更新友链顺序
+     */
+    void updateID();
 }

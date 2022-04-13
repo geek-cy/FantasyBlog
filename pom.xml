@@ -63,10 +63,10 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <!--指标监控-->
-  <!--      <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>-->
+        </dependency>
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

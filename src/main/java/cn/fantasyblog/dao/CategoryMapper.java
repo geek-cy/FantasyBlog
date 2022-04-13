@@ -29,4 +29,9 @@ public interface CategoryMapper extends BaseMapper<Category> {
      * @return
      */
     Page<Category> listTableByCategory(IPage<Category> page, @Param("ew")QueryWrapper<Category> ew);
+
+    /**
+     * 更新分类顺序
+     */
+    void updateID();
 }

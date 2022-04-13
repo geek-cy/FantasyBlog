@@ -28,4 +28,9 @@ public interface MessageMapper extends BaseMapper<Message> {
      */
     List<Message> listAll();
 
+    /**
+     * 更新留言顺序
+     */
+    void updateID();
+
 }

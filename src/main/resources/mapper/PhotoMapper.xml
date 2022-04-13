@@ -14,4 +14,12 @@
             ${ew.customSqlSegment}
         </if>
     </select>
+
+    <update id="updateID">
+        set
+        @i = 0;
+        update t_photo
+        set id =(@i:=@i+1);
+        alter table t_photo auto_increment=0;
+    </update>
 </mapper>

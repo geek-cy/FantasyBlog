@@ -77,7 +77,7 @@
             <charset>utf-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>info</level>
+            <level>debug</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
@@ -91,15 +91,15 @@
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <!--控制台输出的日志级别-->=============================================================================================
-            <level>error</level>
+            <level>debug</level>
         </filter>
     </appender>
 
     <!--该文件下的日志级别-->
-    <logger name="cn.fantasyblog" level="debug"/>
+    <logger name="cn.fantasyblog" level="info"/>
 
     <!--项目根目录默认级别-->=====================================================================================================
-    <root level="error">
+    <root level="info">
         <appender-ref ref="FILE_ERROR"/>
         <appender-ref ref="FILE_WARN"/>
         <appender-ref ref="FILE_INFO"/>

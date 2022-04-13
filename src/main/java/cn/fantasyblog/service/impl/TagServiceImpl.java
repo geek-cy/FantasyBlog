@@ -69,6 +69,7 @@ public class TagServiceImpl implements TagService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         tagMapper.deleteById(id);
+        tagMapper.updateID();
     }
 
     @Override
@@ -76,6 +77,7 @@ public class TagServiceImpl implements TagService {
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         tagMapper.deleteBatchIds(idList);
+        tagMapper.updateID();
     }
 
     @Override

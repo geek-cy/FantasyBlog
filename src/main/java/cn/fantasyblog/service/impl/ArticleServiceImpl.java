@@ -72,6 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
             elasticSearchService.deleteById(article.getId());*/
         }
         // 添加新标签
+        if(article.getTagList() == null) return;
         List<Long> tagIdList = article.getTagList().stream().map(Tag::getId).collect(Collectors.toList());
         articleTagMapper.insertBatch(article.getId(), tagIdList);
         // 添加到ElasticSearch中
@@ -250,6 +251,7 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         articleMapper.deleteById(id);
+        articleMapper.updateID();
         /*if(elasticSearchService != null)
             elasticSearchService.deleteById(id);*/
     }
@@ -258,6 +260,7 @@ public class ArticleServiceImpl implements ArticleService {
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         articleMapper.deleteBatchIds(idList);
+        articleMapper.updateID();
         /*ArrayList<ArticleDocument> articleDocuments = new ArrayList<>();
         for (Long id : idList) {
             ArticleDocument articleDocument = new ArticleDocument();

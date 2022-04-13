@@ -92,12 +92,14 @@ public class MessageServiceImpl implements MessageService {
     @CacheEvict(allEntries = true)
     public void remove(Long id) {
         messageMapper.deleteById(id);
+        messageMapper.updateID();
     }
 
     @Override
     @CacheEvict(allEntries = true)
     public void removeList(List<Long> idList) {
         messageMapper.deleteBatchIds(idList);
+        messageMapper.updateID();
     }
 
     @Override

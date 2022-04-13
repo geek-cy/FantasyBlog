@@ -87,7 +87,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 前台根据日期统计文章数量
-     * @param dateFilterType
+     * @param
      * @return
      */
     List<ArticleDateVO> countByDate();
@@ -101,4 +101,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
      * 获取文章id最大值
      */
     Long maxId();
+
+    /**
+     * 更新文章顺序
+     */
+    void updateID();
 }

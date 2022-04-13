@@ -29,7 +29,7 @@ public class VisitorQuartz extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         log.info("VisitorQuartz--------- {}",sdf.format(new Date()));
         log.info("删除未激活访客");
-        visitorService.removeVisitors();
+//        visitorService.removeVisitors();
     }
 }
 

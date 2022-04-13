@@ -32,4 +32,9 @@ public interface TagMapper extends BaseMapper<Tag> {
      */
     Page<Tag> listTableByTag(IPage<Tag> page, @Param("ew") QueryWrapper<Tag> ew);
 
+    /**
+     * 更新标签顺序
+     */
+    void updateID();
+
 }

@@ -54,6 +54,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Transactional(rollbackFor = Exception.class)
     public void remove(Long id) {
         photoMapper.deleteById(id);
+        photoMapper.updateID();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Transactional(rollbackFor = Exception.class)
     public void removeList(List<Long> idList) {
         photoMapper.deleteBatchIds(idList);
+        photoMapper.updateID();
     }
 
     @Override

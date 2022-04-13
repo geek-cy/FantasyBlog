@@ -9,4 +9,12 @@
         </if>
         order by id
     </select>
+
+    <update id="updateID">
+        set
+        @i = 0;
+        update t_link
+        set id =(@i:=@i+1);
+        alter table t_link auto_increment=0;
+    </update>
 </mapper>

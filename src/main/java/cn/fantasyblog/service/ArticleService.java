@@ -119,7 +119,7 @@ public interface ArticleService {
     /**
      * 前台根据日期统计文章数量
      *
-     * @param dateFilterType
+     * @param
      * @return 文章日期统计
      */
     List<ArticleDateVO> countByDate();
